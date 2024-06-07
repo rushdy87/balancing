@@ -1,0 +1,26 @@
+const Sequelize = require('sequelize');
+const sequelize = require('../utils/database');
+
+const Unit53Tank = sequelize.define('Unit53Tank', {
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    allowNull: false,
+    primaryKey: true,
+  },
+  tag_number: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  pumpable: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
+  },
+  day: {
+    type: Sequelize.DATEONLY,
+    allowNull: false,
+  },
+});
+
+module.exports = Unit53Tank;
