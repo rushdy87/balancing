@@ -2,15 +2,14 @@ const express = require('express');
 require('dotenv').config();
 
 const sequelize = require('./utils/database');
-const { Unit52Tank, Unit53Tank, Unit90Tank, TanksInfo } = require('./models');
-const { tanksInfoRoutes } = require('./Routes');
-const { tanksInfo } = require('./utils/constant');
+const { tanksInfoRoutes, u52TanksRoutes } = require('./Routes');
 
 const app = express();
 
 app.use(express.json());
 
 // ROUTES
+app.use('/api/u52', u52TanksRoutes);
 app.use('/api/tanks-info', tanksInfoRoutes);
 
 app.get('/', (req, res, next) => {
