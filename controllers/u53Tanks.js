@@ -1,7 +1,7 @@
 const { Op } = require('sequelize');
 const moment = require('moment');
 const { Unit53Tank, HttpError } = require('../models');
-const { findBottomByTag } = require('../utils/tanks-info-helpers');
+const { findBottomByTag } = require('../utils');
 
 exports.getAllTanksByDay = async (req, res, next) => {
   const { day } = req.params;

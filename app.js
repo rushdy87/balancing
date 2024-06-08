@@ -7,6 +7,7 @@ const {
   u52TanksRoutes,
   u53TanksRoutes,
   u90TanksRoutes,
+  allTanksRoutes,
 } = require('./Routes');
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use('/api/u52', u52TanksRoutes);
 app.use('/api/u53', u53TanksRoutes);
 app.use('/api/u90', u90TanksRoutes);
+app.use('/api/all', allTanksRoutes);
 app.use('/api/tanks-info', tanksInfoRoutes);
 
 app.get('/', (req, res, next) => {

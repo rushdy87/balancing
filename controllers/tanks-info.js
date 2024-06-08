@@ -1,9 +1,6 @@
 const { TanksInfo, HttpError } = require('../models');
 
-const {
-  allowedUpdateFields,
-  findTankByTag,
-} = require('../utils/tanks-info-helpers');
+const { allowedUpdateFields, findTankByTag } = require('../utils');
 
 exports.getTankInfo = async (req, res, next) => {
   const { tag_number } = req.params;
