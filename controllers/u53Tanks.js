@@ -1,6 +1,6 @@
 const { Op } = require('sequelize');
 const moment = require('moment');
-const { Unit52Tank, HttpError } = require('../models');
+const { Unit53Tank, HttpError } = require('../models');
 const { findBottomByTag } = require('../utils/tanks-info-helpers');
 
 exports.getAllTanksByDay = async (req, res, next) => {
@@ -8,7 +8,7 @@ exports.getAllTanksByDay = async (req, res, next) => {
   const formattedDate = moment(day, 'DD-MM-YYYY');
 
   try {
-    const tanks = await Unit52Tank.findAll({
+    const tanks = await Unit53Tank.findAll({
       where: { day: formattedDate },
       attributes: ['id', 'tag_number', 'pumpable'],
     });
@@ -18,10 +18,10 @@ exports.getAllTanksByDay = async (req, res, next) => {
     }
     res.status(200).json({ tanks });
   } catch (error) {
-    console.error(`Error fetching tank at : ${day} from Unit 52.`, error);
+    console.error(`Error fetching tank at : ${day} from Unit 53.`, error);
     return next(
       new HttpError(
-        "Something went wrong, could not retrieve Unit 52 tank's right now.",
+        "Something went wrong, could not retrieve Unit 53 tank's right now.",
         500
       )
     );
@@ -33,7 +33,7 @@ exports.getTankByDay = async (req, res, next) => {
   const formattedDate = moment(day, 'DD-MM-YYYY');
 
   try {
-    const tank = await Unit52Tank.findOne({
+    const tank = await Unit53Tank.findOne({
       where: { tag_number, day: formattedDate },
       attributes: ['id', 'tag_number', 'pumpable'],
     });
@@ -50,12 +50,12 @@ exports.getTankByDay = async (req, res, next) => {
     res.status(200).json({ tank });
   } catch (error) {
     console.error(
-      `Error fetching tank ${tag_number} at : ${day} from Unit 52.`,
+      `Error fetching tank ${tag_number} at : ${day} from Unit 53.`,
       error
     );
     return next(
       new HttpError(
-        "Something went wrong, could not retrieve Unit 52 tank's right now.",
+        "Something went wrong, could not retrieve Unit 53 tank's right now.",
         500
       )
     );
@@ -68,7 +68,7 @@ exports.getAllTanksBetweenTwoDates = async (req, res, next) => {
   endDate = moment(to, 'DD-MM-YYYY');
 
   try {
-    const tanks = await Unit52Tank.findAll({
+    const tanks = await Unit53Tank.findAll({
       where: { day: { [Op.between]: [startDate, endDate] } },
       attributes: ['id', 'tag_number', 'pumpable', 'day'],
     });
@@ -78,10 +78,10 @@ exports.getAllTanksBetweenTwoDates = async (req, res, next) => {
     }
     res.status(200).json({ tanks });
   } catch (error) {
-    console.error(`Error fetching tank from Unit 52.`, error);
+    console.error(`Error fetching tank from Unit 53.`, error);
     return next(
       new HttpError(
-        "Something went wrong, could not retrieve Unit 52 tank's right now.",
+        "Something went wrong, could not retrieve Unit 53 tank's right now.",
         500
       )
     );
@@ -94,7 +94,7 @@ exports.getTankBetweenTwoDates = async (req, res, next) => {
   endDate = moment(to, 'DD-MM-YYYY');
 
   try {
-    const tanks = await Unit52Tank.findAll({
+    const tanks = await Unit53Tank.findAll({
       where: { tag_number, day: { [Op.between]: [startDate, endDate] } },
       attributes: ['id', 'tag_number', 'pumpable', 'day'],
     });
@@ -105,12 +105,12 @@ exports.getTankBetweenTwoDates = async (req, res, next) => {
     res.status(200).json({ tanks });
   } catch (error) {
     console.error(
-      `Error fetching tank ${tag_number} at : ${day} from Unit 52.`,
+      `Error fetching tank ${tag_number} at : ${day} from Unit 53.`,
       error
     );
     return next(
       new HttpError(
-        "Something went wrong, could not retrieve Unit 52 tank's right now.",
+        "Something went wrong, could not retrieve Unit 53 tank's right now.",
         500
       )
     );
@@ -134,7 +134,7 @@ exports.addVolumeToTanks = async (req, res, next) => {
 
       const pumpable = tanks[tag_number] - bottom;
 
-      return await Unit52Tank.create({
+      return await Unit53Tank.create({
         tag_number,
         pumpable,
         day: formattedDate,
@@ -146,7 +146,7 @@ exports.addVolumeToTanks = async (req, res, next) => {
       .status(201)
       .json({ message: 'All tanks pumpable volumes have been added.' });
   } catch (error) {
-    console.error(`Error adding volume to tanks in Unit 52.`, error);
+    console.error(`Error adding volume to tanks in Unit 53.`, error);
     if (error instanceof HttpError) {
       return next(error);
     }
@@ -175,7 +175,7 @@ exports.addVolumeToOneTank = async (req, res, next) => {
   const pumpable = tov - bottom;
 
   try {
-    const tank = await Unit52Tank.create({
+    const tank = await Unit53Tank.create({
       tag_number,
       pumpable,
       day: formattedDate,
@@ -193,7 +193,7 @@ exports.addVolumeToOneTank = async (req, res, next) => {
       .status(201)
       .json({ message: 'All tanks pumpable volumes have been added.' });
   } catch (error) {
-    console.error(`Error adding volume to tanks in Unit 52.`, error);
+    console.error(`Error adding volume to tanks in Unit 53.`, error);
     if (error instanceof HttpError) {
       return next(error);
     }
@@ -213,7 +213,7 @@ exports.updateOneTankVolume = async (req, res, next) => {
   const formattedDate = moment(day, 'DD-MM-YYYY');
 
   try {
-    const tank = await Unit52Tank.findOne({
+    const tank = await Unit53Tank.findOne({
       where: { tag_number, day: formattedDate },
       attributes: ['id', 'tag_number', 'pumpable'],
     });
@@ -243,7 +243,7 @@ exports.updateOneTankVolume = async (req, res, next) => {
 
     res.status(200).json({ message: 'The tank Volume been updated.' });
   } catch (error) {
-    console.error(`Error editing volume to tanks in Unit 52.`, error);
+    console.error(`Error editing volume to tanks in Unit 53.`, error);
     if (error instanceof HttpError) {
       return next(error);
     }

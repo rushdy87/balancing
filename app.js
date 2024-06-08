@@ -2,7 +2,7 @@ const express = require('express');
 require('dotenv').config();
 
 const sequelize = require('./utils/database');
-const { tanksInfoRoutes, u52TanksRoutes } = require('./Routes');
+const { tanksInfoRoutes, u52TanksRoutes, u53TanksRoutes } = require('./Routes');
 
 const app = express();
 
@@ -10,6 +10,7 @@ app.use(express.json());
 
 // ROUTES
 app.use('/api/u52', u52TanksRoutes);
+app.use('/api/u53', u53TanksRoutes);
 app.use('/api/tanks-info', tanksInfoRoutes);
 
 app.get('/', (req, res, next) => {
