@@ -1,22 +1,15 @@
 const { TanksInfo, HttpError } = require('../models');
 
+const {
+  allowedUpdateFields,
+  findTankByTag,
+} = require('../utils/tanks-info-helpers');
+
 exports.getTankInfo = async (req, res, next) => {
   const { tag_number } = req.params;
-  console.log(tag_number);
 
   try {
-    const tank = await TanksInfo.findOne({
-      where: { tag_number, is_active: true },
-      attributes: [
-        'id',
-        'tag_number',
-        'product',
-        'unit',
-        'bottom',
-        'working_volume',
-      ],
-    });
-
+    const tank = await findTankByTag(tag_number);
     if (!tank) {
       return next(
         new HttpError('Could not find a tank for the provided tag number.', 404)
@@ -24,9 +17,13 @@ exports.getTankInfo = async (req, res, next) => {
     }
     res.status(200).json({ tank });
   } catch (error) {
+    console.error(
+      `Error fetching tank info for tag number: ${tag_number}`,
+      error
+    );
     return next(
       new HttpError(
-        'Something went wrong, could not find a place right now.',
+        'Something went wrong, could not retrieve tank info right now.',
         500
       )
     );
@@ -48,14 +45,15 @@ exports.getAllTanksInfo = async (req, res, next) => {
     });
 
     if (!tanks || tanks.length === 0) {
-      return next(new HttpError('Could not find any tank.', 404));
+      return next(new HttpError('Could not find any tanks.', 404));
     }
 
     res.status(200).json({ tanks });
   } catch (error) {
+    console.error('Error fetching all tanks info', error);
     return next(
       new HttpError(
-        'Something went wrong, could not find a place right now.',
+        'Something went wrong, could not retrieve tanks info right now.',
         500
       )
     );
@@ -65,35 +63,37 @@ exports.getAllTanksInfo = async (req, res, next) => {
 exports.updateTankInfo = async (req, res, next) => {
   const { tag_number } = req.params;
   const updatedData = req.body;
-  if (Object.keys(updatedData).length === 0) {
-    return next(new HttpError('There is no data to update!', 404));
+
+  if (!Object.keys(updatedData).length) {
+    return next(new HttpError('No data provided for update.', 400));
   }
 
   try {
-    const tank = await TanksInfo.findOne({
-      where: { tag_number },
-    });
+    const tank = await findTankByTag(tag_number);
 
     if (!tank) {
       return next(
         new HttpError('Could not find a tank for the provided tag number.', 404)
       );
     }
+
     for (let key in updatedData) {
-      if (['bottom', 'working_volume', 'is_active'].includes(key)) {
+      if (allowedUpdateFields.includes(key)) {
         tank[key] = updatedData[key];
       } else {
-        return next(
-          new HttpError(`There is no column with name ${key}! `, 404)
-        );
+        return next(new HttpError(`Invalid field: ${key}`, 400));
       }
     }
     await tank.save();
-    res.status(200).json({ message: 'The tank is updated' });
+    res.status(200).json({ message: 'The tank has been updated.' });
   } catch (error) {
+    console.error(
+      `Error updating tank info for tag number: ${tag_number}`,
+      error
+    );
     return next(
       new HttpError(
-        'Something went wrong, could not find a place right now.',
+        'Something went wrong, could not update tank info right now.',
         500
       )
     );
@@ -101,43 +101,44 @@ exports.updateTankInfo = async (req, res, next) => {
 };
 
 exports.updateAllTanksInfo = async (req, res, next) => {
-  const updatedData = req.body; // [{tag_number: "", ...},{..}, {..}]
+  const updatedData = req.body; // Array of tanks to update
 
-  if (updatedData.length === 0) {
-    return next(new HttpError('There is no data to update!', 404));
+  if (!Array.isArray(updatedData) || updatedData.length === 0) {
+    return next(new HttpError('No data provided for update.', 400));
   }
+
   try {
-    updatedData.forEach(async (tank) => {
-      const existingTank = await TanksInfo.findOne({
-        where: { tag_number: tank.tag_number },
-      });
-      if (!existingTank) {
-        return next(
-          new HttpError(
-            'Could not find a tank for the provided tag number.',
-            404
-          )
+    const updatePromises = updatedData.map(async (tankData) => {
+      const { tag_number } = tankData;
+      const tank = await findTankByTag(tag_number);
+
+      if (!tank) {
+        throw new HttpError(
+          `Could not find a tank for the provided tag number: ${tag_number}.`,
+          404
         );
       }
-      for (let key in tank) {
-        if (['bottom', 'working_volume', 'is_active'].includes(key)) {
-          existingTank[key] = tank[key];
-        } else if (key === 'tag_number') {
-          continue;
-        } else {
-          return next(
-            new HttpError(`There is no column with name ${key}! `, 404)
-          );
+
+      for (let key in tankData) {
+        if (allowedUpdateFields.includes(key)) {
+          tank[key] = tankData[key];
+        } else if (key !== 'tag_number') {
+          throw new HttpError(`Invalid field: ${key}`, 400);
         }
       }
-      await existingTank.save();
+      return tank.save();
     });
 
-    res.status(200).json({ message: 'All tanks are updated' });
+    await Promise.all(updatePromises);
+    res.status(200).json({ message: 'All tanks have been updated.' });
   } catch (error) {
+    console.error('Error updating multiple tanks info', error);
+    if (error instanceof HttpError) {
+      return next(error);
+    }
     return next(
       new HttpError(
-        'Something went wrong, could not find a place right now.',
+        'Something went wrong, could not update tanks info right now.',
         500
       )
     );
