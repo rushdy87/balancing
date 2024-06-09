@@ -10,6 +10,7 @@ const {
   allTanksRoutes,
   UsersRoutes,
 } = require('./Routes');
+const { unsupportedRoutes } = require('./middlewares');
 
 const app = express();
 
@@ -23,9 +24,7 @@ app.use('/api/all', allTanksRoutes);
 app.use('/api/tanks-info', tanksInfoRoutes);
 app.use('/api/users', UsersRoutes);
 
-app.get('/', (req, res, next) => {
-  res.send('<h1>Hello World!</h1>');
-});
+app.use(unsupportedRoutes);
 
 // Error handling medilware
 // This functon will execute when any middleware in front of it yield an erroe
