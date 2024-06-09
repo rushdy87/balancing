@@ -11,6 +11,7 @@ const {
   UsersRoutes,
 } = require('./Routes');
 const { unsupportedRoutes } = require('./middlewares');
+const { errorHandling } = require('./middlewares/error-handling');
 
 const app = express();
 
@@ -24,18 +25,12 @@ app.use('/api/all', allTanksRoutes);
 app.use('/api/tanks-info', tanksInfoRoutes);
 app.use('/api/users', UsersRoutes);
 
+// This medilware handle unsupported Routes
 app.use(unsupportedRoutes);
 
 // Error handling medilware
 // This functon will execute when any middleware in front of it yield an erroe
-app.use((error, req, res, next) => {
-  if (res.headerSent) {
-    return next(error);
-  }
-  res
-    .status(error.code || 500)
-    .json({ message: error.message || 'An unknown error occurred!' });
-});
+app.use(errorHandling);
 
 sequelize
   .sync()
