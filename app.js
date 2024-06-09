@@ -8,6 +8,7 @@ const {
   u53TanksRoutes,
   u90TanksRoutes,
   allTanksRoutes,
+  UsersRoutes,
 } = require('./Routes');
 
 const app = express();
@@ -20,6 +21,7 @@ app.use('/api/u53', u53TanksRoutes);
 app.use('/api/u90', u90TanksRoutes);
 app.use('/api/all', allTanksRoutes);
 app.use('/api/tanks-info', tanksInfoRoutes);
+app.use('/api/users', UsersRoutes);
 
 app.get('/', (req, res, next) => {
   res.send('<h1>Hello World!</h1>');

@@ -1,4 +1,10 @@
-const { TanksInfo, Unit52Tank, Unit53Tank, Unit90Tank } = require('../models');
+const {
+  TanksInfo,
+  Unit52Tank,
+  Unit53Tank,
+  Unit90Tank,
+  HttpError,
+} = require('../models');
 
 const allowedUpdateFields = ['bottom', 'working_volume', 'is_active'];
 
@@ -80,6 +86,10 @@ const fetchTanksData = async (formattedDate) => {
   return [...u52Tanks, ...u53Tanks, ...u90Tanks];
 };
 
+const handleError = (next, message, statusCode = 500) => {
+  return next(new HttpError(message, statusCode));
+};
+
 module.exports = {
   allowedUpdateFields,
   findTankByTag,
@@ -89,4 +99,5 @@ module.exports = {
   transformData,
   getTanksByDay,
   fetchTanksData,
+  handleError,
 };
