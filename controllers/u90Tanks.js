@@ -1,11 +1,23 @@
 const { Op } = require('sequelize');
 const moment = require('moment');
-const { Unit90Tank, HttpError } = require('../models');
-const { findBottomByTag } = require('../utils');
+const { Unit90Tank } = require('../models');
+const { findBottomByTag, handleError } = require('../utils');
+const { isAuthorized } = require('../utils/authorization');
 
+// Utility function to check authorization
+const checkAuthorization = (userData, requiredUnit, next) => {
+  if (!isAuthorized(userData, requiredUnit)) {
+    return handleError(next, 'Access Denied.', 403);
+  }
+};
+
+// Controller to get all tanks by day
 exports.getAllTanksByDay = async (req, res, next) => {
   const { day } = req.params;
-  const formattedDate = moment(day, 'DD-MM-YYYY');
+  const formattedDate = moment(day, 'DD-MM-YYYY').toDate();
+  const { userData } = req;
+
+  checkAuthorization(userData, 'u90', next);
 
   try {
     const tanks = await Unit90Tank.findAll({
@@ -14,23 +26,21 @@ exports.getAllTanksByDay = async (req, res, next) => {
     });
 
     if (!tanks || tanks.length === 0) {
-      return next(new HttpError('Could not find any tanks.', 404));
+      return handleError(next, 'Could not find any tanks.', 404);
     }
     res.status(200).json({ tanks });
   } catch (error) {
-    console.error(`Error fetching tank at : ${day} from Unit 90.`, error);
-    return next(
-      new HttpError(
-        "Something went wrong, could not retrieve Unit 90 tank's right now.",
-        500
-      )
-    );
+    handleError(next, `Error fetching tanks for day: ${day} from Unit 90.`);
   }
 };
 
+// Controller to get a tank by day
 exports.getTankByDay = async (req, res, next) => {
   const { tag_number, day } = req.params;
-  const formattedDate = moment(day, 'DD-MM-YYYY');
+  const formattedDate = moment(day, 'DD-MM-YYYY').toDate();
+  const { userData } = req;
+
+  checkAuthorization(userData, 'u90', next);
 
   try {
     const tank = await Unit90Tank.findOne({
@@ -39,33 +49,29 @@ exports.getTankByDay = async (req, res, next) => {
     });
 
     if (!tank) {
-      return next(
-        new HttpError(
-          'Could not find a tank for the provided tag number and this date.',
-          404
-        )
+      return handleError(
+        next,
+        'Could not find a tank for the provided tag number and this date.',
+        404
       );
     }
-
     res.status(200).json({ tank });
   } catch (error) {
-    console.error(
-      `Error fetching tank ${tag_number} at : ${day} from Unit 90.`,
-      error
-    );
-    return next(
-      new HttpError(
-        "Something went wrong, could not retrieve Unit 90 tank's right now.",
-        500
-      )
+    handleError(
+      next,
+      `Error fetching tank ${tag_number} at : ${day} from Unit 90.`
     );
   }
 };
 
+// Controller to get all tanks between two dates
 exports.getAllTanksBetweenTwoDates = async (req, res, next) => {
   const { from, to } = req.params;
-  startDate = moment(from, 'DD-MM-YYYY');
-  endDate = moment(to, 'DD-MM-YYYY');
+  const startDate = moment(from, 'DD-MM-YYYY').toDate();
+  const endDate = moment(to, 'DD-MM-YYYY').toDate();
+  const { userData } = req;
+
+  checkAuthorization(userData, 'u90', next);
 
   try {
     const tanks = await Unit90Tank.findAll({
@@ -74,24 +80,22 @@ exports.getAllTanksBetweenTwoDates = async (req, res, next) => {
     });
 
     if (!tanks || tanks.length === 0) {
-      return next(new HttpError('Could not find any tanks.', 404));
+      return handleError(next, 'Could not find any tanks.', 404);
     }
     res.status(200).json({ tanks });
   } catch (error) {
-    console.error(`Error fetching tank from Unit 90.`, error);
-    return next(
-      new HttpError(
-        "Something went wrong, could not retrieve Unit 90 tank's right now.",
-        500
-      )
-    );
+    handleError(next, 'Error fetching tanks between dates from Unit 90.');
   }
 };
 
+// Controller to get a tank between two dates
 exports.getTankBetweenTwoDates = async (req, res, next) => {
   const { tag_number, from, to } = req.params;
-  startDate = moment(from, 'DD-MM-YYYY');
-  endDate = moment(to, 'DD-MM-YYYY');
+  const startDate = moment(from, 'DD-MM-YYYY').toDate();
+  const endDate = moment(to, 'DD-MM-YYYY').toDate();
+  const { userData } = req;
+
+  checkAuthorization(userData, 'u90', next);
 
   try {
     const tanks = await Unit90Tank.findAll({
@@ -100,33 +104,32 @@ exports.getTankBetweenTwoDates = async (req, res, next) => {
     });
 
     if (!tanks || tanks.length === 0) {
-      return next(new HttpError('Could not find any tanks.', 404));
+      return handleError(next, 'Could not find any tanks.', 404);
     }
     res.status(200).json({ tanks });
   } catch (error) {
-    console.error(
-      `Error fetching tank ${tag_number} at : ${day} from Unit 90.`,
-      error
-    );
-    return next(
-      new HttpError(
-        "Something went wrong, could not retrieve Unit 90 tank's right now.",
-        500
-      )
+    handleError(
+      next,
+      `Error fetching tanks ${tag_number} between dates from Unit 90.`
     );
   }
 };
 
+// Controller to add volume to tanks
 exports.addVolumeToTanks = async (req, res, next) => {
   const { day, tanks } = req.body;
-  const formattedDate = moment(day, 'DD-MM-YYYY');
+  const formattedDate = moment(day, 'DD-MM-YYYY').toDate();
+  const { userData } = req;
+
+  checkAuthorization(userData, 'u90', next);
 
   try {
     const createPromises = Object.keys(tanks).map(async (tag_number) => {
       const bottom = await findBottomByTag(tag_number);
 
       if (bottom === null) {
-        throw new HttpError(
+        return handleError(
+          next,
           `Could not find bottom for the tank: ${tag_number}`,
           404
         );
@@ -134,7 +137,7 @@ exports.addVolumeToTanks = async (req, res, next) => {
 
       const pumpable = tanks[tag_number] - bottom;
 
-      return await Unit90Tank.create({
+      return Unit90Tank.create({
         tag_number,
         pumpable,
         day: formattedDate,
@@ -146,35 +149,34 @@ exports.addVolumeToTanks = async (req, res, next) => {
       .status(201)
       .json({ message: 'All tanks pumpable volumes have been added.' });
   } catch (error) {
-    console.error(`Error adding volume to tanks in Unit 90.`, error);
-    if (error instanceof HttpError) {
-      return next(error);
-    }
-    return next(
-      new HttpError(
-        'Something went wrong, could not add tank volumes right now.',
-        500
-      )
+    handleError(
+      next,
+      'Something went wrong, could not add tank volumes right now.'
     );
   }
 };
 
+// Controller to add volume to one tank
 exports.addVolumeToOneTank = async (req, res, next) => {
   const { tag_number, tov, day } = req.body;
-  const formattedDate = moment(day, 'DD-MM-YYYY');
+  const formattedDate = moment(day, 'DD-MM-YYYY').toDate();
+  const { userData } = req;
 
-  const bottom = await findBottomByTag(tag_number);
-
-  if (bottom === null) {
-    throw new HttpError(
-      `Could not find bottom for the tank: ${tag_number}`,
-      404
-    );
-  }
-
-  const pumpable = tov - bottom;
+  checkAuthorization(userData, 'u90', next);
 
   try {
+    const bottom = await findBottomByTag(tag_number);
+
+    if (bottom === null) {
+      return handleError(
+        next,
+        `Could not find bottom for the tank: ${tag_number}`,
+        404
+      );
+    }
+
+    const pumpable = tov - bottom;
+
     const tank = await Unit90Tank.create({
       tag_number,
       pumpable,
@@ -182,35 +184,30 @@ exports.addVolumeToOneTank = async (req, res, next) => {
     });
 
     if (!tank) {
-      return next(
-        new HttpError(
-          'Something went wrong, could not add tank volume right now',
-          404
-        )
+      return handleError(
+        next,
+        'Something went wrong, could not add tank volumes right now.',
+        404
       );
     }
-    res
-      .status(201)
-      .json({ message: 'All tanks pumpable volumes have been added.' });
+
+    res.status(201).json({ message: 'Tank volume has been added.' });
   } catch (error) {
-    console.error(`Error adding volume to tanks in Unit 90.`, error);
-    if (error instanceof HttpError) {
-      return next(error);
-    }
-    return next(
-      new HttpError(
-        'Something went wrong, could not add tank volumes right now.',
-        500
-      )
+    handleError(
+      next,
+      'Something went wrong, could not add tank volumes right now.'
     );
   }
 };
 
+// Controller to update one tank volume
 exports.updateOneTankVolume = async (req, res, next) => {
   const { tag_number, day } = req.params;
   const { tov } = req.body;
+  const formattedDate = moment(day, 'DD-MM-YYYY').toDate();
+  const { userData } = req;
 
-  const formattedDate = moment(day, 'DD-MM-YYYY');
+  checkAuthorization(userData, 'u90', next);
 
   try {
     const tank = await Unit90Tank.findOne({
@@ -219,39 +216,33 @@ exports.updateOneTankVolume = async (req, res, next) => {
     });
 
     if (!tank) {
-      return next(
-        new HttpError(
-          'Could not find a tank for the provided tag number and this date.',
-          404
-        )
+      return handleError(
+        next,
+        'Could not find a tank for the provided tag number and this date.',
+        404
       );
     }
 
     const bottom = await findBottomByTag(tag_number);
 
     if (bottom === null) {
-      throw new HttpError(
+      return handleError(
+        next,
         `Could not find bottom for the tank: ${tag_number}`,
         404
       );
     }
-    const pumpable = tov - bottom;
 
+    const pumpable = tov - bottom;
     tank.pumpable = pumpable;
 
     await tank.save();
 
-    res.status(200).json({ message: 'The tank Volume been updated.' });
+    res.status(200).json({ message: 'The tank volume has been updated.' });
   } catch (error) {
-    console.error(`Error editing volume to tanks in Unit 90.`, error);
-    if (error instanceof HttpError) {
-      return next(error);
-    }
-    return next(
-      new HttpError(
-        'Something went wrong, could not edit tank volumes right now.',
-        500
-      )
+    handleError(
+      next,
+      'Something went wrong, could not update tank volumes right now.'
     );
   }
 };
