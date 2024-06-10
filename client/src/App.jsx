@@ -16,6 +16,7 @@ import {
   Users,
   Reports,
 } from './pages';
+import { TanksInfoProvider } from './context/TanksInfoContext';
 
 function App() {
   const token = true;
@@ -40,7 +41,11 @@ function App() {
       <Route path='*' element={<Navigate to='/login' replace />} />
     </Routes>
   );
-  return <Router>{renderRoutes}</Router>;
+  return (
+    <TanksInfoProvider>
+      <Router>{renderRoutes}</Router>;
+    </TanksInfoProvider>
+  );
 }
 
 export default App;

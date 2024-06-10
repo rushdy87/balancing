@@ -1,0 +1,26 @@
+.tanksInfo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 5px;
+
+  .tanksInfo-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: 100vw;
+  }
+
+  .tanksInfo-column {
+    width: 200px;
+    text-align: center;
+    margin: 5px;
+
+    input {
+      width: 40px;
+    }
+  }
+}
