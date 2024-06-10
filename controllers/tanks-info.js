@@ -1,9 +1,21 @@
 const { TanksInfo, HttpError } = require('../models');
 
-const { allowedUpdateFields, findTankByTag } = require('../utils');
+const { allowedUpdateFields, findTankByTag, handleError } = require('../utils');
+
+const { isAuthorized } = require('../utils/authorization');
+
+const checkAuthorization = (userData, requiredUnit, next) => {
+  if (!isAuthorized(userData, requiredUnit)) {
+    return handleError(next, 'Access Denied.', 403);
+  }
+};
 
 exports.getTankInfo = async (req, res, next) => {
   const { tag_number } = req.params;
+
+  const { userData } = req;
+
+  checkAuthorization(userData, 'all', next);
 
   try {
     const tank = await findTankByTag(tag_number);
@@ -28,6 +40,9 @@ exports.getTankInfo = async (req, res, next) => {
 };
 
 exports.getAllTanksInfo = async (req, res, next) => {
+  const { userData } = req;
+
+  checkAuthorization(userData, 'all', next);
   try {
     const tanks = await TanksInfo.findAll({
       where: { is_active: true },
@@ -60,6 +75,10 @@ exports.getAllTanksInfo = async (req, res, next) => {
 exports.updateTankInfo = async (req, res, next) => {
   const { tag_number } = req.params;
   const updatedData = req.body;
+
+  const { userData } = req;
+
+  checkAuthorization(userData, 'all', next);
 
   if (!Object.keys(updatedData).length) {
     return next(new HttpError('No data provided for update.', 400));
@@ -99,6 +118,10 @@ exports.updateTankInfo = async (req, res, next) => {
 
 exports.updateAllTanksInfo = async (req, res, next) => {
   const updatedData = req.body; // Array of tanks to update
+
+  const { userData } = req;
+
+  checkAuthorization(userData, 'all', next);
 
   if (!Array.isArray(updatedData) || updatedData.length === 0) {
     return next(new HttpError('No data provided for update.', 400));
