@@ -9,8 +9,9 @@ const {
   u90TanksRoutes,
   allTanksRoutes,
   UsersRoutes,
+  AuthRoutes,
 } = require('./Routes');
-const { unsupportedRoutes } = require('./middlewares');
+const { unsupportedRoutes, checkAuth } = require('./middlewares');
 const { errorHandling } = require('./middlewares/error-handling');
 
 const app = express();
@@ -18,6 +19,8 @@ const app = express();
 app.use(express.json());
 
 // ROUTES
+app.use('/api/auth', AuthRoutes);
+// app.use(checkAuth);
 app.use('/api/u52', u52TanksRoutes);
 app.use('/api/u53', u53TanksRoutes);
 app.use('/api/u90', u90TanksRoutes);
