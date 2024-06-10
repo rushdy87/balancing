@@ -21,6 +21,15 @@ const Unit53Tank = sequelize.define('Unit53Tank', {
     type: Sequelize.DATEONLY,
     allowNull: false,
   },
+  userId: {
+    // Adding the foreign key
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'Users', // Name of the target model
+      key: 'id', // Key in the target model that is referenced
+    },
+  },
 });
 
 module.exports = Unit53Tank;

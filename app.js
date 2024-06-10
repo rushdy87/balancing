@@ -1,5 +1,6 @@
 const express = require('express');
 require('dotenv').config();
+// const bcryptjs = require('bcryptjs');
 
 const sequelize = require('./utils/database');
 const {
@@ -17,6 +18,18 @@ const { errorHandling } = require('./middlewares/error-handling');
 const app = express();
 
 app.use(express.json());
+
+// const { User } = require('./models');
+
+// app.get('/', async (req, res) => {
+//   const user = await User.create({
+//     username: 'john_doe',
+//     password: bcryptjs.hashSync('password', 10),
+//     name: 'John Doe',
+//     role: '0',
+//   });
+//   res.json(user);
+// });
 
 // ROUTES
 app.use('/api/auth', AuthRoutes);

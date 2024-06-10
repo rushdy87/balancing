@@ -5,6 +5,19 @@ const Unit90Tank = require('./u90Tanks');
 const TanksInfo = require('./tanks-info');
 const HttpError = require('./http-error');
 
+// Define associations
+User.hasMany(Unit52Tank, { foreignKey: 'userId' });
+Unit52Tank.belongsTo(User, { foreignKey: 'userId' });
+
+User.hasMany(Unit53Tank, { foreignKey: 'userId' });
+Unit53Tank.belongsTo(User, { foreignKey: 'userId' });
+
+User.hasMany(Unit90Tank, { foreignKey: 'userId' });
+Unit90Tank.belongsTo(User, { foreignKey: 'userId' });
+
+User.hasMany(TanksInfo, { foreignKey: 'userId' });
+TanksInfo.belongsTo(User, { foreignKey: 'userId' });
+
 module.exports = {
   User,
   Unit52Tank,
