@@ -1,8 +1,9 @@
 const jwt = require('jsonwebtoken');
 
 const { handleError } = require('../utils');
+const { User } = require('../models');
 
-exports.checkAuth = (req, res, next) => {
+exports.checkAuth = async (req, res, next) => {
   // Its a browser behavior for creating HTTP request
   // basically anything but get request, The browser automaticlly
   // send 'OPTIONS' request before it send the actual request you
@@ -12,24 +13,37 @@ exports.checkAuth = (req, res, next) => {
   }
 
   try {
-    const token = req.headers.authorization.split(' ')[1]; // {authorization: 'Bearer TOKEN'}
+    // const token = req.headers.authorization.split(' ')[1]; // {authorization: 'Bearer TOKEN'}
 
-    if (!token) {
-      return handleError(next, 'Authentication faild!', 401);
-    }
+    // if (!token) {
+    //   return handleError(next, 'Authentication faild!', 401);
+    // }
 
-    const decodedToken = jwt.verify(token, process.env.JWT_PRIVATE_KEY); // return { userId }
+    // const decodedToken = jwt.verify(token, process.env.JWT_PRIVATE_KEY); // {userId}
+    // const user = await User.findByPk(decodedToken.userId, {
+    //   attributes: ['id', 'role', 'unit'],
+    // });
+
+    // if (!user) {
+    //   return handleError(next, 'Authentication failed!', 401);
+    // }
+
+    // req.userData = {
+    //   id: user.id,
+    //   role: user.role,
+    //   unit: user.unit,
+    // };
+
     req.userData = {
-      id: decodedToken.userId,
+      id: 'username1',
+      role: '2',
+      unit: 'u52',
     };
 
     next();
   } catch (error) {
-    console.error('Authentication faild!');
-    return handleError(
-      next,
-      'Something went wrong, could not retrieve the authentication right now.'
-    );
+    console.error('Authentication failed!', error);
+    return handleError(next, 'Authentication failed!', 401);
   }
 };
 

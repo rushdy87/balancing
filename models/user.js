@@ -21,7 +21,7 @@ const User = sequelize.define('User', {
     allowNull: false,
   },
   role: {
-    type: Sequelize.ENUM('0', '1', '2', '3'),
+    type: Sequelize.ENUM('0', '1', '2'),
     allowNull: false,
   },
   unit: {
@@ -29,7 +29,7 @@ const User = sequelize.define('User', {
     allowNull: true,
   },
   group: {
-    type: Sequelize.ENUM('u52', 'u53', 'u90'),
+    type: Sequelize.ENUM('A', 'B', 'C', 'D'),
     allowNull: true,
   },
 });

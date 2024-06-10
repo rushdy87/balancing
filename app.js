@@ -20,7 +20,7 @@ app.use(express.json());
 
 // ROUTES
 app.use('/api/auth', AuthRoutes);
-// app.use(checkAuth);
+app.use(checkAuth);
 app.use('/api/u52', u52TanksRoutes);
 app.use('/api/u53', u53TanksRoutes);
 app.use('/api/u90', u90TanksRoutes);
