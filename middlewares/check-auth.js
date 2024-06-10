@@ -36,7 +36,7 @@ exports.checkAuth = async (req, res, next) => {
 
     req.userData = {
       id: 'username1',
-      role: '2',
+      role: '1',
       unit: 'u90',
     };
 

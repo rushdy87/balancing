@@ -6,11 +6,23 @@ const {
   findProductByTagWVByTag,
   transformData,
   fetchTanksData,
+  handleError,
 } = require('../utils');
+const { isAuthorized } = require('../utils/authorization');
+
+const checkAuthorization = (userData, requiredUnit, next) => {
+  if (!isAuthorized(userData, requiredUnit)) {
+    return handleError(next, 'Access Denied.', 403);
+  }
+};
 
 exports.getAllTanksByDay = async (req, res, next) => {
   const { day } = req.params;
   const formattedDate = moment(day, 'DD-MM-YYYY');
+
+  const { userData } = req;
+
+  checkAuthorization(userData, 'all', next);
 
   try {
     const allTanks = await fetchTanksData(formattedDate);
@@ -34,6 +46,10 @@ exports.getTankByDay = async (req, res, next) => {
   const { tag_number, day } = req.params;
   const formattedDate = moment(day, 'DD-MM-YYYY', true);
   const unitNumber = tag_number.split('-')[1];
+
+  const { userData } = req;
+
+  checkAuthorization(userData, 'all', next);
 
   const unitMap = {
     52: Unit52Tank,
@@ -78,6 +94,10 @@ exports.getAllTankBetweenTwoDates = async (req, res, next) => {
   startDate = moment(from, 'DD-MM-YYYY');
   endDate = moment(to, 'DD-MM-YYYY');
 
+  const { userData } = req;
+
+  checkAuthorization(userData, 'all', next);
+
   try {
     const [u52Tanks, u53Tanks, u90Tanks] = await Promise.all([
       Unit52Tank.findAll({
@@ -114,6 +134,10 @@ exports.getAllTankBetweenTwoDates = async (req, res, next) => {
 exports.getTanksReportByDay = async (req, res, next) => {
   const { day } = req.params;
   const formattedDate = moment(day, 'DD-MM-YYYY');
+
+  const { userData } = req;
+
+  checkAuthorization(userData, 'all', next);
 
   try {
     const allTanks = await fetchTanksData(formattedDate);
