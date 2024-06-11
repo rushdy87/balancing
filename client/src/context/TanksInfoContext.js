@@ -23,9 +23,9 @@ export const TanksInfoProvider = ({ children }) => {
     console.log(tanksInfo);
   };
 
-  const getU52TanksGroupedByProduct = (tanks) => {
-    // Filter tanks for unit "u52"
-    const u52Tanks = tanksInfo.filter((tank) => tank.unit === 'u52');
+  const getTanksGroupedByProduct = (unit) => {
+    // Filter tanks for unit "u52", "u53", "u90"
+    const u52Tanks = tanksInfo.filter((tank) => tank.unit === unit);
 
     // Reduce tanks to the desired format
     const groupedTanks = u52Tanks.reduce((acc, tank) => {
@@ -55,7 +55,7 @@ export const TanksInfoProvider = ({ children }) => {
         tanksInfo,
         ChangeTankValue,
         updateTanksValues,
-        getU52TanksGroupedByProduct,
+        getTanksGroupedByProduct,
       }}
     >
       {children}

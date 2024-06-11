@@ -17,3 +17,13 @@ export const fetchTanksInfo = async () => {
     }
   }
 };
+
+// http://localhost:3030/api/u52/tanks
+// }
+// "day": "08-06-2024",
+//     "tanks": {
+//     "TK-52-401A": 2220,
+//      ....
+//      }
+// }
+export const addVolumeToTanks = async (unit, data) => {};
