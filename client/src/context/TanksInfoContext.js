@@ -13,8 +13,20 @@ export const TanksInfoProvider = ({ children }) => {
     })();
   }, []);
 
+  const ChangeTankValue = (index, key, value) => {
+    const newTanks = [...tanksInfo];
+    newTanks[index][key] = value;
+    setTanksInfo(newTanks);
+  };
+
+  const updateTanksValues = () => {
+    console.log(tanksInfo);
+  };
+
   return (
-    <TanksInfoContext.Provider value={{ tanksInfo, setTanksInfo }}>
+    <TanksInfoContext.Provider
+      value={{ tanksInfo, ChangeTankValue, updateTanksValues }}
+    >
       {children}
     </TanksInfoContext.Provider>
   );

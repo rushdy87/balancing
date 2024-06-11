@@ -13,7 +13,7 @@ $spacing-md: 16px;
 $spacing-lg: 32px;
 
 // border radius
-$borderRadius: 12px;
+$borderRadius: 8px;
 
 @mixin breakpoint($point) {
   @if $point == md {
