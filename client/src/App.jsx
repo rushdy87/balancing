@@ -43,7 +43,7 @@ function App() {
   );
   return (
     <TanksInfoProvider>
-      <Router>{renderRoutes}</Router>;
+      <Router>{renderRoutes}</Router>
     </TanksInfoProvider>
   );
 }

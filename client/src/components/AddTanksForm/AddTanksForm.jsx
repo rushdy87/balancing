@@ -60,6 +60,10 @@ const AddTanksForm = ({ unit, tanksGroup, action }) => {
           <fieldset
             className={`AddTanksForm_fieldset ${
               tank.product === 'Paving Asphalt' ? 'asphalt' : ''
+            } ${unit === 'Unit 90' && tank.product === 'LPG' ? 'lpg90' : ''} ${
+              unit === 'Unit 90' && tank.product === 'Heavy Diesel'
+                ? 'hd90'
+                : ''
             }`}
             key={tank.product}
           >
