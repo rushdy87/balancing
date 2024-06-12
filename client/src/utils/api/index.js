@@ -18,6 +18,22 @@ export const fetchTanksInfo = async () => {
   }
 };
 
+export const updateAllTanksInfo = async (newTanksInfo) => {
+  try {
+    const url = 'http://localhost:3030/api/tanks-info';
+    const { data } = await axios.patch(
+      url,
+      { ...newTanksInfo }
+      // {
+      //   headers: { authorization: `Bearer ${token}` },
+      // }
+    );
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 // http://localhost:3030/api/u52/tanks
 // }
 // "day": "08-06-2024",
@@ -27,7 +43,6 @@ export const fetchTanksInfo = async () => {
 //      }
 // }
 export const addVolumeToTanks = async (unit, tanksdata) => {
-  console.log(tanksdata);
   try {
     const url = `http://localhost:3030/api/${unit}/tanks`;
     const { data } = await axios.post(

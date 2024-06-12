@@ -25,6 +25,11 @@ const TanksInfo = sequelize.define('TanksInfo', {
     allowNull: false,
     defaultValue: 0,
   },
+  factor: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
+  },
   working_volume: {
     type: Sequelize.INTEGER,
     allowNull: false,

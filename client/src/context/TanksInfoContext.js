@@ -20,7 +20,15 @@ export const TanksInfoProvider = ({ children }) => {
   };
 
   const updateTanksValues = () => {
-    console.log(tanksInfo);
+    const newValues = tanksInfo.map(
+      ({ tag_number, bottom, working_volume }) => ({
+        tag_number,
+        bottom,
+        working_volume,
+      })
+    );
+
+    console.log(newValues);
   };
 
   const getTanksGroupedByProduct = (unit) => {

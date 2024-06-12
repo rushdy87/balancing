@@ -126,8 +126,9 @@ exports.addVolumeToTanks = async (req, res, next) => {
   try {
     const createPromises = Object.keys(tanks).map(async (tag_number) => {
       const bottom = await findBottomByTag(tag_number);
+      const factor = await findFactorByTag(tag_number);
 
-      if (bottom === null) {
+      if (bottom === null || factor === null) {
         return handleError(
           next,
           `Could not find bottom for the tank: ${tag_number}`,
@@ -135,7 +136,7 @@ exports.addVolumeToTanks = async (req, res, next) => {
         );
       }
 
-      const pumpable = tanks[tag_number] - bottom;
+      const pumpable = tanks[tag_number] - factor * bottom;
 
       return Unit90Tank.create({
         tag_number,

@@ -30,6 +30,14 @@ const findBottomByTag = async (tag_number) => {
   return tank ? tank.bottom : null;
 };
 
+const findFactorByTag = async (tag_number) => {
+  const tank = await TanksInfo.findOne({
+    where: { tag_number, is_active: true },
+    attributes: ['factor'],
+  });
+  return tank ? tank.factor : null;
+};
+
 const findProductByTag = async (tag_number) => {
   const tank = await TanksInfo.findOne({
     where: { tag_number, is_active: true },
@@ -94,6 +102,7 @@ module.exports = {
   allowedUpdateFields,
   findTankByTag,
   findBottomByTag,
+  findFactorByTag,
   findProductByTag,
   findProductByTagWVByTag,
   transformData,
