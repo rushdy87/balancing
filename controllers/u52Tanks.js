@@ -121,6 +121,8 @@ exports.addVolumeToTanks = async (req, res, next) => {
   const formattedDate = moment(day, 'DD-MM-YYYY').toDate();
   const { userData } = req;
 
+  console.log(userData);
+
   checkAuthorization(userData, 'u52', next);
 
   try {
@@ -141,6 +143,7 @@ exports.addVolumeToTanks = async (req, res, next) => {
         tag_number,
         pumpable,
         day: formattedDate,
+        userId: userData.id,
       });
     });
 
@@ -149,6 +152,7 @@ exports.addVolumeToTanks = async (req, res, next) => {
       .status(201)
       .json({ message: 'All tanks pumpable volumes have been added.' });
   } catch (error) {
+    console.log(error);
     handleError(
       next,
       'Something went wrong, could not add tank volumes right now.'
@@ -181,6 +185,7 @@ exports.addVolumeToOneTank = async (req, res, next) => {
       tag_number,
       pumpable,
       day: formattedDate,
+      userId: userData.id,
     });
 
     if (!tank) {

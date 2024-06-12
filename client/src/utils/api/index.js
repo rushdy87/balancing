@@ -26,4 +26,19 @@ export const fetchTanksInfo = async () => {
 //      ....
 //      }
 // }
-export const addVolumeToTanks = async (unit, data) => {};
+export const addVolumeToTanks = async (unit, tanksdata) => {
+  console.log(tanksdata);
+  try {
+    const url = `http://localhost:3030/api/${unit}/tanks`;
+    const { data } = await axios.post(
+      url,
+      { ...tanksdata }
+      // {
+      //   headers: { authorization: `Bearer ${token}` },
+      // }
+    );
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};

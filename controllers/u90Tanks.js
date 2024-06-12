@@ -141,6 +141,7 @@ exports.addVolumeToTanks = async (req, res, next) => {
         tag_number,
         pumpable,
         day: formattedDate,
+        userId: userData.id,
       });
     });
 
@@ -181,6 +182,7 @@ exports.addVolumeToOneTank = async (req, res, next) => {
       tag_number,
       pumpable,
       day: formattedDate,
+      userId: userData.id,
     });
 
     if (!tank) {
