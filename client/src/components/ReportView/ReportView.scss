@@ -1,50 +1,62 @@
 @import '../../styles/variables.scss';
-
 .ReportView_container {
-  display: grid;
-  grid-template-columns: repeat(5, 200px);
-  grid-template-rows: repeat(2, 1fr);
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
-  // width: 210mm;
-  // height: 297mm;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100vw;
 
-  .reportData_item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 200px;
-    border: 1px solid $dark;
+  .ReportView_tanks_balance {
+    display: grid;
+    grid-template-columns: repeat(4, 200px);
+    grid-template-rows: repeat(3, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
 
-    .reportData_item_name {
-      background-color: rgba($color: $secondary, $alpha: 0.4);
-      width: 100%;
-      text-align: center;
-    }
-
-    .reportData_item_values {
+    .reportData_item {
       display: flex;
-      flex-direction: row;
-      width: 100%;
-      border: 1px solid $secondary;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 200px;
+      border: 1px solid $dark;
 
-      .reportData_item_column {
+      .reportData_item_name {
+        background-color: rgba($color: $secondary, $alpha: 0.4);
+        width: 100%;
+        text-align: center;
+      }
+
+      .reportData_item_values {
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        width: 100px;
+        flex-direction: row;
+        width: 100%;
         border: 1px solid $secondary;
 
-        .volume_name {
-          width: 100%;
-          border-bottom: 1px solid $secondary;
-          text-align: center;
+        .reportData_item_column {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 10px;
+          width: 100px;
+          border: 1px solid $secondary;
+
+          .volume_name {
+            width: 100%;
+            border-bottom: 1px solid $secondary;
+            text-align: center;
+          }
+          .volume_value {
+            text-align: center;
+          }
         }
-        .volume_value {
-          text-align: center;
-        }
+      }
+    }
+
+    @media print {
+      padding: 10mm 20mm;
+      @page {
+        size: 50mm 150mm;
       }
     }
   }

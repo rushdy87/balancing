@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { useReactToPrint } from 'react-to-print';
 
 import { Datepicker, ReportView } from '../components';
 
@@ -9,6 +10,14 @@ const Reports = () => {
     }-${new Date().getFullYear()}`
   );
 
+  const contentToPrint = useRef(null);
+  const handlePrint = useReactToPrint({
+    documentTitle: 'Print This Document',
+    onBeforePrint: () => console.log('before printing...'),
+    onAfterPrint: () => console.log('after printing...'),
+    removeAfterPrint: true,
+  });
+
   const changeDate = (newDate) => {
     setDay(
       `${newDate.getDate()}-${newDate.getMonth() + 1}-${newDate.getFullYear()}`
@@ -18,17 +27,18 @@ const Reports = () => {
   return (
     <div>
       <Datepicker date={day} changeDate={changeDate} />
-      <ReportView day={day} />
-      <button>Create a PDF</button>
+
+      <ReportView day={day} contentToPrint={contentToPrint} />
+
+      <button
+        onClick={() => {
+          handlePrint(null, () => contentToPrint.current);
+        }}
+      >
+        Create PDF
+      </button>
     </div>
   );
 };
 
 export default Reports;
-
-/**
- * Daily:
- * DatePiker
-    - View
- * Create PDF
- */

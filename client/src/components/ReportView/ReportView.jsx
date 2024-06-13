@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import './ReportView.scss';
 import { getReportDataByDay } from '../../utils/api';
 
-const ReportView = ({ day }) => {
+const ReportView = ({ day, contentToPrint }) => {
   const [reportData, setReportData] = useState([]);
   const isFirstRender = useRef(true); // Ref to track the initial render
 
@@ -42,7 +42,11 @@ const ReportView = ({ day }) => {
     </div>
   ));
 
-  return <div className='ReportView_container'>{renderData}</div>;
+  return (
+    <div className='ReportView_container' ref={contentToPrint}>
+      <div className='ReportView_tanks_balance'>{renderData}</div>
+    </div>
+  );
 };
 
 export default ReportView;
