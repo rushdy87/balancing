@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { useReactToPrint } from 'react-to-print';
 
-import { Datepicker, ReportView } from '../components';
+import { Button, Datepicker, ReportView } from '../components';
 
 const Reports = () => {
   const [day, setDay] = useState(
@@ -30,13 +30,9 @@ const Reports = () => {
 
       <ReportView day={day} contentToPrint={contentToPrint} />
 
-      <button
-        onClick={() => {
-          handlePrint(null, () => contentToPrint.current);
-        }}
-      >
+      <Button onClick={() => handlePrint(null, () => contentToPrint.current)}>
         Create PDF
-      </button>
+      </Button>
     </div>
   );
 };

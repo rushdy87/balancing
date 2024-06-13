@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Datepicker } from '../../components';
+import { Button, Datepicker } from '../../components';
 import './AddTanksForm.scss';
 
 const AddTanksForm = ({ unit, tanksGroup, action }) => {
@@ -56,40 +56,33 @@ const AddTanksForm = ({ unit, tanksGroup, action }) => {
       <h1>{unit}</h1>
       <Datepicker date={day} changeDate={changeDate} />
       <form className='AddTanksForm-form' onSubmit={handleSubmit}>
-        {tanksGroup.map((tank) => (
-          <fieldset
-            className={`AddTanksForm_fieldset ${
-              tank.product === 'Paving Asphalt' ? 'asphalt' : ''
-            } ${unit === 'Unit 90' && tank.product === 'LPG' ? 'lpg90' : ''} ${
-              unit === 'Unit 90' && tank.product === 'Heavy Diesel'
-                ? 'hd90'
-                : ''
-            }`}
-            key={tank.product}
-          >
-            <legend>
-              <span>{tank.product}</span>
-            </legend>
-            {tank.tanks.map((tag) => (
-              <div className='AddTanksForm-inputfield' key={tag}>
-                <input
-                  type='number'
-                  id={tag}
-                  name={tag}
-                  onChange={handleValuesChange}
-                />
-                <label htmlFor={tag}>{tag}</label>
-              </div>
-            ))}
-          </fieldset>
-        ))}
-        <button
+        <div className='AddTanksForm-form_inputs'>
+          {tanksGroup.map((tank) => (
+            <fieldset className='AddTanksForm_fieldset' key={tank.product}>
+              <legend>
+                <span>{tank.product}</span>
+              </legend>
+              {tank.tanks.map((tag) => (
+                <div className='AddTanksForm-inputfield' key={tag}>
+                  <input
+                    type='number'
+                    id={tag}
+                    name={tag}
+                    onChange={handleValuesChange}
+                  />
+                  <label htmlFor={tag}>{tag}</label>
+                </div>
+              ))}
+            </fieldset>
+          ))}
+        </div>
+        <Button
           type='submit'
           className='AddTanksForm-btn'
           disabled={!isFormValid}
         >
-          حفظ
-        </button>
+          معاينة
+        </Button>
       </form>
     </div>
   );
