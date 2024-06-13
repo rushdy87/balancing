@@ -57,3 +57,27 @@ export const addVolumeToTanks = async (unit, tanksdata) => {
     throw error;
   }
 };
+
+export const getReportDataByDay = async (day) => {
+  try {
+    const response = await axios.get(
+      `http://localhost:3030/api/all/report/${day}`
+    );
+    return response.data.tanksReport;
+  } catch (error) {
+    // Check if the error is an Axios error with a response object
+    if (error.response) {
+      // Response was received but it's not 2xx
+      console.log(
+        new Error(
+          `Error: ${error.response.status} - ${error.response.data.message}`
+        )
+      );
+      return [];
+    } else {
+      // No response was received or an error occurred during the request setup
+      console.log(new Error('Error: Network Error'));
+      return [];
+    }
+  }
+};

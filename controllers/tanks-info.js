@@ -52,6 +52,7 @@ exports.getAllTanksInfo = async (req, res, next) => {
         'product',
         'unit',
         'bottom',
+        'factor',
         'working_volume',
       ],
     });

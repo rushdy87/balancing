@@ -1,7 +1,7 @@
 const { Op } = require('sequelize');
 const moment = require('moment');
 const { Unit90Tank } = require('../models');
-const { findBottomByTag, handleError } = require('../utils');
+const { findBottomByTag, findFactorByTag, handleError } = require('../utils');
 const { isAuthorized } = require('../utils/authorization');
 
 // Utility function to check authorization
@@ -177,7 +177,7 @@ exports.addVolumeToOneTank = async (req, res, next) => {
       );
     }
 
-    const pumpable = tov - bottom;
+    const pumpable = tov - factor * bottom;
 
     const tank = await Unit90Tank.create({
       tag_number,
@@ -227,8 +227,9 @@ exports.updateOneTankVolume = async (req, res, next) => {
     }
 
     const bottom = await findBottomByTag(tag_number);
+    const factor = await findFactorByTag(tag_number);
 
-    if (bottom === null) {
+    if (bottom === null || factor === null) {
       return handleError(
         next,
         `Could not find bottom for the tank: ${tag_number}`,

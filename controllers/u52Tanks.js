@@ -169,8 +169,9 @@ exports.addVolumeToOneTank = async (req, res, next) => {
 
   try {
     const bottom = await findBottomByTag(tag_number);
+    const factor = await findFactorByTag(tag_number);
 
-    if (bottom === null) {
+    if (bottom === null || factor === null) {
       return handleError(
         next,
         `Could not find bottom for the tank: ${tag_number}`,
@@ -178,7 +179,7 @@ exports.addVolumeToOneTank = async (req, res, next) => {
       );
     }
 
-    const pumpable = tov - bottom;
+    const pumpable = tov - bottom * factor;
 
     const tank = await Unit52Tank.create({
       tag_number,
@@ -228,8 +229,9 @@ exports.updateOneTankVolume = async (req, res, next) => {
     }
 
     const bottom = await findBottomByTag(tag_number);
+    const factor = await findFactorByTag(tag_number);
 
-    if (bottom === null) {
+    if (bottom === null || factor === null) {
       return handleError(
         next,
         `Could not find bottom for the tank: ${tag_number}`,
@@ -237,7 +239,7 @@ exports.updateOneTankVolume = async (req, res, next) => {
       );
     }
 
-    const pumpable = tov - bottom;
+    const pumpable = tov - bottom * factor;
     tank.pumpable = pumpable;
 
     await tank.save();

@@ -8,7 +8,7 @@ const Datepicker = ({ date, changeDate }) => {
     <div className='Datepicker-container'>
       <label>التاريخ</label>
       <Flatpickr
-        data-enable-time
+        data-enable-time={false}
         value={date}
         onChange={(selectedDates) => {
           changeDate(selectedDates[0]);
