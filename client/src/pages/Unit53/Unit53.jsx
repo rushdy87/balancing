@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 
-import { AddTanksForm } from '../components';
-import { TanksInfoContext } from '../context/TanksInfoContext';
-import { addVolumeToTanks } from '../utils/api';
+import { AddTanksForm } from '../../components';
+import { TanksInfoContext } from '../../context/TanksInfoContext';
+import { addVolumeToTanks } from '../../utils/api';
 
 const Unit53 = () => {
   const { getTanksGroupedByProduct } = useContext(TanksInfoContext);

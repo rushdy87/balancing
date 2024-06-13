@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { useReactToPrint } from 'react-to-print';
 
-import { Button, Datepicker, ReportView } from '../components';
+import { Button, Datepicker, ReportView } from '../../components';
 
 const Reports = () => {
   const [day, setDay] = useState(
