@@ -1,25 +1,26 @@
 const Sequelize = require('sequelize');
-const sequelize = require('../utils/database');
+const sequelize = require('../../utils/database');
 
-const Unit52Tank = sequelize.define('Unit52Tank', {
+const PGBlending = sequelize.define('PGBlending', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true,
   },
-  tag_number: {
-    type: Sequelize.STRING,
+
+  day: { type: Sequelize.DATEONLY, allowNull: false },
+
+  quantity: { type: Sequelize.INTEGER, allowNull: false, defaultValue: 0 },
+
+  isConfirmed: {
+    type: Sequelize.BOOLEAN,
     allowNull: false,
+    defaultValue: true,
   },
-  pumpable: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    defaultValue: 0,
-  },
-  day: {
-    type: Sequelize.DATEONLY,
-    allowNull: false,
+  notes: {
+    type: Sequelize.JSON,
+    allowNull: true,
   },
   userId: {
     // Adding the foreign key
@@ -32,4 +33,4 @@ const Unit52Tank = sequelize.define('Unit52Tank', {
   },
 });
 
-module.exports = Unit52Tank;
+module.exports = PGBlending;

@@ -1,44 +1,36 @@
 const Sequelize = require('sequelize');
-const sequelize = require('../utils/database');
+const sequelize = require('../../utils/database');
 
-const TanksInfo = sequelize.define('TanksInfo', {
+const Unit53Tank = sequelize.define('Unit53Tank', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true,
   },
-  tag_number: {
-    type: Sequelize.STRING,
+  day: {
+    type: Sequelize.DATEONLY,
     allowNull: false,
   },
-  product: {
-    type: Sequelize.STRING,
+
+  working_quantity: {
+    type: Sequelize.INTEGER,
     allowNull: false,
+    defaultValue: 9720,
   },
-  unit: {
-    type: Sequelize.ENUM('u52', 'u53', 'u90'),
-    allowNull: false,
-  },
-  bottom: {
+  actual_quantity: {
     type: Sequelize.INTEGER,
     allowNull: false,
     defaultValue: 0,
   },
-  factor: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    defaultValue: 0,
-  },
-  working_volume: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    defaultValue: 0,
-  },
-  is_active: {
+  isConfirmed: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
     defaultValue: true,
+  },
+  notes: {
+    type: Sequelize.JSON,
+    allowNull: true,
   },
   userId: {
     // Adding the foreign key
@@ -51,4 +43,4 @@ const TanksInfo = sequelize.define('TanksInfo', {
   },
 });
 
-module.exports = TanksInfo;
+module.exports = Unit53Tank;

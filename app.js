@@ -1,6 +1,6 @@
 const express = require('express');
 require('dotenv').config();
-// const bcryptjs = require('bcryptjs');
+const bcryptjs = require('bcryptjs');
 
 const sequelize = require('./utils/database');
 const {
@@ -11,7 +11,7 @@ const {
   allTanksRoutes,
   UsersRoutes,
   AuthRoutes,
-} = require('./Routes');
+} = require('./routes');
 const { unsupportedRoutes, checkAuth } = require('./middlewares');
 const { errorHandling } = require('./middlewares/error-handling');
 
@@ -181,6 +181,30 @@ const app = express();
 //     },
 //     {
 //       tag_number: 'TK-52-409C',
+//       product: 'LPG',
+//       bottom: 1,
+//       factor: 0,
+//       unit: 'U52',
+//       userId: 1,
+//     },
+//     {
+//       tag_number: 'TK-52-409D',
+//       product: 'LPG',
+//       bottom: 1,
+//       factor: 0,
+//       unit: 'U52',
+//       userId: 1,
+//     },
+//     {
+//       tag_number: 'TK-52-409E',
+//       product: 'LPG',
+//       bottom: 1,
+//       factor: 0,
+//       unit: 'U52',
+//       userId: 1,
+//     },
+//     {
+//       tag_number: 'TK-52-409F',
 //       product: 'LPG',
 //       bottom: 1,
 //       factor: 0,
@@ -453,7 +477,6 @@ app.use((req, res, next) => {
 app.use(express.json());
 
 // const { User } = require('./models');
-
 // app.get('/', async (req, res) => {
 //   const user = await User.create({
 //     username: 'john_doe',

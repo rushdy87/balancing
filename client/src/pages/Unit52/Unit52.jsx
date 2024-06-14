@@ -12,7 +12,7 @@ const Unit52 = () => {
   const addVolumes = async (day, tanks) => {
     //tanks her: {u52:[], u53:[]}
     try {
-      await addVolumeToTanks('u53', { day, tanks: tanks['u53'] });
+      await addVolumeToTanks('u52', { day, tanks: tanks['u5'] });
     } catch (error) {
       console.log(error);
     }

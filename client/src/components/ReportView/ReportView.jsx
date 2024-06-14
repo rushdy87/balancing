@@ -42,6 +42,9 @@ const ReportView = ({ day, contentToPrint }) => {
     </div>
   ));
 
+  if (isFirstRender.current) {
+    return <h4>الرجاء اختيار التاريخ</h4>;
+  }
   return (
     <div className='ReportView_container' ref={contentToPrint}>
       <div className='ReportView_tanks_balance'>{renderData}</div>

@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const sequelize = require('../utils/database');
+const sequelize = require('../../utils/database');
 
 const Unit90Tank = sequelize.define('Unit90Tank', {
   id: {
@@ -20,6 +20,15 @@ const Unit90Tank = sequelize.define('Unit90Tank', {
   day: {
     type: Sequelize.DATEONLY,
     allowNull: false,
+  },
+  isConfirmed: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: true,
+  },
+  notes: {
+    type: Sequelize.JSON,
+    allowNull: true,
   },
   userId: {
     // Adding the foreign key

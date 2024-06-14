@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
-const sequelize = require('../utils/database');
+const sequelize = require('../../utils/database');
 
-const Unit53Tank = sequelize.define('Unit53Tank', {
+const Unit52Tank = sequelize.define('Unit52Tank', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
@@ -21,6 +21,15 @@ const Unit53Tank = sequelize.define('Unit53Tank', {
     type: Sequelize.DATEONLY,
     allowNull: false,
   },
+  isConfirmed: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: true,
+  },
+  notes: {
+    type: Sequelize.JSON,
+    allowNull: true,
+  },
   userId: {
     // Adding the foreign key
     type: Sequelize.INTEGER,
@@ -32,4 +41,4 @@ const Unit53Tank = sequelize.define('Unit53Tank', {
   },
 });
 
-module.exports = Unit53Tank;
+module.exports = Unit52Tank;

@@ -2,13 +2,15 @@ import { useRef, useState } from 'react';
 import { useReactToPrint } from 'react-to-print';
 
 import { Button, Datepicker, ReportView } from '../../components';
+import './Reports.scss';
 
 const Reports = () => {
-  const [day, setDay] = useState(
-    `${new Date().getDate()}-${
-      new Date().getMonth() + 1
-    }-${new Date().getFullYear()}`
-  );
+  const [day, setDay] = useState('');
+  // const [day, setDay] = useState(
+  //   `${new Date().getDate()}-${
+  //     new Date().getMonth() + 1
+  //   }-${new Date().getFullYear()}`
+  // );
 
   const contentToPrint = useRef(null);
   const handlePrint = useReactToPrint({
@@ -25,13 +27,13 @@ const Reports = () => {
   };
 
   return (
-    <div>
+    <div className='Reports_container'>
       <Datepicker date={day} changeDate={changeDate} />
 
       <ReportView day={day} contentToPrint={contentToPrint} />
 
       <Button onClick={() => handlePrint(null, () => contentToPrint.current)}>
-        Create PDF
+        طباعة
       </Button>
     </div>
   );
