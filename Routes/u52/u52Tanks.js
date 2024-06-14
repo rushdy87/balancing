@@ -1,10 +1,12 @@
 const express = require('express');
 
-const Unit52TanksControllers = require('../controllers/u52Tanks');
+const Unit52TanksControllers = require('../../controllers/u52/u52Tanks');
 
 const router = express.Router();
 
 // /api/u52/....
+
+// Tanks
 router.get('/tanks/:day', Unit52TanksControllers.getAllTanksByDay);
 
 router.get(

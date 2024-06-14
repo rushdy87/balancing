@@ -5,7 +5,7 @@ const bcryptjs = require('bcryptjs');
 const sequelize = require('./utils/database');
 const {
   tanksInfoRoutes,
-  u52TanksRoutes,
+  u52Routes,
   u53TanksRoutes,
   u90TanksRoutes,
   allTanksRoutes,
@@ -490,7 +490,7 @@ app.use(express.json());
 // ROUTES
 app.use('/api/auth', AuthRoutes);
 app.use(checkAuth);
-app.use('/api/u52', u52TanksRoutes);
+app.use('/api/u52', u52Routes);
 app.use('/api/u53', u53TanksRoutes);
 app.use('/api/u90', u90TanksRoutes);
 app.use('/api/all', allTanksRoutes);

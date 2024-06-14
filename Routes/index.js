@@ -1,14 +1,15 @@
-const tanksInfoRoutes = require('./tanks-info.js');
-const u52TanksRoutes = require('./u52Tanks.js');
-const u53TanksRoutes = require('./u53Tanks.js');
-const u90TanksRoutes = require('./u90Tanks.js');
-const allTanksRoutes = require('./all-tanks.js');
-const UsersRoutes = require('./users.js');
-const AuthRoutes = require('./auth.js');
+const tanksInfoRoutes = require('./tanks-info');
+
+const u52Routes = require('./u52');
+const u53TanksRoutes = require('./u53Tanks');
+const u90TanksRoutes = require('./u90Tanks');
+const allTanksRoutes = require('./all-tanks');
+const UsersRoutes = require('./users');
+const AuthRoutes = require('./auth');
 
 module.exports = {
   tanksInfoRoutes,
-  u52TanksRoutes,
+  u52Routes,
   u53TanksRoutes,
   u90TanksRoutes,
   allTanksRoutes,
