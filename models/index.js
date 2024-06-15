@@ -2,11 +2,7 @@ const User = require('./user');
 const HttpError = require('./http-error');
 const TanksInfo = require('./tanks-info');
 
-const DieselBlending = require('./blending/dieselBlending');
-const HFOBlending = require('./blending/HFOBlending');
-const LPGBlending = require('./blending/LPGBlending');
-const PGBlending = require('./blending/PGBlending');
-const RGBlending = require('./blending/RGBlending');
+const Blending = require('./blending/blending');
 const SolidSulphurProduction = require('./blending/solidSulphurProduction');
 
 const CrudeOil = require('./crude/crudeOil');
@@ -33,29 +29,17 @@ const SolidSulphurTransport = require('./transport/solidSulphurTransport');
 User.hasMany(TanksInfo, { foreignKey: 'userId' });
 TanksInfo.belongsTo(User, { foreignKey: 'userId' });
 
-User.hasMany(DieselBlending, { foreignKey: 'userId' });
-DieselBlending.belongsTo(User, { foreignKey: 'userId' });
+User.hasMany(Blending, { foreignKey: 'userId' });
+Blending.belongsTo(User, { foreignKey: 'userId' });
 
-User.hasMany(HFOBlending, { foreignKey: 'userId' });
-HFOBlending.belongsTo(User, { foreignKey: 'userId' });
-
-User.hasMany(LPGBlending, { foreignKey: 'userId' });
-LPGBlending.belongsTo(User, { foreignKey: 'userId' });
-
-User.hasMany(PGBlending, { foreignKey: 'userId' });
-PGBlending.belongsTo(User, { foreignKey: 'userId' });
-
-User.hasMany(RGBlending, { foreignKey: 'userId' });
-RGBlending.belongsTo(User, { foreignKey: 'userId' });
+User.hasMany(SolidSulphurProduction, { foreignKey: 'userId' });
+SolidSulphurProduction.belongsTo(User, { foreignKey: 'userId' });
 
 User.hasMany(CrudeOil, { foreignKey: 'userId' });
 CrudeOil.belongsTo(User, { foreignKey: 'userId' });
 
 User.hasMany(NaturalGas, { foreignKey: 'userId' });
 NaturalGas.belongsTo(User, { foreignKey: 'userId' });
-
-User.hasMany(SolidSulphurProduction, { foreignKey: 'userId' });
-SolidSulphurProduction.belongsTo(User, { foreignKey: 'userId' });
 
 User.hasMany(DieselPumping, { foreignKey: 'userId' });
 DieselPumping.belongsTo(User, { foreignKey: 'userId' });
@@ -103,11 +87,7 @@ module.exports = {
   User,
   HttpError,
   TanksInfo,
-  DieselBlending,
-  HFOBlending,
-  LPGBlending,
-  PGBlending,
-  RGBlending,
+  Blending,
   SolidSulphurProduction,
   CrudeOil,
   NaturalGas,

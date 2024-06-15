@@ -491,11 +491,11 @@ app.use(express.json());
 app.use('/api/auth', AuthRoutes);
 app.use(checkAuth);
 app.use('/api/u52', u52Routes);
-app.use('/api/u53', u53TanksRoutes);
-app.use('/api/u90', u90TanksRoutes);
-app.use('/api/all', allTanksRoutes);
-app.use('/api/tanks-info', tanksInfoRoutes);
-app.use('/api/users', UsersRoutes);
+// app.use('/api/u53', u53TanksRoutes);
+// app.use('/api/u90', u90TanksRoutes);
+// app.use('/api/all', allTanksRoutes);
+// app.use('/api/tanks-info', tanksInfoRoutes);
+// app.use('/api/users', UsersRoutes);
 
 // This medilware handle unsupported Routes
 app.use(unsupportedRoutes);

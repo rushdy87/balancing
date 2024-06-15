@@ -34,6 +34,13 @@ const isAuthorized = (user, requiredUnit) => {
   }
 };
 
+const checkAuthorization = (userData, requiredUnit, next) => {
+  if (!isAuthorized(userData, requiredUnit)) {
+    return next(new HttpError('Access Denied.', 403));
+  }
+};
+
 module.exports = {
   isAuthorized,
+  checkAuthorization,
 };
