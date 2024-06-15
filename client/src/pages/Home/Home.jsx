@@ -1,5 +1,11 @@
+import Modal from '../../components/Modal/Modal';
+
 const Home = () => {
-  return <div>Home</div>;
+  return (
+    <div>
+      <Modal />
+    </div>
+  );
 };
 
 export default Home;
