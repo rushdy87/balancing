@@ -43,8 +43,9 @@ export const updateAllTanksInfo = async (newTanksInfo) => {
 //      }
 // }
 export const addVolumeToTanks = async (unit, tanksdata) => {
+  // console.log(tanksdata);
   try {
-    const url = `http://localhost:3030/api/${unit}/tanks`;
+    const url = `http://localhost:3030/api/${unit}/tanks/`;
     const { data } = await axios.post(
       url,
       { ...tanksdata }
@@ -54,6 +55,24 @@ export const addVolumeToTanks = async (unit, tanksdata) => {
     );
     return data;
   } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const addBlending = async (blendingData) => {
+  try {
+    const url = 'http://localhost:3030/api/u52/blending/';
+    const { data } = await axios.post(
+      url,
+      { ...blendingData }
+      // {
+      //   headers: { authorization: `Bearer ${token}` },
+      // }
+    );
+    return data;
+  } catch (error) {
+    console.log(error);
     throw error;
   }
 };

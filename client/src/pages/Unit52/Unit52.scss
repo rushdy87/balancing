@@ -1,0 +1,35 @@
+@import '../../styles/variables.scss';
+
+.u52-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .u52_header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    h2 {
+      font-size: 2rem;
+    }
+
+    @include breakpoint(md) {
+      flex-direction: row;
+      gap: 20px;
+    }
+  }
+
+  .u52_tanks-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .u52_btn {
+      width: 200px;
+      align-self: center;
+    }
+  }
+}

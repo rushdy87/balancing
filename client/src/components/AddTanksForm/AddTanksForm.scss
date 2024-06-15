@@ -53,22 +53,5 @@
         }
       }
     }
-    .AddTanksForm-btn {
-      display: block;
-      width: 100px;
-      height: 40px;
-      background-color: $light;
-      color: $dark;
-      border: 1px solid $secondary;
-      border-radius: $borderRadius;
-      font-size: 1.4rem;
-      margin: 10px auto;
-
-      &:hover {
-        cursor: pointer;
-        background-color: $dark;
-        color: $light;
-      }
-    }
   }
 }

@@ -7,6 +7,6 @@ const u52TanksRoutes = require('./u52Tanks');
 const router = express.Router();
 
 router.use('/blending', blendingRoutes);
-// router.use('/tanks', u52TanksRoutes);
+router.use('/tanks', u52TanksRoutes);
 
 module.exports = router;
