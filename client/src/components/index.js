@@ -6,3 +6,4 @@ export { default as AddTanksForm } from './AddTanksForm/AddTanksForm';
 export { default as Blending } from './Blending/Blending';
 export { default as Datepicker } from './Datepicker/Datepicker';
 export { default as ReportView } from './ReportView/ReportView';
+export { default as ContentPreview } from './ContentPreview/ContentPreview';

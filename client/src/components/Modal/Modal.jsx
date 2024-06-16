@@ -3,14 +3,14 @@ import ModalOverlay from './ModalOverlay/ModalOverlay';
 
 import './Modal.scss';
 
-const Modal = (props) => {
+const Modal = ({ renderedContent, save, close }) => {
   return (
     <>
-      {true && <Backdrop onClick={() => console.log('Close')} />}
+      {true && <Backdrop onClick={close} />}
       <ModalOverlay
-        renderedContent='abcsdslkmdmwelqkmdqw;lemdekl;q'
-        save={() => console.log('Save')}
-        close={() => console.log('Close')}
+        renderedContent={renderedContent}
+        save={save}
+        close={close}
       />
     </>
   );

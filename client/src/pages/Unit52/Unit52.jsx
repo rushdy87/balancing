@@ -1,6 +1,13 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
-import { AddTanksForm, Datepicker, Button, Blending } from '../../components';
+import {
+  AddTanksForm,
+  Datepicker,
+  Button,
+  Blending,
+  Modal,
+  ContentPreview,
+} from '../../components';
 import { TanksInfoContext } from '../../context/TanksInfoContext';
 import { addBlending, addVolumeToTanks } from '../../utils/api';
 
@@ -23,6 +30,9 @@ const Unit52 = () => {
   );
 
   const [blendingQuantities, setBlendingQuantities] = useState({});
+
+  const [showPreview, setShowPreview] = useState(false);
+
   const { getTanksGroupedByProduct } = useContext(TanksInfoContext);
 
   const changeDate = (newDate) => {
@@ -31,19 +41,31 @@ const Unit52 = () => {
     );
   };
 
+  useEffect(() => {
+    if (showPreview) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [showPreview]);
+
   const tanksGroupe = [...getTanksGroupedByProduct('u52')];
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      await addVolumeToTanks('u52', { day, tanks });
-      await addBlending({ ...blendingQuantities, day });
-      setTanks({});
-      setBlendingQuantities({});
-    } catch (error) {
-      console.log(error);
-    }
+    console.log(tanks);
+    console.log(blendingQuantities);
+    setShowPreview(true);
+    // try {
+    //   await addVolumeToTanks('u52', { day, tanks });
+    //   await addBlending({ ...blendingQuantities, day });
+    //   setTanks({});
+    //   setBlendingQuantities({});
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
+
   return (
     <div className='u52-container'>
       <div className='u52_header'>
@@ -68,6 +90,22 @@ const Unit52 = () => {
           </Button>
         </div>
       </form>
+      {/* Modal */}
+      {showPreview && (
+        <Modal
+          renderedContent={
+            <ContentPreview
+              content={{
+                day,
+                unit: 'Unit 52',
+                subjects: { tanks, blendingQuantities },
+              }}
+            />
+          }
+          save={() => console.log('Save')}
+          close={() => setShowPreview(false)}
+        />
+      )}
     </div>
   );
 };
