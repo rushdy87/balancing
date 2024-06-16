@@ -4,7 +4,7 @@ const BlendingControllers = require('../../controllers/u52/blending');
 
 const router = express.Router();
 
-// /api/u52/....
+// /api/u52/blending/....
 
 // Blending
 router.get('/:day', BlendingControllers.getAllBlendingQuantitiesByDay);

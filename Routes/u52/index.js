@@ -1,12 +1,14 @@
 const express = require('express');
 
-const blendingRoutes = require('./blending');
 const u52TanksRoutes = require('./u52Tanks');
+const blendingRoutes = require('./blending');
+const crudeOilRoutes = require('./crudeOil');
 
 // /api/52/
 const router = express.Router();
 
-router.use('/blending', blendingRoutes);
 router.use('/tanks', u52TanksRoutes);
+router.use('/blending', blendingRoutes);
+router.use('/crude', crudeOilRoutes);
 
 module.exports = router;
