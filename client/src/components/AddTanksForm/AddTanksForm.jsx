@@ -1,6 +1,9 @@
+import NumberInput from '../NumberInput/NumberInput';
 import './AddTanksForm.scss';
 
 const AddTanksForm = ({ tanksGroup, setTanks }) => {
+  // Initialize the tanks state to { [tag]: 0 } on first render
+
   const handleValuesChange = (event) => {
     const tag = event.target.name;
     const value = parseInt(event.target.value, 10);
@@ -13,6 +16,19 @@ const AddTanksForm = ({ tanksGroup, setTanks }) => {
     });
   };
 
+  const handleKeyDown = (event) => {
+    switch (event.keyCode) {
+      case 38: // Up arrow
+      case 40: // Down arrow
+      case 37: // Left arrow
+      case 39: // Right arrow
+        event.preventDefault();
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <div className='AddTanksForm-container'>
       <div className='AddTanksForm-form'>
@@ -22,17 +38,22 @@ const AddTanksForm = ({ tanksGroup, setTanks }) => {
               <legend>
                 <span>{tank.product}</span>
               </legend>
-              {tank.tanks.map((tag) => (
-                <div className='AddTanksForm-inputfield' key={tag}>
-                  <input
-                    type='number'
-                    id={tag}
-                    name={tag}
-                    onChange={handleValuesChange}
-                  />
-                  <label htmlFor={tag}>{tag}</label>
-                </div>
-              ))}
+              {tank.tanks.map((item) => {
+                const tag = Object.keys(item)[0];
+                return (
+                  <div className='AddTanksForm-inputfield' key={tag}>
+                    <NumberInput
+                      type='number'
+                      id={tag}
+                      name={tag}
+                      defaultValue={0}
+                      onChange={handleValuesChange}
+                      onKeyDown={handleKeyDown}
+                    />
+                    <label htmlFor={tag}>{tag}</label>
+                  </div>
+                );
+              })}
             </fieldset>
           ))}
         </div>

@@ -1,3 +1,4 @@
+import NumberInput from '../NumberInput/NumberInput';
 import './Blending.scss';
 
 const Blending = ({ products, setBlendingQuantities, setIsFormValid }) => {
@@ -16,7 +17,7 @@ const Blending = ({ products, setBlendingQuantities, setIsFormValid }) => {
             <label htmlFor={prod.column}>
               {prod.name} (m<sup>3</sup>)
             </label>
-            <input
+            <NumberInput
               type='number'
               name={prod.column}
               id={prod.column}

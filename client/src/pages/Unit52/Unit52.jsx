@@ -1,15 +1,14 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 
+import { TanksInfoContext } from '../../context/TanksInfoContext';
 import {
   AddTanksForm,
-  Datepicker,
-  Button,
   Blending,
-  Modal,
+  Button,
   ContentPreview,
+  Datepicker,
+  Modal,
 } from '../../components';
-import { TanksInfoContext } from '../../context/TanksInfoContext';
-import { addBlending, addVolumeToTanks } from '../../utils/api';
 
 import './Unit52.scss';
 
@@ -22,39 +21,49 @@ const products = [
 ];
 
 const Unit52 = () => {
-  const [tanks, setTanks] = useState({});
+  const [showPreview, setShowPreview] = useState(false);
+  const { getTanksGroupedByProduct } = useContext(TanksInfoContext);
+
   const [day, setDay] = useState(
     `${new Date().getDate()}-${
       new Date().getMonth() + 1
     }-${new Date().getFullYear()}`
   );
-
-  const [blendingQuantities, setBlendingQuantities] = useState({});
-
-  const [showPreview, setShowPreview] = useState(false);
-
-  const { getTanksGroupedByProduct } = useContext(TanksInfoContext);
-
   const changeDate = (newDate) => {
     setDay(
       `${newDate.getDate()}-${newDate.getMonth() + 1}-${newDate.getFullYear()}`
     );
   };
+  const tanksGroup = useMemo(
+    () => getTanksGroupedByProduct('u52'),
+    [getTanksGroupedByProduct]
+  );
+
+  // Tanks
+  const [tanks, setTanks] = useState({});
 
   useEffect(() => {
-    if (showPreview) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-  }, [showPreview]);
+    let tanksItems = {};
+    tanksGroup.forEach((item) => {
+      for (const t of item.tanks) {
+        tanksItems = { ...tanksItems, ...t };
+      }
+    });
 
-  const tanksGroupe = [...getTanksGroupedByProduct('u52')];
+    setTanks(tanksItems);
+  }, [tanksGroup]);
+
+  // Blending
+  const [blendingQuantities, setBlendingQuantities] = useState({
+    lpg: 0,
+    pg: 0,
+    rg: 0,
+    diesel: 0,
+    hfo: 0,
+  });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(tanks);
-    console.log(blendingQuantities);
     setShowPreview(true);
     // try {
     //   await addVolumeToTanks('u52', { day, tanks });
@@ -72,17 +81,32 @@ const Unit52 = () => {
         <h2>Unit 52</h2>
         <Datepicker date={day} changeDate={changeDate} />
       </div>
-      <form className='u52_tanks-form' onSubmit={handleSubmit}>
+      <div className='hr' />
+      <form className='u52_form' onSubmit={handleSubmit}>
         <div className='u52_tanks'>
-          <h3>الخزين</h3>
-          <AddTanksForm tanksGroup={tanksGroupe} setTanks={setTanks} />
+          <h3 className='u52_subheading'>الخزين</h3>
+          <div>
+            {tanks && (
+              <AddTanksForm tanksGroup={tanksGroup} setTanks={setTanks} />
+            )}
+          </div>
         </div>
         <div className='u52_blending'>
-          <h3>مزج المنتجات</h3>
-          <Blending
-            products={products}
-            setBlendingQuantities={setBlendingQuantities}
-          />
+          <h3 className='u52_subheading'>مزج المنتجات</h3>
+          <div>
+            <Blending
+              products={products}
+              setBlendingQuantities={setBlendingQuantities}
+            />
+          </div>
+        </div>
+        <div className='u52_crude'>
+          <h3 className='u52_subheading'>النفط الخام</h3>
+          <div></div>
+        </div>
+        <div className='u52_gas'>
+          <h3 className='u52_subheading'>الغاز الطبيعي</h3>
+          <div></div>
         </div>
         <div className='u52_btn'>
           <Button type='submit' className='AddTanksForm-btn'>

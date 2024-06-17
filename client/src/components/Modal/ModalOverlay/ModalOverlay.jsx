@@ -1,6 +1,7 @@
 import { createPortal } from 'react-dom';
 
 import './ModalOverlay.scss';
+import Button from '../../Button/Button';
 
 const ModalOverlay = ({ renderedContent, save, close }) => {
   const content = (
@@ -8,8 +9,8 @@ const ModalOverlay = ({ renderedContent, save, close }) => {
       <div className='ModalOverlay-header'></div>
       <div className='ModalOverlay-body'>{renderedContent}</div>
       <div className='ModalOverlay-footer'>
-        <button onClick={close}>رجوع</button>
-        <button onClick={save}>حفظ</button>
+        <Button onClick={close}>رجوع</Button>
+        <Button onClick={save}>حفظ</Button>
       </div>
     </div>
   );
