@@ -16,7 +16,7 @@ const SolidSulphurProduction = sequelize.define('SolidSulphurProduction', {
   isConfirmed: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
-    defaultValue: true,
+    defaultValue: false,
   },
   notes: {
     type: Sequelize.JSON,

@@ -18,7 +18,7 @@ const PGPumping = sequelize.define('PGPumping', {
   isConfirmed: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
-    defaultValue: true,
+    defaultValue: false,
   },
   notes: {
     type: Sequelize.JSON,

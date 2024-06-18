@@ -22,7 +22,7 @@ const PavingAsphaltTransport = sequelize.define('PavingAsphaltTransport', {
   },
   notes: {
     type: Sequelize.JSON,
-    allowNull: true,
+    allowNull: false,
   },
   userId: {
     // Adding the foreign key

@@ -18,7 +18,7 @@ const RGPumping = sequelize.define('RGPumping', {
   isConfirmed: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
-    defaultValue: true,
+    defaultValue: false,
   },
   notes: {
     type: Sequelize.JSON,

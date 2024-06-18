@@ -24,7 +24,7 @@ const Unit90Tank = sequelize.define('Unit90Tank', {
   isConfirmed: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
-    defaultValue: true,
+    defaultValue: false,
   },
   notes: {
     type: Sequelize.JSON,

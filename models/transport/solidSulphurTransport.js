@@ -22,7 +22,7 @@ const SolidSulphurTransport = sequelize.define('SolidSulphurTransport', {
   },
   notes: {
     type: Sequelize.JSON,
-    allowNull: true,
+    allowNull: false,
   },
   userId: {
     // Adding the foreign key

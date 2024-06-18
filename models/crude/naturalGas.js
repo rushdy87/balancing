@@ -24,7 +24,7 @@ const NaturalGas = sequelize.define('NaturalGas', {
   isConfirmed: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
-    defaultValue: true,
+    defaultValue: false,
   },
 
   notes: {

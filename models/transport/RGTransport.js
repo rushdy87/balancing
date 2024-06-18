@@ -22,7 +22,7 @@ const RGTransport = sequelize.define('RGTransport', {
   },
   notes: {
     type: Sequelize.JSON,
-    allowNull: true,
+    allowNull: false,
   },
   userId: {
     // Adding the foreign key
