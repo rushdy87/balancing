@@ -9,6 +9,7 @@ import {
   CrudeOil,
   Datepicker,
   Modal,
+  NaturalGas,
 } from '../../components';
 
 import './Unit52.scss';
@@ -63,6 +64,12 @@ const Unit52 = () => {
     sending: 0,
   });
 
+  // Natural Gas
+  const [naturalGas, setNaturalGas] = useState({
+    receiving_m3: 0,
+    receiving_mscf: 0,
+  });
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setShowPreview(true);
@@ -79,7 +86,7 @@ const Unit52 = () => {
   return (
     <div className='u52-container'>
       <div className='u52_header'>
-        <h2>Unit 52</h2>
+        <h1>Unit 52</h1>
         <Datepicker date={day} changeDate={changeDate} />
       </div>
       <div className='hr' />
@@ -108,7 +115,9 @@ const Unit52 = () => {
           </div>
           <div className='u52_gas'>
             <h3 className='u52_subheading'>الغاز الطبيعي</h3>
-            <div></div>
+            <div>
+              <NaturalGas setNaturalGas={setNaturalGas} />
+            </div>
           </div>
         </div>
         <div className='u52_btn'>
@@ -125,7 +134,7 @@ const Unit52 = () => {
               content={{
                 day,
                 unit: 'Unit 52',
-                subjects: { tanks, blendingQuantities, crudeOil },
+                subjects: { tanks, blendingQuantities, crudeOil, naturalGas },
               }}
             />
           }

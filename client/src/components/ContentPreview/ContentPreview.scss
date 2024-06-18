@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 90%;
+  width: 100%;
   margin: 0;
 
   .ContentPreview_header {
@@ -12,30 +12,35 @@
     align-items: center;
     justify-content: center;
     gap: 20px;
-    // border-bottom: 2px solid #555;
     margin-bottom: 10px;
   }
 
   .ContentPreview_subjects {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+
     .ContentPreview_subject {
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      gap: 40px;
       border: 1px solid #000;
       margin-bottom: 10px;
+      width: 100%;
 
       h3 {
-        width: 110px;
         text-align: center;
         margin: 0;
         padding: 0;
+        width: 40%;
       }
 
       .ContentPreview_subject_volumes {
         border-right: 1px solid #555;
-        width: 130px;
+        width: 60%;
 
         .ContentPreview_subject_item {
           display: flex;
