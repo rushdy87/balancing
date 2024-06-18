@@ -18,11 +18,11 @@ const RGTransport = sequelize.define('RGTransport', {
   isConfirmed: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
-    defaultValue: true,
+    defaultValue: false,
   },
   notes: {
     type: Sequelize.JSON,
-    allowNull: false,
+    allowNull: true,
   },
   userId: {
     // Adding the foreign key

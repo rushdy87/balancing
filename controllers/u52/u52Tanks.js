@@ -7,6 +7,7 @@ const {
   findFactorByTag,
 } = require('../../utils');
 const { isAuthorized } = require('../../utils/authorization');
+const { confireTank } = require('../../utils/tanks');
 
 // Utility function to check authorization
 const checkAuthorization = (userData, requiredUnit, next) => {
@@ -253,6 +254,26 @@ exports.updateOneTankVolume = async (req, res, next) => {
     handleError(
       next,
       'Something went wrong, could not update tank volumes right now.'
+    );
+  }
+};
+
+exports.confimTankVolume = async (req, res, next) => {
+  const { tag_number, day } = req.body;
+
+  const formattedDate = moment(day, 'DD-MM-YYYY').toDate();
+  const { userData } = req;
+
+  checkAuthorization(userData, 'u52', next);
+
+  try {
+    await confireTank(Unit52Tank, tag_number, formattedDate);
+
+    res.status(200).json({ message: 'The tank volume has been confirmed.' });
+  } catch (error) {
+    handleError(
+      next,
+      'Something went wrong, could not confirme tank volumes right now.'
     );
   }
 };

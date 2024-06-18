@@ -1,15 +1,13 @@
 const { Op } = require('sequelize');
 const moment = require('moment');
-const { Unit53Tank } = require('../models');
-const { findBottomByTag, handleError, findFactorByTag } = require('../utils');
-const { isAuthorized } = require('../utils/authorization');
-
-// Utility function to check authorization
-const checkAuthorization = (userData, requiredUnit, next) => {
-  if (!isAuthorized(userData, requiredUnit)) {
-    return handleError(next, 'Access Denied.', 403);
-  }
-};
+const { Unit53Tank } = require('../../models');
+const {
+  findBottomByTag,
+  handleError,
+  findFactorByTag,
+} = require('../../utils');
+const { checkAuthorization } = require('../../utils/authorization');
+const { findTanksByDate, confireTank } = require('../../utils/tanks');
 
 // Controller to get all tanks by day
 exports.getAllTanksByDay = async (req, res, next) => {
@@ -20,16 +18,18 @@ exports.getAllTanksByDay = async (req, res, next) => {
   checkAuthorization(userData, 'u53', next);
 
   try {
-    const tanks = await Unit53Tank.findAll({
-      where: { day: formattedDate },
-      attributes: ['id', 'tag_number', 'pumpable'],
-    });
+    // const tanks = await Unit53Tank.findAll({
+    //   where: { day: formattedDate },
+    //   attributes: ['id', 'tag_number', 'pumpable'],
+    // });
+    const tanks = await findTanksByDate(Unit53Tank, formattedDate);
 
     if (!tanks || tanks.length === 0) {
       return handleError(next, 'Could not find any tanks.', 404);
     }
     res.status(200).json({ tanks });
   } catch (error) {
+    console.log(error);
     handleError(next, `Error fetching tanks for day: ${day} from Unit 53.`);
   }
 };
@@ -124,6 +124,11 @@ exports.addVolumeToTanks = async (req, res, next) => {
   checkAuthorization(userData, 'u53', next);
 
   try {
+    const existingTanks = await findTanksByDate(Unit53Tank, formattedDate);
+    if (existingTanks.length > 0) {
+      return handleError(next, 'in this date the tanks is already added.', 400);
+    }
+
     const createPromises = Object.keys(tanks).map(async (tag_number) => {
       const bottom = await findBottomByTag(tag_number);
       const factor = await findFactorByTag(tag_number);
@@ -151,6 +156,7 @@ exports.addVolumeToTanks = async (req, res, next) => {
       .status(201)
       .json({ message: 'All tanks pumpable volumes have been added.' });
   } catch (error) {
+    console.log(error);
     handleError(
       next,
       'Something went wrong, could not add tank volumes right now.'
@@ -246,6 +252,25 @@ exports.updateOneTankVolume = async (req, res, next) => {
     handleError(
       next,
       'Something went wrong, could not update tank volumes right now.'
+    );
+  }
+};
+exports.confimTankVolume = async (req, res, next) => {
+  const { tag_number, day } = req.body;
+
+  const formattedDate = moment(day, 'DD-MM-YYYY').toDate();
+  const { userData } = req;
+
+  checkAuthorization(userData, 'u53', next);
+
+  try {
+    await confireTank(Unit53Tank, tag_number, formattedDate);
+
+    res.status(200).json({ message: 'The tank volume has been confirmed.' });
+  } catch (error) {
+    handleError(
+      next,
+      'Something went wrong, could not confirme tank volumes right now.'
     );
   }
 };

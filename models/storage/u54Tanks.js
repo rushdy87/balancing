@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../../utils/database');
 
-const Unit53Tank = sequelize.define('Unit53Tank', {
+const Unit54Tank = sequelize.define('Unit54Tank', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
@@ -43,4 +43,4 @@ const Unit53Tank = sequelize.define('Unit53Tank', {
   },
 });
 
-module.exports = Unit53Tank;
+module.exports = Unit54Tank;
