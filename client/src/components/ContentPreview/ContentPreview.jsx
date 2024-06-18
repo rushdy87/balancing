@@ -3,6 +3,7 @@ import './ContentPreview.scss';
 const ArSubjects = {
   tanks: 'الخزين',
   blendingQuantities: 'كميات الخلط',
+  crudeOil: 'النفط الخام',
 };
 
 const ContentPreview = ({ content }) => {

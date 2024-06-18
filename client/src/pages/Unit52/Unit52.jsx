@@ -6,19 +6,12 @@ import {
   Blending,
   Button,
   ContentPreview,
+  CrudeOil,
   Datepicker,
   Modal,
 } from '../../components';
 
 import './Unit52.scss';
-
-const products = [
-  { id: 1, column: 'lpg', name: 'الغاز السائل' },
-  { id: 2, column: 'pg', name: 'البنزين السوبر' },
-  { id: 3, column: 'rg', name: 'البنزين المحسن' },
-  { id: 4, column: 'diesel', name: 'زيت الغاز' },
-  { id: 5, column: 'hfo', name: 'زيت الوقود الثقيل' },
-];
 
 const Unit52 = () => {
   const [showPreview, setShowPreview] = useState(false);
@@ -62,6 +55,14 @@ const Unit52 = () => {
     hfo: 0,
   });
 
+  // Crude Oil
+  const [crudeOil, setCrudeOil] = useState({
+    reservoir_m3: 0,
+    reservoir_bbl: 0,
+    receiving: 0,
+    sending: 0,
+  });
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setShowPreview(true);
@@ -91,22 +92,24 @@ const Unit52 = () => {
             )}
           </div>
         </div>
-        <div className='u52_blending'>
-          <h3 className='u52_subheading'>مزج المنتجات</h3>
-          <div>
-            <Blending
-              products={products}
-              setBlendingQuantities={setBlendingQuantities}
-            />
+        <div className='blending_and_crude'>
+          <div className='u52_blending'>
+            <h3 className='u52_subheading'>مزج المنتجات</h3>
+            <div>
+              <Blending setBlendingQuantities={setBlendingQuantities} />
+            </div>
           </div>
-        </div>
-        <div className='u52_crude'>
-          <h3 className='u52_subheading'>النفط الخام</h3>
-          <div></div>
-        </div>
-        <div className='u52_gas'>
-          <h3 className='u52_subheading'>الغاز الطبيعي</h3>
-          <div></div>
+
+          <div className='u52_crudeOil'>
+            <h3 className='u52_subheading'>النفط الخام</h3>
+            <div>
+              <CrudeOil setCrudeOil={setCrudeOil} />
+            </div>
+          </div>
+          <div className='u52_gas'>
+            <h3 className='u52_subheading'>الغاز الطبيعي</h3>
+            <div></div>
+          </div>
         </div>
         <div className='u52_btn'>
           <Button type='submit' className='AddTanksForm-btn'>
@@ -122,7 +125,7 @@ const Unit52 = () => {
               content={{
                 day,
                 unit: 'Unit 52',
-                subjects: { tanks, blendingQuantities },
+                subjects: { tanks, blendingQuantities, crudeOil },
               }}
             />
           }
