@@ -49,6 +49,7 @@ exports.getSolidSulphurStoreBetweenTwoDates = async (req, res, next) => {
     const sulphurStore = await Unit54Storage.findAll({
       where: { day: { [Op.between]: [startDate, endDate] } },
       attributes: ['day', 'working_quantity', 'actual_quantity', 'isConfirmed'],
+      order: [['day', 'ASC']],
     });
 
     if (!sulphurStore || sulphurStore.length === 0) {

@@ -50,6 +50,7 @@ exports.getSolidSulphurTransportBetweenTwoDates = async (req, res, next) => {
     const solidSulphur = await SolidSulphurTransport.findAll({
       where: { day: { [Op.between]: [startDate, endDate] } },
       attributes: ['day', 'quantity', 'tankers', 'isConfirmed'],
+      order: [['day', 'ASC']],
     });
 
     if (!solidSulphur || solidSulphur.length === 0) {
