@@ -15,7 +15,7 @@ const RGPumping = require('./pumping/RGPumping');
 
 const Unit52Tank = require('./storage/u52Tanks');
 const Unit53Tank = require('./storage/u53Tanks');
-const Unit54Tank = require('./storage/u54Tanks');
+const Unit54Storage = require('./storage/unit54Storage');
 const Unit90Tank = require('./storage/u90Tanks');
 
 const HFOTransport = require('./transport/HFOTransport');
@@ -59,8 +59,8 @@ Unit52Tank.belongsTo(User, { foreignKey: 'userId' });
 User.hasMany(Unit53Tank, { foreignKey: 'userId' });
 Unit53Tank.belongsTo(User, { foreignKey: 'userId' });
 
-User.hasMany(Unit54Tank, { foreignKey: 'userId' });
-Unit54Tank.belongsTo(User, { foreignKey: 'userId' });
+User.hasMany(Unit54Storage, { foreignKey: 'userId' });
+Unit54Storage.belongsTo(User, { foreignKey: 'userId' });
 
 User.hasMany(Unit90Tank, { foreignKey: 'userId' });
 Unit90Tank.belongsTo(User, { foreignKey: 'userId' });
@@ -97,7 +97,7 @@ module.exports = {
   RGPumping,
   Unit52Tank,
   Unit53Tank,
-  Unit54Tank,
+  Unit54Storage,
   Unit90Tank,
   HFOTransport,
   LPGTransport,
