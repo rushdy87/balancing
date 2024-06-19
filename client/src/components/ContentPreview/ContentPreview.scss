@@ -39,7 +39,6 @@
       }
 
       .ContentPreview_subject_volumes {
-        border-right: 1px solid #555;
         width: 60%;
 
         .ContentPreview_subject_item {
@@ -47,7 +46,7 @@
           flex-direction: row;
           align-items: center;
           justify-content: space-between;
-          margin: 2px 0;
+          margin: 2px;
           padding: 1px 2px;
           border: 1px solid #555;
         }

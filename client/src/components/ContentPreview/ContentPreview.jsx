@@ -6,6 +6,15 @@ const ArSubjects = {
   crudeOil: 'النفط الخام',
   naturalGas: 'الغاز المستلم الطبيعي',
   transport: 'التحميل',
+  solidSulphurStorge: 'خزين الكبريت الصلب',
+  solidSulphurProduction: 'الكبريت الصلب المُنتج',
+  solidSulphurTransport: 'تحميل الكيريت الصلب',
+};
+
+const ArWords = {
+  actual_quantity: 'الكمية',
+  quantity: 'الكمية',
+  tankers: 'الصهاريج',
 };
 
 const ContentPreview = ({ content }) => {
@@ -29,7 +38,7 @@ const ContentPreview = ({ content }) => {
                         content.subjects[subject][key] === 0 ? 'red_bg' : ''
                       }`}
                     >
-                      <span>{key}</span>
+                      <span>{ArWords[key] || key}</span>
                       <span>{content.subjects[subject][key]}</span>
                     </div>
                   );
