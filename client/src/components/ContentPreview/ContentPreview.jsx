@@ -5,6 +5,7 @@ const ArSubjects = {
   blendingQuantities: 'كميات الخلط',
   crudeOil: 'النفط الخام',
   naturalGas: 'الغاز المستلم الطبيعي',
+  transport: 'التحميل',
 };
 
 const ContentPreview = ({ content }) => {
