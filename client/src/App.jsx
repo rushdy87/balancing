@@ -15,6 +15,7 @@ import {
   Unit90,
   Users,
   Reports,
+  Unit54,
 } from './pages';
 import { TanksInfoProvider } from './context/TanksInfoContext';
 import { Navbar } from './components';
@@ -32,6 +33,7 @@ function App() {
 
         <Route path='/u52' element={<Unit52 />} />
         <Route path='/u53' element={<Unit53 />} />
+        <Route path='/u54' element={<Unit54 />} />
         <Route path='/u90' element={<Unit90 />} />
 
         <Route path='/reports' element={<Reports />} />

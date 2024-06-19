@@ -45,6 +45,9 @@ const Navbar = () => {
             <Link to='/u53'>الوحدة 53</Link>
           </li>
           <li>
+            <Link to='/u54'>الوحدة 54</Link>
+          </li>
+          <li>
             <Link to='/u90'>الوحدة 90</Link>
           </li>
           <li>
