@@ -7,6 +7,7 @@ const {
   handleError,
 } = require('../../utils');
 const { isAuthorized } = require('../../utils/authorization');
+const { confireTank } = require('../../utils/tanks');
 
 // Utility function to check authorization
 const checkAuthorization = (userData, requiredUnit, next) => {
@@ -239,19 +240,9 @@ exports.confirmeTank = async (req, res, next) => {
   checkAuthorization(userData, 'u53', next);
 
   try {
-    const existingTank = await Unit90Tank.findOne({
-      where: { day: formattedDate, tag_number },
-    });
+    await confireTank(Unit90Tank, tag_number, formattedDate);
 
-    if (!existingTank) {
-      return handleError(next, 'Could not find any tank for this day.', 400);
-    }
-
-    existingTank.isConfirmed = true;
-
-    await existingTank.save();
-
-    res.status(201).json({
+    res.status(200).json({
       message: `The tank (${tag_number}) have been successfully confirmed.`,
     });
   } catch (error) {
