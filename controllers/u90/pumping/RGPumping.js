@@ -1,5 +1,5 @@
 const moment = require('moment');
-const { PGPumping } = require('../../../models');
+const { RGPumping } = require('../../../models');
 const { checkAuthorization } = require('../../../utils/authorization');
 const {
   findPumping,
@@ -17,16 +17,16 @@ exports.getPumpingByDay = async (req, res, next) => {
   checkAuthorization(userData, 'u90', next);
 
   try {
-    const pumping = await findPumping(PGPumping, formattedDate);
+    const pumping = await findPumping(RGPumping, formattedDate);
 
     if (!pumping) {
-      return handleError(next, 'There is no PG pumping on this date.');
+      return handleError(next, 'There is no RG pumping on this date.');
     }
     res.status(200).json(pumping);
   } catch (error) {
     return handleError(
       next,
-      `Error fetching PG pumping on this date. Error: ${error.message}`
+      `Error fetching RG pumping on this date. Error: ${error.message}`
     );
   }
 };
@@ -44,16 +44,16 @@ exports.getPumpingBetweenTwoDates = async (req, res, next) => {
   checkAuthorization(userData, 'u90', next);
 
   try {
-    const pumping = await findPumpingInDateRange(PGPumping, startDate, endDate);
+    const pumping = await findPumpingInDateRange(RGPumping, startDate, endDate);
 
     if (!pumping || pumping.length === 0) {
-      return handleError(next, 'There is no PG pumping in this date range.');
+      return handleError(next, 'There is no RG pumping in this date range.');
     }
     res.status(200).json(pumping);
   } catch (error) {
     return handleError(
       next,
-      `Error fetching PG pumping in this date range. Error: ${error.message}`
+      `Error fetching RG pumping in this date range. Error: ${error.message}`
     );
   }
 };
@@ -69,33 +69,33 @@ exports.addPumping = async (req, res, next) => {
   checkAuthorization(userData, 'u90', next);
 
   try {
-    const existingPumping = await findPumping(PGPumping, formattedDate);
+    const existingPumping = await findPumping(RGPumping, formattedDate);
 
     if (existingPumping) {
       return handleError(
         next,
-        'The PG pumping for this day already exists.',
+        'The RG pumping for this day already exists.',
         404
       );
     }
 
     const pumping = await createPumping(
-      PGPumping,
+      RGPumping,
       { ...data, day: formattedDate },
       userData.id
     );
 
     if (!pumping) {
-      return handleError(next, 'Could not add PG pumping at this time.', 500);
+      return handleError(next, 'Could not add RG pumping at this time.', 500);
     }
 
     res
       .status(201)
-      .json({ message: 'The PG pumping has been successfully added.' });
+      .json({ message: 'The RG pumping has been successfully added.' });
   } catch (error) {
     return handleError(
       next,
-      `Error adding PG pumping on this date. Error: ${error.message}`
+      `Error adding RG pumping on this date. Error: ${error.message}`
     );
   }
 };
@@ -111,10 +111,10 @@ exports.updatePumping = async (req, res, next) => {
   checkAuthorization(userData, 'u90', next);
 
   try {
-    const existingPumping = await findPumping(PGPumping, formattedDate);
+    const existingPumping = await findPumping(RGPumping, formattedDate);
 
     if (!existingPumping) {
-      return handleError(next, 'There is no PG pumping for this day.', 404);
+      return handleError(next, 'There is no RG pumping for this day.', 404);
     }
 
     for (const item in items) {
@@ -131,16 +131,16 @@ exports.updatePumping = async (req, res, next) => {
 
     res
       .status(200)
-      .json({ message: 'The PG pumping has been successfully updated.' });
+      .json({ message: 'The RG pumping has been successfully updated.' });
   } catch (error) {
     return handleError(
       next,
-      `Error updating PG pumping on this date. Error: ${error.message}`
+      `Error updating RG pumping on this date. Error: ${error.message}`
     );
   }
 };
 
-exports.confirmPGPumping = async (req, res, next) => {
+exports.confirmRGPumping = async (req, res, next) => {
   const { day } = req.body;
   if (!day) {
     return handleError(next, 'Missing required data: day.', 400);
@@ -151,17 +151,17 @@ exports.confirmPGPumping = async (req, res, next) => {
   checkAuthorization(userData, 'u90', next);
 
   try {
-    const isConfirmed = await confirmPumping(PGPumping, formattedDate, next);
+    const isConfirmed = await confirmPumping(RGPumping, formattedDate, next);
 
     if (isConfirmed) {
       return res
         .status(200)
-        .json({ message: 'PG pumping has been successfully confirmed.' });
+        .json({ message: 'RG pumping has been successfully confirmed.' });
     }
   } catch (error) {
     return handleError(
       next,
-      `Error confirming PG pumping on this date. Error: ${error.message}`
+      `Error confirming RG pumping on this date. Error: ${error.message}`
     );
   }
 };
