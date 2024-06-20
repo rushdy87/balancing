@@ -9,7 +9,7 @@ const KerosenePumping = sequelize.define('KerosenePumping', {
     primaryKey: true,
   },
 
-  day: { type: Sequelize.DATEONLY, allowNull: false },
+  day: { type: Sequelize.DATEONLY, allowNull: false, unique: true },
 
   toKarbala: { type: Sequelize.INTEGER, allowNull: false, defaultValue: 0 },
 
