@@ -4,7 +4,7 @@ const findTanksByDate = async (model, day) => {
   return await model.findAll({ where: { day } });
 };
 
-const confireTank = async (model, tag_number, day) => {
+const confiremTank = async (model, tag_number, day) => {
   const tank = await model.findOne({
     where: { tag_number, day },
   });
@@ -24,5 +24,5 @@ const confireTank = async (model, tag_number, day) => {
 
 module.exports = {
   findTanksByDate,
-  confireTank,
+  confiremTank,
 };

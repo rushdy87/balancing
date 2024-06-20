@@ -7,7 +7,7 @@ const {
   findFactorByTag,
 } = require('../../utils');
 const { isAuthorized } = require('../../utils/authorization');
-const { confireTank } = require('../../utils/tanks');
+const { confiremTank } = require('../../utils/tanks');
 
 // Utility function to check authorization
 const checkAuthorization = (userData, requiredUnit, next) => {
@@ -267,7 +267,7 @@ exports.confimTankVolume = async (req, res, next) => {
   checkAuthorization(userData, 'u52', next);
 
   try {
-    await confireTank(Unit52Tank, tag_number, formattedDate);
+    await confiremTank(Unit52Tank, tag_number, formattedDate);
 
     res.status(200).json({ message: 'The tank volume has been confirmed.' });
   } catch (error) {

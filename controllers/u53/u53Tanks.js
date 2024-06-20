@@ -7,7 +7,7 @@ const {
   findFactorByTag,
 } = require('../../utils');
 const { checkAuthorization } = require('../../utils/authorization');
-const { findTanksByDate, confireTank } = require('../../utils/tanks');
+const { findTanksByDate, confiremTank } = require('../../utils/tanks');
 
 // Controller to get all tanks by day
 exports.getAllTanksByDay = async (req, res, next) => {
@@ -264,7 +264,7 @@ exports.confimTankVolume = async (req, res, next) => {
   checkAuthorization(userData, 'u53', next);
 
   try {
-    await confireTank(Unit53Tank, tag_number, formattedDate);
+    await confiremTank(Unit53Tank, tag_number, formattedDate);
 
     res.status(200).json({ message: 'The tank volume has been confirmed.' });
   } catch (error) {
