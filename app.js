@@ -8,7 +8,7 @@ const {
   u52Routes,
   u53Routes,
   u54Routes,
-  u90TanksRoutes,
+  u90Routes,
   allTanksRoutes,
   UsersRoutes,
   AuthRoutes,
@@ -50,9 +50,7 @@ app.use(checkAuth);
 app.use('/api/u52', u52Routes);
 app.use('/api/u53', u53Routes);
 app.use('/api/u54', u54Routes);
-// app.use('/api/u53', u53TanksRoutes);
-// app.use('/api/u90', u90TanksRoutes);
-// app.use('/api/all', allTanksRoutes);
+app.use('/api/u90', u90Routes);
 app.use('/api/tanks-info', tanksInfoRoutes);
 // app.use('/api/users', UsersRoutes);
 
