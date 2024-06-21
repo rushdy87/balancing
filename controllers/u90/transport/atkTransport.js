@@ -99,7 +99,7 @@ exports.addATKTransport = async (req, res, next) => {
     }
 
     res
-      .status(200)
+      .status(201)
       .json({ message: 'The ATK transport has been successfully added.' });
   } catch (error) {
     return handleError(

@@ -1,8 +1,13 @@
-const { Op } = require('sequelize');
 const moment = require('moment');
 const { SolidSulphurTransport } = require('../../models');
 const { handleError } = require('../../utils');
 const { checkAuthorization } = require('../../utils/authorization');
+const {
+  findTransport,
+  findTransportInDateRange,
+  createTransport,
+  confirmTransport,
+} = require('../../utils/transport');
 
 exports.getSolidSulphurTransport = async (req, res, next) => {
   const { day } = req.params;
@@ -12,12 +17,9 @@ exports.getSolidSulphurTransport = async (req, res, next) => {
   checkAuthorization(userData, 'u53', next);
 
   try {
-    const solidSulphur = await SolidSulphurTransport.findOne({
-      where: { day: formattedDate },
-      attributes: ['day', 'quantity', 'tankers', 'isConfirmed'],
-    });
+    const transport = await findTransport(SolidSulphurTransport, formattedDate);
 
-    if (!solidSulphur) {
+    if (!transport) {
       return handleError(
         next,
         'Could not find any Solid Sulphur on this day.',
@@ -25,7 +27,7 @@ exports.getSolidSulphurTransport = async (req, res, next) => {
       );
     }
 
-    res.status(200).json(solidSulphur);
+    res.status(200).json(transport);
   } catch (error) {
     handleError(
       next,
@@ -47,13 +49,13 @@ exports.getSolidSulphurTransportBetweenTwoDates = async (req, res, next) => {
   checkAuthorization(userData, 'u53', next);
 
   try {
-    const solidSulphur = await SolidSulphurTransport.findAll({
-      where: { day: { [Op.between]: [startDate, endDate] } },
-      attributes: ['day', 'quantity', 'tankers', 'isConfirmed'],
-      order: [['day', 'ASC']],
-    });
+    const transport = await findTransportInDateRange(
+      SolidSulphurTransport,
+      startDate,
+      endDate
+    );
 
-    if (!solidSulphur || solidSulphur.length === 0) {
+    if (!transport || transport.length === 0) {
       return handleError(
         next,
         'Could not find any Solid Sulphur tramsport in this date range.',
@@ -61,7 +63,7 @@ exports.getSolidSulphurTransportBetweenTwoDates = async (req, res, next) => {
       );
     }
 
-    res.status(200).json(solidSulphur);
+    res.status(200).json(transport);
   } catch (error) {
     handleError(
       next,
@@ -71,17 +73,23 @@ exports.getSolidSulphurTransportBetweenTwoDates = async (req, res, next) => {
 };
 
 exports.addSolidSulphurTransport = async (req, res, next) => {
-  const { day, quantity, tankers } = req.body;
-  const formattedDate = moment(day, 'DD-MM-YYYY').toDate();
+  const data = req.body;
+  if (!data || !data.day) {
+    return handleError(next, 'Missing required data: day.', 400);
+  }
+
+  const formattedDate = moment(data.day, 'DD-MM-YYYY').toDate();
   const { userData } = req;
 
-  checkAuthorization(userData, 'u53', next);
+  checkAuthorization(userData, 'u54', next);
 
   try {
-    const existingSolidSulphur = await SolidSulphurTransport.findOne({
-      where: { day: formattedDate },
-    });
-    if (existingSolidSulphur) {
+    const existingTransport = await findTransport(
+      SolidSulphurTransport,
+      formattedDate
+    );
+
+    if (existingTransport) {
       return handleError(
         next,
         'The Solid Sulphur transport for this date already exists.',
@@ -89,14 +97,13 @@ exports.addSolidSulphurTransport = async (req, res, next) => {
       );
     }
 
-    const solidSulphur = await SolidSulphurTransport.create({
-      day: formattedDate,
-      quantity,
-      tankers,
-      userId: userData.id,
-    });
+    const transport = await createTransport(
+      SolidSulphurTransport,
+      { ...data, day: formattedDate },
+      userData.id
+    );
 
-    if (!solidSulphur) {
+    if (!transport) {
       return handleError(
         next,
         'Could not add Solid Sulphur at this time.',
@@ -123,29 +130,29 @@ exports.updateSolidSulphurTransport = async (req, res, next) => {
   checkAuthorization(userData, 'u53', next);
 
   try {
-    const existingSolidSulphur = await SolidSulphurTransport.findOne({
-      where: { day: formattedDate },
-    });
+    const existingTransport = await findTransport(
+      SolidSulphurTransport,
+      formattedDate
+    );
 
-    if (!existingSolidSulphur) {
+    if (!existingTransport) {
       return handleError(
         next,
         'There is no Solid Sulphur transport for this date.',
         404
       );
     }
-
     for (const item in items) {
       if (
         items.hasOwnProperty(item) &&
-        existingSolidSulphur[item] !== undefined &&
+        existingTransport[item] !== undefined &&
         item !== 'isConfirmed'
       ) {
-        existingSolidSulphur[item] = items[item];
+        existingTransport[item] = items[item];
       }
     }
 
-    await existingSolidSulphur.save();
+    await existingTransport.save();
 
     res.status(200).json({
       message: 'The Solid Sulphur have been successfully updated.',
@@ -174,21 +181,16 @@ exports.confirmeSolidSulphur = async (req, res, next) => {
       where: { day: formattedDate },
     });
 
-    if (!existingSolidSulphur) {
-      return handleError(
-        next,
-        'Could not find any Solid Sulphur in this day.',
-        404
-      );
+    const isConfirmed = await confirmTransport(
+      SolidSulphurTransport,
+      formattedDate,
+      next
+    );
+    if (isConfirmed) {
+      return res.status(200).json({
+        message: 'The Solid Sulphur have been successfully confirmed.',
+      });
     }
-
-    existingSolidSulphur.isConfirmed = true;
-
-    await existingSolidSulphur.save();
-
-    res.status(201).json({
-      message: 'The Solid Sulphur have been successfully confirmed.',
-    });
   } catch (error) {
     handleError(
       next,

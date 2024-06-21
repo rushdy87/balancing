@@ -1,8 +1,13 @@
-const { Op } = require('sequelize');
 const moment = require('moment');
 const { PavingAsphaltTransport } = require('../../models');
 const { handleError } = require('../../utils');
 const { checkAuthorization } = require('../../utils/authorization');
+const {
+  findTransport,
+  findTransportInDateRange,
+  createTransport,
+  confirmTransport,
+} = require('../../utils/transport');
 
 exports.getPavingAsphaltTransportbyDay = async (req, res, next) => {
   const { day } = req.params;
@@ -12,12 +17,12 @@ exports.getPavingAsphaltTransportbyDay = async (req, res, next) => {
   checkAuthorization(userData, 'u53', next);
 
   try {
-    const pAsphalt = await PavingAsphaltTransport.findOne({
-      where: { day: formattedDate },
-      attributes: ['day', 'quantity', 'tankers', 'isConfirmed'],
-    });
+    const transport = await findTransport(
+      PavingAsphaltTransport,
+      formattedDate
+    );
 
-    if (!pAsphalt) {
+    if (!transport) {
       return handleError(
         next,
         'Could not find any Paving Asphalt Transport for this day.',
@@ -25,7 +30,7 @@ exports.getPavingAsphaltTransportbyDay = async (req, res, next) => {
       );
     }
 
-    res.status(200).json(pAsphalt);
+    res.status(200).json(transport);
   } catch (error) {
     handleError(
       next,
@@ -47,19 +52,20 @@ exports.getPavingAsphaltTransportBetweenTwoDates = async (req, res, next) => {
   checkAuthorization(userData, 'u53', next);
 
   try {
-    pAsphalt = await PavingAsphaltTransport.findAll({
-      where: { day: { [Op.between]: [startDate, endDate] } },
-      attributes: ['day', 'quantity', 'tankers', 'isConfirmed'],
-    });
+    const transport = await findTransportInDateRange(
+      PavingAsphaltTransport,
+      startDate,
+      endDate
+    );
 
-    if (!pAsphalt || pAsphalt.length === 0) {
+    if (!transport || transport.length === 0) {
       return handleError(
         next,
         'There is no Paving Asphalt Transport in this date range.',
         404
       );
     }
-    res.status(200).json(pAsphalt);
+    res.status(200).json(transport);
   } catch (error) {
     handleError(
       next,
@@ -80,11 +86,12 @@ exports.addPavingAsphaltTransport = async (req, res, next) => {
   checkAuthorization(userData, 'u53', next);
 
   try {
-    const existingAsphalt = await PavingAsphaltTransport.findOne({
-      where: { day: formattedDate },
-    });
+    const existingTransport = await findTransport(
+      PavingAsphaltTransport,
+      formattedDate
+    );
 
-    if (existingAsphalt) {
+    if (existingTransport) {
       return handleError(
         next,
         'The Paving Asphalt Transport for this date already exists.',
@@ -92,13 +99,13 @@ exports.addPavingAsphaltTransport = async (req, res, next) => {
       );
     }
 
-    const pAsphalt = await PavingAsphaltTransport.create({
-      ...data,
-      day: formattedDate,
-      userId: userData.id,
-    });
+    const transport = await createTransport(
+      PavingAsphaltTransport,
+      { ...data, day: formattedDate },
+      userData.id
+    );
 
-    if (!pAsphalt) {
+    if (!transport) {
       return handleError(
         next,
         'Could not add Paving Asphalt Transport at this time.',
@@ -130,11 +137,12 @@ exports.updatePavingAsphaltTransport = async (req, res, next) => {
   checkAuthorization(userData, 'u53', next);
 
   try {
-    const existingAsphalt = await PavingAsphaltTransport.findOne({
-      where: { day: formattedDate },
-    });
+    const existingTransport = await findTransport(
+      PavingAsphaltTransport,
+      formattedDate
+    );
 
-    if (!existingAsphalt) {
+    if (!existingTransport) {
       return handleError(
         next,
         'There is no Paving Asphalt Transport for this date.',
@@ -145,14 +153,14 @@ exports.updatePavingAsphaltTransport = async (req, res, next) => {
     for (const item in items) {
       if (
         items.hasOwnProperty(item) &&
-        existingAsphalt[item] !== undefined &&
+        existingTransport[item] !== undefined &&
         item !== 'isConfirmed'
       ) {
-        existingAsphalt[item] = items[item];
+        existingTransport[item] = items[item];
       }
     }
 
-    await existingAsphalt.save();
+    await existingTransport.save();
 
     res.status(200).json({
       message:
@@ -179,26 +187,16 @@ exports.confirmePavingAsphaltTransport = async (req, res, next) => {
   checkAuthorization(userData, 'u53', next);
 
   try {
-    const existingAsphalt = await PavingAsphaltTransport.findOne({
-      where: { day: formattedDate },
-    });
-
-    if (!existingAsphalt) {
-      return handleError(
-        next,
-        'There is no Paving Asphalt Transport for this date.',
-        404
-      );
+    const isConfirmed = await confirmTransport(
+      PavingAsphaltTransport,
+      formattedDate,
+      next
+    );
+    if (isConfirmed) {
+      return res.status(200).json({
+        message: 'Paving Asphalt Transport has been successfully confirmed.',
+      });
     }
-
-    existingAsphalt.isConfirmed = true;
-
-    await existingAsphalt.save();
-
-    res.status(200).json({
-      message:
-        'The Paving Asphalt Transport quantities have been successfully confirmed.',
-    });
   } catch (error) {
     handleError(
       next,

@@ -7,6 +7,6 @@ const PavingAsphaltRoutes = require('./pavingAsphaltTransport');
 const router = express.Router();
 
 router.use('/tanks', u53TanksRoutes);
-router.use('/asphalt', PavingAsphaltRoutes);
+router.use('/transport/paving-asphalt', PavingAsphaltRoutes);
 
 module.exports = router;
