@@ -16,8 +16,8 @@ router.get(
 router.post('/', LPGTransportControllers.addLPGTransport);
 
 // {day, ..}
-router.patch('/');
+router.patch('/', LPGTransportControllers.updateLPGTransport);
 
-router.patch('/confirmation');
+router.patch('/confirmation', LPGTransportControllers.confirmLPGTransport);
 
 module.exports = router;

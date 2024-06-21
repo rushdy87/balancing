@@ -5,6 +5,7 @@ const {
   findTransport,
   findTransportInDateRange,
   createTransport,
+  confirmTransport,
 } = require('../../../utils/transport');
 const { handleError } = require('../../../utils');
 
@@ -73,7 +74,7 @@ exports.addLPGTransport = async (req, res, next) => {
   checkAuthorization(userData, 'u90', next);
 
   try {
-    const existingTransport = findTransport(LPGTransport, formattedDate);
+    const existingTransport = await findTransport(LPGTransport, formattedDate);
 
     if (existingTransport) {
       return handleError(
@@ -104,6 +105,75 @@ exports.addLPGTransport = async (req, res, next) => {
     return handleError(
       next,
       `Error adding LPG transport in this date. Error: ${error.message}`
+    );
+  }
+};
+
+exports.updateLPGTransport = async (req, res, next) => {
+  const { day, items } = req.body;
+  if (!day) {
+    return handleError(next, 'Missing required data: day.', 400);
+  }
+  const formattedDate = moment(day, 'DD-MM-YYYY').toDate();
+  const { userData } = req;
+
+  checkAuthorization(userData, 'u90', next);
+
+  try {
+    const existingTransport = await findTransport(LPGTransport, formattedDate);
+
+    if (!existingTransport) {
+      return handleError(next, 'There is no LPG Transport for this day.', 404);
+    }
+
+    for (const item in items) {
+      if (
+        items.hasOwnProperty(item) &&
+        existingTransport[item] !== undefined &&
+        item !== 'isConfirmed'
+      ) {
+        existingTransport[item] = items[item];
+      }
+    }
+
+    await existingTransport.save();
+
+    res
+      .status(200)
+      .json({ message: 'The LPG Transport has been successfully updated.' });
+  } catch (error) {
+    return handleError(
+      next,
+      `Error updating LPG Transport on this date. Error: ${error.message}`
+    );
+  }
+};
+
+exports.confirmLPGTransport = async (req, res, next) => {
+  const { day } = req.body;
+  if (!day) {
+    return handleError(next, 'Missing required data: day.', 400);
+  }
+  const formattedDate = moment(day, 'DD-MM-YYYY').toDate();
+  const { userData } = req;
+
+  checkAuthorization(userData, 'u90', next);
+
+  try {
+    const isConfirmed = await confirmTransport(
+      LPGTransport,
+      formattedDate,
+      next
+    );
+    if (isConfirmed) {
+      return res
+        .status(200)
+        .json({ message: 'LPG Transport has been successfully confirmed.' });
+    }
+  } catch (error) {
+    return handleError(
+      next,
+      `Error confirming LPG Transport on this date. Error: ${error.message}`
     );
   }
 };
