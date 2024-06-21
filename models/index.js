@@ -21,7 +21,7 @@ const Unit90Tank = require('./storage/u90Tanks');
 const HFOTransport = require('./transport/HFOTransport');
 const LPGTransport = require('./transport/LPGTransport');
 const PavingAsphaltTransport = require('./transport/pavingAsphaltTransport');
-const PGTransport = require('./transport/PGTransport');
+const ATKTransport = require('./transport/ATKTransport');
 const RGTransport = require('./transport/RGTransport');
 const SolidSulphurTransport = require('./transport/solidSulphurTransport');
 
@@ -74,8 +74,8 @@ LPGTransport.belongsTo(User, { foreignKey: 'userId' });
 User.hasMany(PavingAsphaltTransport, { foreignKey: 'userId' });
 PavingAsphaltTransport.belongsTo(User, { foreignKey: 'userId' });
 
-User.hasMany(PGTransport, { foreignKey: 'userId' });
-PGTransport.belongsTo(User, { foreignKey: 'userId' });
+User.hasMany(ATKTransport, { foreignKey: 'userId' });
+ATKTransport.belongsTo(User, { foreignKey: 'userId' });
 
 User.hasMany(RGTransport, { foreignKey: 'userId' });
 RGTransport.belongsTo(User, { foreignKey: 'userId' });
@@ -102,7 +102,7 @@ module.exports = {
   HFOTransport,
   LPGTransport,
   PavingAsphaltTransport,
-  PGTransport,
+  ATKTransport,
   RGTransport,
   SolidSulphurTransport,
 };

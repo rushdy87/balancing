@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../../utils/database');
 
-const PGTransport = sequelize.define('PGTransport', {
+const ATKTransport = sequelize.define('ATKTransport', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
@@ -35,4 +35,4 @@ const PGTransport = sequelize.define('PGTransport', {
   },
 });
 
-module.exports = PGTransport;
+module.exports = ATKTransport;
