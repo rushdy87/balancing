@@ -1,0 +1,46 @@
+@import '../../styles/variables.scss';
+.u90-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+
+  .u90_header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    @include breakpoint(md) {
+      flex-direction: row;
+      gap: 20px;
+    }
+  }
+
+  .u90_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 96%;
+
+    .u90_tanks {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      justify-content: center;
+    }
+  }
+
+  .u90_subheading {
+    background-color: rgba($color: $info, $alpha: 0.2);
+    font-size: 1.2rem;
+    border-radius: $borderRadius;
+    padding: 4px 6px;
+  }
+}

@@ -1,0 +1,34 @@
+@import '../../styles/variables.scss';
+.Pumping-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: rgba($color: $secondary, $alpha: 0.1);
+  width: 95%;
+  margin: 10px;
+  padding-bottom: 10px;
+  border: 1px solid $secondary;
+  border-radius: $borderRadius;
+
+  .Pumping-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    .Pumping-item {
+      width: 80px;
+      font-size: 1.2em;
+    }
+    .Pumping_inputFiled {
+      width: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}

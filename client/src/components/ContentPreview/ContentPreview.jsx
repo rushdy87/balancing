@@ -9,12 +9,18 @@ const ArSubjects = {
   solidSulphurStorge: 'خزين الكبريت الصلب',
   solidSulphurProduction: 'الكبريت الصلب المُنتج',
   solidSulphurTransport: 'تحميل الكيريت الصلب',
+  pg: 'بنزين سوبر',
+  rg: 'بنزين محسن',
+  diesel: 'النفط الابيض',
+  kerosene: 'زيت الغاز',
 };
 
 const ArWords = {
   actual_quantity: 'الكمية',
   quantity: 'الكمية',
   tankers: 'الصهاريج',
+  toKarbala: 'كربلاء',
+  toNajaf: 'النجف',
 };
 
 const ContentPreview = ({ content }) => {
