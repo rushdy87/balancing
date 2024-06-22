@@ -49,16 +49,30 @@ const Unit90 = () => {
 
   // pumping
   const [pumpingQuantities, setPumpingQuantities] = useState({
-    pg: { toKarbala: 0, toNajaf: 0 },
-    rg: { toKarbala: 0, toNajaf: 0 },
-    diesel: { toKarbala: 0, toNajaf: 0 },
-    kerosene: { toKarbala: 0, toNajaf: 0 },
+    pgPumping: { toKarbala: 0, toNajaf: 0 },
+    rgPumping: { toKarbala: 0, toNajaf: 0 },
+    dieselPumping: { toKarbala: 0, toNajaf: 0 },
+    kerosenePumping: { toKarbala: 0, toNajaf: 0 },
   });
 
   // Transport
   const [lpgTransport, setLPGTransport] = useState({ quantity: 0, tankers: 0 });
   const [rgTransport, setRGTransport] = useState({ quantity: 0, tankers: 0 });
   const [atkTransport, setATKTransport] = useState({ quantity: 0, tankers: 0 });
+
+  // HFO Transport
+  const [hfo1Transport, setHFO1Transport] = useState({
+    quantity: 0,
+    tankers: 0,
+  });
+  const [hfo2Transport, setHFO2Transport] = useState({
+    quantity: 0,
+    tankers: 0,
+  });
+  const [hfo3Transport, setHFO3Transport] = useState({
+    quantity: 0,
+    tankers: 0,
+  });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -96,10 +110,16 @@ const Unit90 = () => {
           <h3 className='u90_subheading'>تحميل المنتجات</h3>
           <div className='u90_transport_items'>
             <Transport item='lpg' setTransport={setLPGTransport} />
-
             <Transport item='rg' setTransport={setRGTransport} />
-
             <Transport item='atk' setTransport={setATKTransport} />
+          </div>
+        </div>
+        <div className='u90_transport'>
+          <h3 className='u90_subheading'>تحميل زيت الوقود الثقيل</h3>
+          <div className='u90_transport_items'>
+            <Transport item='1' setTransport={setHFO1Transport} />
+            <Transport item='2' setTransport={setHFO2Transport} />
+            <Transport item='3' setTransport={setHFO3Transport} />
           </div>
         </div>
         <div className='u90_btn'>
@@ -121,6 +141,9 @@ const Unit90 = () => {
                   lpgTransport,
                   rgTransport,
                   atkTransport,
+                  hfo1Transport,
+                  hfo2Transport,
+                  hfo3Transport,
                 },
               }}
             />

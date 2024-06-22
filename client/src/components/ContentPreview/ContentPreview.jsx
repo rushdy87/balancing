@@ -5,7 +5,6 @@ const ArSubjects = {
   blendingQuantities: 'كميات الخلط',
   crudeOil: 'النفط الخام',
   naturalGas: 'الغاز المستلم الطبيعي',
-  transport: 'التحميل',
   solidSulphurStorge: 'خزين الكبريت الصلب',
   solidSulphurProduction: 'الكبريت الصلب المُنتج',
   solidSulphurTransport: 'تحميل الكيريت الصلب',
@@ -13,6 +12,16 @@ const ArSubjects = {
   rg: 'بنزين محسن',
   diesel: 'النفط الابيض',
   kerosene: 'زيت الغاز',
+  pgPumping: 'ضخ البنزين السوبر',
+  rgPumping: 'ضخ البنزين المحسن',
+  dieselPumping: 'ضخ النفط الأبيض',
+  kerosenePumping: 'ضخ زيت الغاز',
+  lpgTransport: 'تحميل الغاز السائل',
+  rgTransport: 'تحميل البنزين المحسن',
+  atkTransport: 'تحميل الطائرات',
+  hfo1Transport: 'تحميل المعامل الحكومية',
+  hfo2Transport: 'تحميل المعامل الأهلية',
+  hfo3Transport: 'تحميل التصدير',
 };
 
 const ArWords = {

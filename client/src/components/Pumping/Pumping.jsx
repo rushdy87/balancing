@@ -1,6 +1,13 @@
 import NumberInput from '../NumberInput/NumberInput';
 import './Pumping.scss';
 
+const ArSubjects = {
+  pgPumping: 'ضخ البنزين السوبر',
+  rgPumping: 'ضخ البنزين المحسن',
+  dieselPumping: 'ضخ النفط الأبيض',
+  kerosenePumping: 'ضخ زيت الغاز',
+};
+
 const Pumping = ({ pumpingQuantities, setPumpingQuantities }) => {
   const handleChange = (item, to, value) => {
     setPumpingQuantities((prev) => ({
@@ -14,7 +21,7 @@ const Pumping = ({ pumpingQuantities, setPumpingQuantities }) => {
       {Object.keys(pumpingQuantities).map((item) => {
         return (
           <div className='Pumping-row' key={`${item}_pumping`}>
-            <span className='Pumping-item'>{item}</span>
+            <span className='Pumping-item'>{ArSubjects[item]}</span>
             <div className='Pumping_inputFiled'>
               <label htmlFor='toKarbala'>كربلاء</label>
               <NumberInput
