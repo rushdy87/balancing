@@ -8,6 +8,7 @@ import {
   Datepicker,
   Modal,
   Pumping,
+  Transport,
 } from '../../components';
 
 import './Unit90.scss';
@@ -53,6 +54,12 @@ const Unit90 = () => {
     diesel: { toKarbala: 0, toNajaf: 0 },
     kerosene: { toKarbala: 0, toNajaf: 0 },
   });
+
+  // Transport
+  const [lpgTransport, setLPGTransport] = useState({ quantity: 0, tankers: 0 });
+  const [rgTransport, setRGTransport] = useState({ quantity: 0, tankers: 0 });
+  const [atkTransport, setATKTransport] = useState({ quantity: 0, tankers: 0 });
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setShowPreview(true);
@@ -85,6 +92,16 @@ const Unit90 = () => {
             />
           </div>
         </div>
+        <div className='u90_transport'>
+          <h3 className='u90_subheading'>تحميل المنتجات</h3>
+          <div className='u90_transport_items'>
+            <Transport item='lpg' setTransport={setLPGTransport} />
+
+            <Transport item='rg' setTransport={setRGTransport} />
+
+            <Transport item='atk' setTransport={setATKTransport} />
+          </div>
+        </div>
         <div className='u90_btn'>
           <Button type='submit' className='AddTanksForm-btn'>
             معاينة
@@ -98,7 +115,13 @@ const Unit90 = () => {
               content={{
                 day,
                 unit: 'Unit 90',
-                subjects: { tanks, ...pumpingQuantities },
+                subjects: {
+                  tanks,
+                  ...pumpingQuantities,
+                  lpgTransport,
+                  rgTransport,
+                  atkTransport,
+                },
               }}
             />
           }

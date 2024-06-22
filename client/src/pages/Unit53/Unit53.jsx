@@ -73,7 +73,7 @@ const Unit53 = () => {
           <div className='u53_transport'>
             <h3 className='u53_subheading'>تحميل اسفلت الرصف</h3>
             <div>
-              <Transport setTransport={setTransport} />
+              <Transport item='PavingAsphalt' setTransport={setTransport} />
             </div>
           </div>
         </div>
