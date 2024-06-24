@@ -6,6 +6,7 @@ const u54Routes = require('./u54');
 const u90Routes = require('./u90');
 
 const allTanksRoutes = require('./all-tanks');
+const reportsRoutes = require('./reports');
 const UsersRoutes = require('./users');
 const AuthRoutes = require('./auth');
 
@@ -16,6 +17,7 @@ module.exports = {
   u54Routes,
   u90Routes,
   allTanksRoutes,
+  reportsRoutes,
   UsersRoutes,
   AuthRoutes,
 };
