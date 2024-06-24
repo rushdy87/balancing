@@ -12,7 +12,7 @@ router.get(
   HFOTransportControllers.getHFOTransportBetweenTwoDates
 );
 
-//{day, to, quantity, tankers"}
+// {day: "01-01-2024, quantites: [{to, quantity, tankers},{}, {}]}
 router.post('/', HFOTransportControllers.addHFOTransport);
 
 // {day, ..}

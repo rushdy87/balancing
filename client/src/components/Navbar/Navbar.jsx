@@ -54,6 +54,9 @@ const Navbar = () => {
             <Link to='/reports'>التقارير</Link>
           </li>
           <li>
+            <Link to='/tanks-info'>بيانات الخزانات</Link>
+          </li>
+          <li>
             <Link to='/users'>المستخدمين</Link>
           </li>
         </ul>

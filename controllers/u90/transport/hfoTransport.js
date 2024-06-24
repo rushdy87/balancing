@@ -62,21 +62,21 @@ exports.getHFOTransportBetweenTwoDates = async (req, res, next) => {
 };
 
 exports.addHFOTransport = async (req, res, next) => {
-  const data = req.body;
-  if (!data || !data.day) {
+  const { day, quantites } = req.body;
+  if (!day || !quantites) {
     return handleError(next, 'Missing required data: day.', 400);
   }
-  const formattedDate = moment(data.day, 'DD-MM-YYYY').toDate();
+  const formattedDate = moment(day, 'DD-MM-YYYY').toDate();
   const { userData } = req;
 
   checkAuthorization(userData, 'u90', next);
 
   try {
-    const existingTransport = await HFOTransport.findOne({
-      where: { day: formattedDate, to: data.to },
+    const existingTransport = await HFOTransport.findAll({
+      where: { day: formattedDate },
     });
 
-    if (existingTransport) {
+    if (existingTransport.length > 0) {
       return handleError(
         next,
         'The HFO transport for this day already exists.',
@@ -84,20 +84,15 @@ exports.addHFOTransport = async (req, res, next) => {
       );
     }
 
-    const transport = await HFOTransport.create({
-      ...data,
-      day: formattedDate,
-      userId: userData.id,
+    const createPromises = quantites.map(async (q) => {
+      return await HFOTransport.create({
+        ...q,
+        day: formattedDate,
+        userId: userData.id,
+      });
     });
 
-    if (!transport) {
-      return handleError(
-        next,
-        'Could not add HFO transport at this time.',
-        500
-      );
-    }
-
+    await Promise.all(createPromises);
     res
       .status(201)
       .json({ message: 'The HFO transport has been successfully added.' });

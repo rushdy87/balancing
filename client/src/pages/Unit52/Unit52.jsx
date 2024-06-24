@@ -73,14 +73,14 @@ const Unit52 = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setShowPreview(true);
-    // try {
-    //   await addVolumeToTanks('u52', { day, tanks });
-    //   await addBlending({ ...blendingQuantities, day });
-    //   setTanks({});
-    //   setBlendingQuantities({});
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    // add tanks // {day, tanks}
+    console.log({ day, tanks });
+    // add blending
+    console.log({ day, ...blendingQuantities });
+    // add crude
+    console.log({ day, ...crudeOil });
+    // add Gas
+    console.log({ day, ...naturalGas });
   };
 
   return (
