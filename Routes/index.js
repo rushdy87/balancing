@@ -4,9 +4,9 @@ const u52Routes = require('./u52');
 const u53Routes = require('./u53');
 const u54Routes = require('./u54');
 const u90Routes = require('./u90');
+const reportsRoutes = require('./reports');
 
 const allTanksRoutes = require('./all-tanks');
-const reportsRoutes = require('./reports');
 const UsersRoutes = require('./users');
 const AuthRoutes = require('./auth');
 

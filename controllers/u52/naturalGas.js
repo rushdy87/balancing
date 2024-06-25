@@ -47,7 +47,13 @@ exports.getAllNaturalGasQuantitiesBetweenTwoDates = async (req, res, next) => {
   try {
     const gasResults = await NaturalGas.findAll({
       where: { day: { [Op.between]: [startDate, endDate] } },
-      attributes: ['receiving_m3', 'receiving_mscf', 'isConfirmed'],
+      attributes: [
+        'id',
+        'day',
+        'receiving_m3',
+        'receiving_mscf',
+        'isConfirmed',
+      ],
     });
 
     if (!gasResults || gasResults.length === 0) {

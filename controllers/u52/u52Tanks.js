@@ -27,7 +27,7 @@ exports.getAllTanksByDay = async (req, res, next) => {
   try {
     const tanks = await Unit52Tank.findAll({
       where: { day: formattedDate },
-      attributes: ['id', 'tag_number', 'pumpable'],
+      attributes: ['id', 'day', 'tag_number', 'pumpable', 'isConfirmed'],
     });
 
     if (!tanks || tanks.length === 0) {
@@ -50,7 +50,7 @@ exports.getTankByDay = async (req, res, next) => {
   try {
     const tank = await Unit52Tank.findOne({
       where: { tag_number, day: formattedDate },
-      attributes: ['id', 'tag_number', 'pumpable'],
+      attributes: ['id', 'day', 'tag_number', 'pumpable', 'isConfirmed'],
     });
 
     if (!tank) {
@@ -60,7 +60,7 @@ exports.getTankByDay = async (req, res, next) => {
         404
       );
     }
-    res.status(200).json({ tank });
+    res.status(200).json(tank);
   } catch (error) {
     handleError(
       next,
@@ -81,13 +81,13 @@ exports.getAllTanksBetweenTwoDates = async (req, res, next) => {
   try {
     const tanks = await Unit52Tank.findAll({
       where: { day: { [Op.between]: [startDate, endDate] } },
-      attributes: ['id', 'tag_number', 'pumpable', 'day'],
+      attributes: ['id', 'day', 'tag_number', 'pumpable', 'isConfirmed'],
     });
 
     if (!tanks || tanks.length === 0) {
       return handleError(next, 'Could not find any tanks.', 404);
     }
-    res.status(200).json({ tanks });
+    res.status(200).json(tanks);
   } catch (error) {
     handleError(next, 'Error fetching tanks between dates from Unit 52.');
   }
@@ -105,13 +105,13 @@ exports.getTankBetweenTwoDates = async (req, res, next) => {
   try {
     const tanks = await Unit52Tank.findAll({
       where: { tag_number, day: { [Op.between]: [startDate, endDate] } },
-      attributes: ['id', 'tag_number', 'pumpable', 'day'],
+      attributes: ['id', 'day', 'tag_number', 'pumpable', 'isConfirmed'],
     });
 
     if (!tanks || tanks.length === 0) {
       return handleError(next, 'Could not find any tanks.', 404);
     }
-    res.status(200).json({ tanks });
+    res.status(200).json(tanks);
   } catch (error) {
     handleError(
       next,

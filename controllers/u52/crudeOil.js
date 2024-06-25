@@ -48,9 +48,11 @@ exports.getAllOilQuantitiesBetweenTwoDates = async (req, res, next) => {
     const oilResults = await CrudeOil.findAll({
       where: { day: { [Op.between]: [startDate, endDate] } },
       attributes: [
+        'id',
+        'day',
         'w_v_m3',
-        'w_v_bbl',
         'reservoir_m3',
+        'w_v_bbl',
         'reservoir_bbl',
         'receiving',
         'sending',
