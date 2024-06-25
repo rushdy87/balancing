@@ -1,21 +1,21 @@
 const express = require('express');
 
-const DieselumpingControllers = require('../../../controllers/u90/pumping/dieselPumping');
+const DieselPumpingControllers = require('../../../controllers/u90/pumping/dieselPumping');
 
 const router = express.Router();
 
 // /api/u90/pumping/pg
 
-router.get('/:day', DieselumpingControllers.getPumpingByDay);
+router.get('/:day', DieselPumpingControllers.getPumpingByDay);
 
-router.get('/:from/:to', DieselumpingControllers.getPumpingBetweenTwoDates);
+router.get('/:from/:to', DieselPumpingControllers.getPumpingBetweenTwoDates);
 
-router.post('/', DieselumpingControllers.addPumping);
+router.post('/', DieselPumpingControllers.addPumping);
 // {'day', 'toKarbala', 'toNajaf'}
 
-router.patch('/', DieselumpingControllers.updatePumping);
+router.patch('/', DieselPumpingControllers.updatePumping);
 // {day, items:{}}
 
-router.patch('/confirmation', DieselumpingControllers.confirmDieselPumping);
+router.patch('/confirmation', DieselPumpingControllers.confirmDieselPumping);
 
 module.exports = router;

@@ -18,7 +18,7 @@ const HFOTransport = sequelize.define('HFOTransport', {
   // 1. حكومي
   // 2. أهلي
   // 3. تصدير
-  to: {
+  side: {
     type: Sequelize.ENUM('1', '2', '3'),
     allowNull: false,
   },

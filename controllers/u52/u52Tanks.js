@@ -64,7 +64,7 @@ exports.getTankByDay = async (req, res, next) => {
   } catch (error) {
     handleError(
       next,
-      `Error fetching tank ${tag_number} at : ${day} from Unit 52.`
+      `Error fetching tank ${tag_number} at : ${day} from Unit 52. error: ${error.message}`
     );
   }
 };

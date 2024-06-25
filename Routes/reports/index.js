@@ -12,6 +12,17 @@ const Unit54StorageControllers = require('../../controllers/u54/unit54Storage');
 const Unit54ProductionControllers = require('../../controllers/u54/solidSulphurProduction');
 const Unit54TransportControllers = require('../../controllers/u54/solidSulphurTransport');
 
+// Unit 90
+const Unit90TanksControllers = require('../../controllers/u90/u90Tanks');
+const PGPumpingControllers = require('../../controllers/u90/pumping/PGPumping');
+const RGPumpingControllers = require('../../controllers/u90/pumping/RGPumping');
+const DieselPumpingControllers = require('../../controllers/u90/pumping/dieselPumping');
+const kerosenePumpingControllers = require('../../controllers/u90/pumping/kerosenePumping');
+const LPGTransportControllers = require('../../controllers/u90/transport/lpgTransport');
+const RGTransportControllers = require('../../controllers/u90/transport/rgTransport');
+const ATKTransportControllers = require('../../controllers/u90/transport/atkTransport');
+const HFOTransportControllers = require('../../controllers/u90/transport/hfoTransport');
+
 const router = express.Router();
 
 // Unit 52
@@ -126,28 +137,111 @@ router.get(
 
 // Unit 90
 // 1. get tank info for a specific day
-// 2. get all tanks for a specific day
-// 3. get tank info for a specific date range.
-// 4. get all tanks for a specific date range.
-// 5. get Diesel Pumping for a specific day
-// 6. get Diesel Pumping for a specific date range
-// 7. get Kerosene Pumping for a specific day
-// 8. get Kerosene Pumping for a specific date range
-// 9. get PG Pumping for a specific day
-// 10. get PG Pumping for a specific date range
-// 11. get RG Pumping for a specific day
-// 12. get RG Pumping for a specific date range
-// 13. get ATK Transport for a specific day
-// 14. get ATK Transport for a specific date range
-// 15. get PG Transport for a specific day
-// 16. get PG Transport for a specific date range
-// 17. get RG Transport for a specific day
-// 18. get RG Transport for a specific date range
-// 19. get HFO Transport for a specific day
-// 20. get HFO Transport for a specific date range
-// 21. get HFO Transport for a specific day and side a specific
-// 22. get HFO Transport for a specific date range and side a specific
+router.get('/u90/tank/:tag_number/:day', Unit90TanksControllers.getTankByDay);
 
+// 2. get all tanks for a specific day
+router.get('/u90/all/:day', Unit90TanksControllers.getAllTanksByDay);
+
+// 3. get tank info for a specific date range.
+router.get(
+  '/u90/tank/:tag_number/:from/:to',
+  Unit90TanksControllers.getTankBetweenTwoDates
+);
+// 4. get all tanks for a specific date range.
+router.get(
+  '/u90/all/:from/:to',
+  Unit90TanksControllers.getAllTanksBetweenTwoDates
+);
+
+// 5. get Diesel Pumping for a specific day
+router.get(
+  '/u90/pumping/diesel/:day',
+  DieselPumpingControllers.getPumpingByDay
+);
+
+// 6. get Diesel Pumping for a specific date range
+router.get(
+  '/u90/pumping/diesel/:from/:to',
+  DieselPumpingControllers.getPumpingBetweenTwoDates
+);
+
+// 7. get Kerosene Pumping for a specific day
+router.get(
+  '/u90/pumping/kerosene/:day',
+  kerosenePumpingControllers.getPumpingByDay
+);
+
+// 8. get Kerosene Pumping for a specific date range
+router.get(
+  '/u90/pumping/kerosene/:from/:to',
+  kerosenePumpingControllers.getPumpingBetweenTwoDates
+);
+
+// 9. get PG Pumping for a specific day
+router.get('/u90/pumping/pg/:day', PGPumpingControllers.getPumpingByDay);
+
+// 10. get PG Pumping for a specific date range
+router.get(
+  '/u90/pumping/pg/:from/:to',
+  PGPumpingControllers.getPumpingBetweenTwoDates
+);
+
+// 11. get RG Pumping for a specific day
+router.get('/u90/pumping/rg/:day', RGPumpingControllers.getPumpingByDay);
+
+// 12. get RG Pumping for a specific date range
+router.get(
+  '/u90/pumping/rg/:from/:to',
+  RGPumpingControllers.getPumpingBetweenTwoDates
+);
+
+// 13. get ATK Transport for a specific day
+router.get('/u90/transport/atk/:day', ATKTransportControllers.getATKTransport);
+// 14. get ATK Transport for a specific date range
+router.get(
+  '/u90/transport/atk/:from/:to',
+  ATKTransportControllers.getATKTransportBetweenTwoDates
+);
+// 15. get LPG Transport for a specific day
+router.get('/u90/transport/lpg/:day', LPGTransportControllers.getLPGTransport);
+
+// 16. get LPG Transport for a specific date range
+router.get(
+  '/u90/transport/lpg/:from/:to',
+  LPGTransportControllers.getLPGTransportBetweenTwoDates
+);
+
+// 17. get RG Transport for a specific day
+router.get('/u90/transport/rg/:day', RGTransportControllers.getRGTransport);
+
+// 18. get RG Transport for a specific date range
+router.get(
+  '/u90/transport/rg/:from/:to',
+  RGTransportControllers.getRGTransportBetweenTwoDates
+);
+
+// 19. get HFO Transport for a specific day
+router.get(
+  '/u90/transport/hfo/all/:day',
+  HFOTransportControllers.getHFOTransportByDay
+);
+
+// 20. get HFO Transport for a specific date range
+router.get(
+  '/u90/transport/hfo/all/:from/:to',
+  HFOTransportControllers.getHFOTransportBetweenTwoDates
+);
+
+// 21. get HFO Transport for a specific day and side a specific
+router.get(
+  '/u90/transport/hfo/:side/:day',
+  HFOTransportControllers.getHFOTransportBySide
+);
+// 22. get HFO Transport for a specific date range and side a specific
+router.get(
+  '/u90/transport/hfo/:side/:from/:to',
+  HFOTransportControllers.getHFOTransportBySideBetweenTwoDates
+);
 // REPORTS
 // 1. get a full report for a specific day.
 

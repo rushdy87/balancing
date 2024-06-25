@@ -16,6 +16,59 @@ const checkAuthorization = (userData, requiredUnit, next) => {
   }
 };
 
+exports.getTankByDay = async (req, res, next) => {
+  const { tag_number, day } = req.params;
+  const formattedDate = moment(day, 'DD-MM-YYYY').toDate();
+  const { userData } = req;
+
+  checkAuthorization(userData, 'u90', next);
+  checkAuthorization(userData, 'u90', next);
+
+  try {
+    const tank = await Unit90Tank.findOne({
+      where: { day: formattedDate, tag_number },
+      attributes: ['id', 'day', 'tag_number', 'pumpable', 'isConfirmed'],
+    });
+
+    if (!tank) {
+      return handleError(
+        next,
+        'Could not find a tank for the provided tag number and this date.',
+        404
+      );
+    }
+    res.status(200).json(tank);
+  } catch (error) {
+    handleError(
+      next,
+      `Error fetching tank ${tag_number} for day: ${day} from Unit 90. . error: ${error.message}`
+    );
+  }
+};
+
+exports.getTankBetweenTwoDates = async (req, res, next) => {
+  const { tag_number, from, to } = req.params;
+  const startDate = moment(from, 'DD-MM-YYYY').toDate();
+  const endDate = moment(to, 'DD-MM-YYYY').toDate();
+  const { userData } = req;
+
+  checkAuthorization(userData, 'u90', next);
+
+  try {
+    const tanks = await Unit90Tank.findAll({
+      where: { tag_number, day: { [Op.between]: [startDate, endDate] } },
+      attributes: ['id', 'day', 'tag_number', 'pumpable', 'isConfirmed'],
+    });
+
+    if (!tanks || tanks.length === 0) {
+      return handleError(next, 'Could not find any tanks.', 404);
+    }
+    res.status(200).json(tanks);
+  } catch (error) {
+    handleError(next, `Error fetching tanks for day: ${day} from Unit 90.`);
+  }
+};
+
 // Controller to get all tanks by day
 exports.getAllTanksByDay = async (req, res, next) => {
   const { day } = req.params;
@@ -33,7 +86,7 @@ exports.getAllTanksByDay = async (req, res, next) => {
     if (!tanks || tanks.length === 0) {
       return handleError(next, 'Could not find any tanks.', 404);
     }
-    res.status(200).json({ tanks });
+    res.status(200).json(tanks);
   } catch (error) {
     handleError(next, `Error fetching tanks for day: ${day} from Unit 90.`);
   }
@@ -57,7 +110,7 @@ exports.getAllTanksBetweenTwoDates = async (req, res, next) => {
     if (!tanks || tanks.length === 0) {
       return handleError(next, 'Could not find any tanks.', 404);
     }
-    res.status(200).json({ tanks });
+    res.status(200).json(tanks);
   } catch (error) {
     handleError(next, 'Error fetching tanks between dates from Unit 90.');
   }
