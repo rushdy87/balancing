@@ -1,9 +1,12 @@
 const express = require('express');
-
+// unit 52
 const Unit52TanksControllers = require('../../controllers/u52/u52Tanks');
 const Unit52CrudeControllers = require('../../controllers/u52/crudeOil');
 const Unit52GasControllers = require('../../controllers/u52/naturalGas');
 const Unit52BlendingControllers = require('../../controllers/u52/blending');
+// unit 53
+const Unit53TanksControllers = require('../../controllers/u53/u53Tanks');
+const PavingAsphaltTransportController = require('../../controllers/u53/pavingAsphaltTransport');
 
 const router = express.Router();
 
@@ -57,9 +60,34 @@ router.get(
 
 // Unit 53
 // 1. get tank info for a specific day
-// 2. get all tanks for a specific day
-// 3. get Asphalt transport for a specific day
-// 4. get  Asphalt transport  for a specific date range
+router.get('/u53/tank/:tag_number/:day', Unit53TanksControllers.getTankByDay);
+
+// 2. get tank info for a specific date range.
+router.get(
+  '/u53/tank/:tag_number/:from/:to',
+  Unit53TanksControllers.getTankBetweenTwoDates
+);
+
+// 3. get all tanks for a specific day
+router.get('/u53/all/:day', Unit53TanksControllers.getAllTanksByDay);
+
+// 4. get all tanks for a specific day
+router.get(
+  '/u53/all/:from/:to',
+  Unit53TanksControllers.getAllTanksBetweenTwoDates
+);
+
+// 5. get Asphalt transport for a specific day
+router.get(
+  '/u53/transport/:day',
+  PavingAsphaltTransportController.getPavingAsphaltTransportbyDay
+);
+
+// 6. get  Asphalt transport  for a specific date range
+router.get(
+  '/u53/transport/:from/:to',
+  PavingAsphaltTransportController.getPavingAsphaltTransportBetweenTwoDates
+);
 
 // Unit 54
 // 1. get Solid Sulphur Storeage for a specific day

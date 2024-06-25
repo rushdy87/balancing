@@ -1,7 +1,10 @@
 const { handleError } = require('./index');
 
 const findTanksByDate = async (model, day) => {
-  return await model.findAll({ where: { day } });
+  return await model.findAll({
+    where: { day },
+    attributes: ['id', 'day', 'tag_number', 'pumpable', 'isConfirmed'],
+  });
 };
 
 const confiremTank = async (model, tag_number, day) => {

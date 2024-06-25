@@ -45,7 +45,7 @@ exports.getTankByDay = async (req, res, next) => {
   try {
     const tank = await Unit53Tank.findOne({
       where: { tag_number, day: formattedDate },
-      attributes: ['id', 'tag_number', 'pumpable'],
+      attributes: ['id', 'day', 'tag_number', 'pumpable', 'isConfirmed'],
     });
 
     if (!tank) {
@@ -55,7 +55,7 @@ exports.getTankByDay = async (req, res, next) => {
         404
       );
     }
-    res.status(200).json({ tank });
+    res.status(200).json(tank);
   } catch (error) {
     handleError(
       next,
@@ -76,7 +76,7 @@ exports.getAllTanksBetweenTwoDates = async (req, res, next) => {
   try {
     const tanks = await Unit53Tank.findAll({
       where: { day: { [Op.between]: [startDate, endDate] } },
-      attributes: ['id', 'tag_number', 'pumpable', 'day'],
+      attributes: ['id', 'day', 'tag_number', 'pumpable', 'isConfirmed'],
     });
 
     if (!tanks || tanks.length === 0) {
@@ -100,13 +100,13 @@ exports.getTankBetweenTwoDates = async (req, res, next) => {
   try {
     const tanks = await Unit53Tank.findAll({
       where: { tag_number, day: { [Op.between]: [startDate, endDate] } },
-      attributes: ['id', 'tag_number', 'pumpable', 'day'],
+      attributes: ['id', 'day', 'tag_number', 'pumpable', 'isConfirmed'],
     });
 
     if (!tanks || tanks.length === 0) {
       return handleError(next, 'Could not find any tanks.', 404);
     }
-    res.status(200).json({ tanks });
+    res.status(200).json(tanks);
   } catch (error) {
     handleError(
       next,
