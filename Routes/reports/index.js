@@ -7,6 +7,10 @@ const Unit52BlendingControllers = require('../../controllers/u52/blending');
 // unit 53
 const Unit53TanksControllers = require('../../controllers/u53/u53Tanks');
 const PavingAsphaltTransportController = require('../../controllers/u53/pavingAsphaltTransport');
+// Unit 54
+const Unit54StorageControllers = require('../../controllers/u54/unit54Storage');
+const Unit54ProductionControllers = require('../../controllers/u54/solidSulphurProduction');
+const Unit54TransportControllers = require('../../controllers/u54/solidSulphurTransport');
 
 const router = express.Router();
 
@@ -91,11 +95,34 @@ router.get(
 
 // Unit 54
 // 1. get Solid Sulphur Storeage for a specific day
+router.get('/u54/store/:day', Unit54StorageControllers.getSolidSulphurStore);
+
 // 2. get Solid Sulphur Storeage for a specific date range
+router.get(
+  '/u54/store/:from/:to',
+  Unit54StorageControllers.getSolidSulphurStoreBetweenTwoDates
+);
+
 // 3. get Solid Sulphur Production for a specific day
+router.get(
+  '/u54/production/:day',
+  Unit54ProductionControllers.getSolidSulphurProduction
+);
 // 4. get Solid Sulphur Production for a specific date range
+router.get(
+  '/u54/production/:from/:to',
+  Unit54ProductionControllers.getSolidSulphurProductionBetweenTwoDates
+);
 // 5. get Solid Sulphur Transport for a specific day
+router.get(
+  '/u54/transport/:day',
+  Unit54TransportControllers.getSolidSulphurTransport
+);
 // 6. get Solid Sulphur Transport for a specific date range
+router.get(
+  '/u54/transport/:from/:to',
+  Unit54TransportControllers.getSolidSulphurTransportBetweenTwoDates
+);
 
 // Unit 90
 // 1. get tank info for a specific day

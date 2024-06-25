@@ -8,7 +8,7 @@ const solidSulphurProductionRoutes = require('./solidSulphurProduction');
 const router = express.Router();
 
 router.use('/store', u54StorageRoutes);
-router.use('/transport/solid-sulphur', solidSulphurTransportRoutes);
+router.use('/transport', solidSulphurTransportRoutes);
 router.use('/production', solidSulphurProductionRoutes);
 
 module.exports = router;
