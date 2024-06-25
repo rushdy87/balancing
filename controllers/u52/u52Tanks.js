@@ -5,9 +5,16 @@ const {
   findBottomByTag,
   handleError,
   findFactorByTag,
+  findProductByTag,
 } = require('../../utils');
 const { isAuthorized } = require('../../utils/authorization');
 const { confiremTank } = require('../../utils/tanks');
+const {
+  findAllTanksByDate,
+  findTankByDate,
+  findTankByDateRange,
+  findAllTanksByDateRange,
+} = require('../../utils/tank');
 
 // Utility function to check authorization
 const checkAuthorization = (userData, requiredUnit, next) => {
@@ -25,17 +32,17 @@ exports.getAllTanksByDay = async (req, res, next) => {
   checkAuthorization(userData, 'u52', next);
 
   try {
-    const tanks = await Unit52Tank.findAll({
-      where: { day: formattedDate },
-      attributes: ['id', 'day', 'tag_number', 'pumpable', 'isConfirmed'],
-    });
+    const tanks = await findAllTanksByDate(Unit52Tank, formattedDate);
 
     if (!tanks || tanks.length === 0) {
       return handleError(next, 'Could not find any tanks.', 404);
     }
     res.status(200).json({ tanks });
   } catch (error) {
-    handleError(next, `Error fetching tanks for day: ${day} from Unit 52.`);
+    handleError(
+      next,
+      `Error fetching tanks for day: ${day} from Unit 52. error:${error.message}`
+    );
   }
 };
 
@@ -48,10 +55,7 @@ exports.getTankByDay = async (req, res, next) => {
   checkAuthorization(userData, 'u52', next);
 
   try {
-    const tank = await Unit52Tank.findOne({
-      where: { tag_number, day: formattedDate },
-      attributes: ['id', 'day', 'tag_number', 'pumpable', 'isConfirmed'],
-    });
+    const tank = await findTankByDate(Unit52Tank, tag_number, formattedDate);
 
     if (!tank) {
       return handleError(
@@ -79,17 +83,17 @@ exports.getAllTanksBetweenTwoDates = async (req, res, next) => {
   checkAuthorization(userData, 'u52', next);
 
   try {
-    const tanks = await Unit52Tank.findAll({
-      where: { day: { [Op.between]: [startDate, endDate] } },
-      attributes: ['id', 'day', 'tag_number', 'pumpable', 'isConfirmed'],
-    });
+    const tanks = await findAllTanksByDateRange(Unit52Tank, startDate, endDate);
 
     if (!tanks || tanks.length === 0) {
       return handleError(next, 'Could not find any tanks.', 404);
     }
     res.status(200).json(tanks);
   } catch (error) {
-    handleError(next, 'Error fetching tanks between dates from Unit 52.');
+    handleError(
+      next,
+      `Error fetching tanks between dates from Unit 52. error: ${error.message}`
+    );
   }
 };
 
@@ -103,10 +107,12 @@ exports.getTankBetweenTwoDates = async (req, res, next) => {
   checkAuthorization(userData, 'u52', next);
 
   try {
-    const tanks = await Unit52Tank.findAll({
-      where: { tag_number, day: { [Op.between]: [startDate, endDate] } },
-      attributes: ['id', 'day', 'tag_number', 'pumpable', 'isConfirmed'],
-    });
+    const tanks = await findTankByDateRange(
+      Unit52Tank,
+      tag_number,
+      startDate,
+      endDate
+    );
 
     if (!tanks || tanks.length === 0) {
       return handleError(next, 'Could not find any tanks.', 404);
@@ -115,7 +121,7 @@ exports.getTankBetweenTwoDates = async (req, res, next) => {
   } catch (error) {
     handleError(
       next,
-      `Error fetching tanks ${tag_number} between dates from Unit 52.`
+      `Error fetching tanks ${tag_number} between dates from Unit 52. error: ${error.message}`
     );
   }
 };
@@ -131,7 +137,10 @@ exports.addVolumeToTanks = async (req, res, next) => {
   try {
     const createPromises = Object.keys(tanks).map(async (tag_number) => {
       const bottom = await findBottomByTag(tag_number);
+
       const factor = await findFactorByTag(tag_number);
+
+      const product = await findProductByTag(tag_number);
 
       if (bottom === null || factor === null) {
         return handleError(
@@ -141,10 +150,14 @@ exports.addVolumeToTanks = async (req, res, next) => {
         );
       }
 
-      const pumpable = tanks[tag_number] - factor * bottom;
+      const pumpable =
+        tanks[tag_number] === 0
+          ? tanks[tag_number]
+          : tanks[tag_number] - factor * bottom;
 
       return Unit52Tank.create({
         tag_number,
+        product,
         pumpable,
         day: formattedDate,
         userId: userData.id,
@@ -184,10 +197,13 @@ exports.addVolumeToOneTank = async (req, res, next) => {
       );
     }
 
-    const pumpable = tov - bottom * factor;
+    const product = await findProductByTag(tag_number);
+
+    const pumpable = tov === 0 ? tov : tov - factor * bottom;
 
     const tank = await Unit52Tank.create({
       tag_number,
+      product,
       pumpable,
       day: formattedDate,
       userId: userData.id,

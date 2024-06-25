@@ -5,6 +5,7 @@ const {
   findBottomByTag,
   findFactorByTag,
   handleError,
+  findProductByTag,
 } = require('../../utils');
 const { isAuthorized } = require('../../utils/authorization');
 const { confiremTank } = require('../../utils/tanks');
@@ -140,6 +141,7 @@ exports.addVolumeToTanks = async (req, res, next) => {
     const createPromises = Object.keys(tanks).map(async (tag_number) => {
       const bottom = await findBottomByTag(tag_number);
       const factor = await findFactorByTag(tag_number);
+      const product = await findProductByTag(tag_number);
 
       if (bottom === null || factor === null) {
         return handleError(
@@ -156,6 +158,7 @@ exports.addVolumeToTanks = async (req, res, next) => {
 
       return Unit90Tank.create({
         tag_number,
+        product,
         pumpable,
         day: formattedDate,
         userId: userData.id,
@@ -197,6 +200,7 @@ exports.addVolumeToOneTank = async (req, res, next) => {
 
     const bottom = await findBottomByTag(tag_number);
     const factor = await findFactorByTag(tag_number);
+    const product = await findProductByTag(tag_number);
 
     if (bottom === null || factor === null) {
       return handleError(
@@ -210,6 +214,7 @@ exports.addVolumeToOneTank = async (req, res, next) => {
 
     const tank = await Unit90Tank.create({
       tag_number,
+      product,
       pumpable,
       day: formattedDate,
       userId: userData.id,

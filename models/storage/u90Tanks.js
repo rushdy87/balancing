@@ -12,6 +12,10 @@ const Unit90Tank = sequelize.define('Unit90Tank', {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  product: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
   pumpable: {
     type: Sequelize.INTEGER,
     allowNull: false,
@@ -25,10 +29,6 @@ const Unit90Tank = sequelize.define('Unit90Tank', {
     type: Sequelize.BOOLEAN,
     allowNull: false,
     defaultValue: false,
-  },
-  notes: {
-    type: Sequelize.JSON,
-    allowNull: true,
   },
   userId: {
     // Adding the foreign key

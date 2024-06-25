@@ -23,6 +23,9 @@ const RGTransportControllers = require('../../controllers/u90/transport/rgTransp
 const ATKTransportControllers = require('../../controllers/u90/transport/atkTransport');
 const HFOTransportControllers = require('../../controllers/u90/transport/hfoTransport');
 
+// Reports
+const ReportsRoutes = require('../../controllers/reports');
+
 const router = express.Router();
 
 // Unit 52
@@ -244,5 +247,6 @@ router.get(
 );
 // REPORTS
 // 1. get a full report for a specific day.
+router.get('/:day', ReportsRoutes.getReportByDay);
 
 module.exports = router;
