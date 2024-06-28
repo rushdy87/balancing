@@ -21,6 +21,11 @@ const Unit53Tank = sequelize.define('Unit53Tank', {
     allowNull: false,
     defaultValue: 0,
   },
+  working_volume: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
+  },
   day: {
     type: Sequelize.DATEONLY,
     allowNull: false,

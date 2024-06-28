@@ -1,108 +1,80 @@
-const { Op } = require('sequelize');
-const moment = require('moment');
 const { Unit53Tank } = require('../../models');
+
 const {
-  findBottomByTag,
   handleError,
-  findFactorByTag,
+  checkAuthorization,
+  findAllTanksByDate,
+  findTankByDate,
+  findTankByDateRange,
+  findAllTanksByDateRange,
+  findTankInfo,
+  addTankData,
+  countTanksByDate,
+  editTank,
+  confirmTank,
+  validateInput,
+  formatDate,
 } = require('../../utils');
-const { checkAuthorization } = require('../../utils/authorization');
-const { findTanksByDate, confiremTank } = require('../../utils/tanks');
 
 // Controller to get all tanks by day
 exports.getAllTanksByDay = async (req, res, next) => {
   const { day } = req.params;
-  const formattedDate = moment(day, 'DD-MM-YYYY').toDate();
   const { userData } = req;
 
+  if (!validateInput(req.params, ['day'], next)) return;
+
+  const formattedDate = formatDate(day);
   checkAuthorization(userData, 'u53', next);
 
   try {
-    // const tanks = await Unit53Tank.findAll({
-    //   where: { day: formattedDate },
-    //   attributes: ['id', 'tag_number', 'pumpable'],
-    // });
-    const tanks = await findTanksByDate(Unit53Tank, formattedDate);
-
+    const tanks = await findAllTanksByDate(Unit53Tank, formattedDate);
     if (!tanks || tanks.length === 0) {
       return handleError(next, 'Could not find any tanks.', 404);
     }
     res.status(200).json({ tanks });
   } catch (error) {
-    console.log(error);
-    handleError(next, `Error fetching tanks for day: ${day} from Unit 53.`);
+    handleError(next, `Error fetching tanks for day: ${day}.`, 500);
   }
 };
 
 // Controller to get a tank by day
 exports.getTankByDay = async (req, res, next) => {
   const { tag_number, day } = req.params;
-  const formattedDate = moment(day, 'DD-MM-YYYY').toDate();
   const { userData } = req;
 
+  if (!validateInput(req.params, ['tag_number', 'day'], next)) return;
+
+  const formattedDate = formatDate(day);
   checkAuthorization(userData, 'u53', next);
 
   try {
-    const tank = await Unit53Tank.findOne({
-      where: { tag_number, day: formattedDate },
-      attributes: ['id', 'day', 'tag_number', 'pumpable', 'isConfirmed'],
-    });
-
+    const tank = await findTankByDate(Unit53Tank, tag_number, formattedDate);
     if (!tank) {
       return handleError(
         next,
-        'Could not find a tank for the provided tag number and this date.',
+        `Could not find a tank for tag number: ${tag_number} on date: ${day}.`,
         404
       );
     }
     res.status(200).json(tank);
   } catch (error) {
-    handleError(
-      next,
-      `Error fetching tank ${tag_number} at : ${day} from Unit 53.`
-    );
+    handleError(next, `Error fetching tank ${tag_number} on ${day}.`, 500);
   }
 };
 
 // Controller to get all tanks between two dates
 exports.getAllTanksBetweenTwoDates = async (req, res, next) => {
   const { from, to } = req.params;
-  const startDate = moment(from, 'DD-MM-YYYY').toDate();
-  const endDate = moment(to, 'DD-MM-YYYY').toDate();
   const { userData } = req;
 
+  if (!validateInput(req.params, ['from', 'to'], next)) return;
+
+  const startDate = formatDate(from);
+  const endDate = formatDate(to);
   checkAuthorization(userData, 'u53', next);
 
   try {
-    const tanks = await Unit53Tank.findAll({
-      where: { day: { [Op.between]: [startDate, endDate] } },
-      attributes: ['id', 'day', 'tag_number', 'pumpable', 'isConfirmed'],
-    });
-
-    if (!tanks || tanks.length === 0) {
-      return handleError(next, 'Could not find any tanks.', 404);
-    }
-    res.status(200).json({ tanks });
-  } catch (error) {
-    handleError(next, 'Error fetching tanks between dates from Unit 53.');
-  }
-};
-
-// Controller to get a tank between two dates
-exports.getTankBetweenTwoDates = async (req, res, next) => {
-  const { tag_number, from, to } = req.params;
-  const startDate = moment(from, 'DD-MM-YYYY').toDate();
-  const endDate = moment(to, 'DD-MM-YYYY').toDate();
-  const { userData } = req;
-
-  checkAuthorization(userData, 'u53', next);
-
-  try {
-    const tanks = await Unit53Tank.findAll({
-      where: { tag_number, day: { [Op.between]: [startDate, endDate] } },
-      attributes: ['id', 'day', 'tag_number', 'pumpable', 'isConfirmed'],
-    });
-
+    const tanks = await findAllTanksByDateRange(Unit53Tank, startDate, endDate);
     if (!tanks || tanks.length === 0) {
       return handleError(next, 'Could not find any tanks.', 404);
     }
@@ -110,43 +82,94 @@ exports.getTankBetweenTwoDates = async (req, res, next) => {
   } catch (error) {
     handleError(
       next,
-      `Error fetching tanks ${tag_number} between dates from Unit 53.`
+      `Error fetching tanks between dates: ${from} and ${to}.`,
+      500
+    );
+  }
+};
+
+// Controller to get a tank between two dates
+exports.getTankBetweenTwoDates = async (req, res, next) => {
+  const { tag_number, from, to } = req.params;
+  const { userData } = req;
+
+  if (!validateInput(req.params, ['tag_number', 'from', 'to'], next)) return;
+
+  const startDate = formatDate(from);
+  const endDate = formatDate(to);
+  checkAuthorization(userData, 'u53', next);
+
+  try {
+    const tanks = await findTankByDateRange(
+      Unit53Tank,
+      tag_number,
+      startDate,
+      endDate
+    );
+    if (!tanks || tanks.length === 0) {
+      return handleError(
+        next,
+        `Could not find any tanks for tag number: ${tag_number} between dates: ${from} and ${to}.`,
+        404
+      );
+    }
+    res.status(200).json(tanks);
+  } catch (error) {
+    handleError(
+      next,
+      `Error fetching tanks ${tag_number} between dates: ${from} and ${to}.`,
+      500
     );
   }
 };
 
 // Controller to add volume to tanks
 exports.addVolumeToTanks = async (req, res, next) => {
-  const { day, tanks } = req.body;
-  const formattedDate = moment(day, 'DD-MM-YYYY').toDate();
+  const { day, tanks: tanksData } = req.body;
   const { userData } = req;
 
+  if (!validateInput(req.body, ['day', 'tanks'], next)) return;
+
+  if (typeof tanksData !== 'object')
+    return handleError(
+      next,
+      'Invalid input data: tanks should be an object.',
+      400
+    );
+
+  const formattedDate = formatDate(day);
   checkAuthorization(userData, 'u53', next);
 
   try {
-    const existingTanks = await findTanksByDate(Unit53Tank, formattedDate);
-    if (existingTanks.length > 0) {
-      return handleError(next, 'in this date the tanks is already added.', 400);
+    const existingTanksCount = await countTanksByDate(
+      Unit53Tank,
+      formattedDate
+    );
+    if (existingTanksCount > 0) {
+      return handleError(next, `There is already tanks data for ${day}.`, 400);
     }
 
-    const createPromises = Object.keys(tanks).map(async (tag_number) => {
-      const bottom = await findBottomByTag(tag_number);
-      const factor = await findFactorByTag(tag_number);
+    const createPromises = Object.keys(tanksData).map(async (tag_number) => {
+      const { working_volume, low_level, high_level, product } =
+        await findTankInfo(tag_number);
 
-      if (bottom === null || factor === null) {
+      const tankVolume = tanksData[tag_number];
+      const pumpable = tankVolume === 0 ? tankVolume : tankVolume - low_level;
+
+      if (pumpable > high_level) {
         return handleError(
           next,
-          `Could not find bottom for the tank: ${tag_number}`,
-          404
+          `The pumpable volume for tank ${tag_number} is greater than the high level.`,
+          500
         );
       }
 
-      const pumpable = tanks[tag_number] - factor * bottom;
-
-      return Unit53Tank.create({
+      return addTankData(Unit53Tank, {
         tag_number,
-        pumpable,
         day: formattedDate,
+        product,
+        pumpable,
+        working_volume,
         userId: userData.id,
       });
     });
@@ -156,10 +179,10 @@ exports.addVolumeToTanks = async (req, res, next) => {
       .status(201)
       .json({ message: 'All tanks pumpable volumes have been added.' });
   } catch (error) {
-    console.log(error);
     handleError(
       next,
-      'Something went wrong, could not add tank volumes right now.'
+      'Something went wrong, could not add tank volumes right now.',
+      500
     );
   }
 };
@@ -167,44 +190,42 @@ exports.addVolumeToTanks = async (req, res, next) => {
 // Controller to add volume to one tank
 exports.addVolumeToOneTank = async (req, res, next) => {
   const { tag_number, tov, day } = req.body;
-  const formattedDate = moment(day, 'DD-MM-YYYY').toDate();
   const { userData } = req;
 
+  if (!validateInput(req.body, ['tag_number', 'tov', 'day'], next)) return;
+
+  const formattedDate = formatDate(day);
   checkAuthorization(userData, 'u53', next);
 
   try {
-    const bottom = await findBottomByTag(tag_number);
+    const { working_volume, low_level, high_level, product } =
+      await findTankInfo(tag_number);
 
-    if (bottom === null) {
+    const pumpable = tov === 0 ? tov : tov - low_level;
+
+    if (pumpable > high_level) {
       return handleError(
         next,
-        `Could not find bottom for the tank: ${tag_number}`,
-        404
+        `The pumpable volume for tank ${tag_number} is greater than the high level.`,
+        500
       );
     }
 
-    const pumpable = tov - bottom;
-
-    const tank = await Unit53Tank.create({
+    await addTankData(Unit53Tank, {
       tag_number,
-      pumpable,
       day: formattedDate,
+      product,
+      pumpable,
+      working_volume,
       userId: userData.id,
     });
-
-    if (!tank) {
-      return handleError(
-        next,
-        'Something went wrong, could not add tank volumes right now.',
-        404
-      );
-    }
 
     res.status(201).json({ message: 'Tank volume has been added.' });
   } catch (error) {
     handleError(
       next,
-      'Something went wrong, could not add tank volumes right now.'
+      'Something went wrong, could not add tank volumes right now.',
+      500
     );
   }
 };
@@ -213,64 +234,84 @@ exports.addVolumeToOneTank = async (req, res, next) => {
 exports.updateOneTankVolume = async (req, res, next) => {
   const { tag_number, day } = req.params;
   const { tov } = req.body;
-  const formattedDate = moment(day, 'DD-MM-YYYY').toDate();
   const { userData } = req;
 
+  if (
+    !validateInput(req.params, ['tag_number', 'day'], next) ||
+    !validateInput(req.body, ['tov'], next)
+  )
+    return;
+
+  const formattedDate = formatDate(day);
   checkAuthorization(userData, 'u53', next);
 
   try {
-    const tank = await Unit53Tank.findOne({
-      where: { tag_number, day: formattedDate },
-      attributes: ['id', 'tag_number', 'pumpable'],
-    });
+    const { low_level, high_level } = await findTankInfo(tag_number);
 
-    if (!tank) {
+    const pumpable = tov === 0 ? tov : tov - low_level;
+
+    if (pumpable > high_level) {
       return handleError(
         next,
-        'Could not find a tank for the provided tag number and this date.',
-        404
+        `The pumpable volume for tank ${tag_number} is greater than the high level.`,
+        400
       );
     }
 
-    const bottom = await findBottomByTag(tag_number);
-
-    if (bottom === null) {
+    const updatedTank = await editTank(
+      Unit53Tank,
+      tag_number,
+      formattedDate,
+      pumpable
+    );
+    if (!updatedTank) {
       return handleError(
         next,
-        `Could not find bottom for the tank: ${tag_number}`,
+        `Could not find a tank for tag number: ${tag_number} on date: ${day}.`,
         404
       );
     }
-
-    const pumpable = tov - bottom;
-    tank.pumpable = pumpable;
-
-    await tank.save();
 
     res.status(200).json({ message: 'The tank volume has been updated.' });
   } catch (error) {
     handleError(
       next,
-      'Something went wrong, could not update tank volumes right now.'
+      'Something went wrong, could not update tank volumes right now.',
+      500
     );
   }
 };
-exports.confimTankVolume = async (req, res, next) => {
-  const { tag_number, day } = req.body;
 
-  const formattedDate = moment(day, 'DD-MM-YYYY').toDate();
+// Controller to confirm tank volume
+exports.confirmTankVolume = async (req, res, next) => {
+  const { tag_number, day } = req.body;
   const { userData } = req;
 
+  if (!validateInput(req.body, ['tag_number', 'day'], next)) return;
+
+  const formattedDate = formatDate(day);
   checkAuthorization(userData, 'u53', next);
 
   try {
-    await confiremTank(Unit53Tank, tag_number, formattedDate);
+    const confirmedTank = await confirmTank(
+      Unit53Tank,
+      tag_number,
+      formattedDate
+    );
+    if (!confirmedTank) {
+      return handleError(
+        next,
+        `Could not find a tank for tag number: ${tag_number} on date: ${day}.`,
+        404
+      );
+    }
 
     res.status(200).json({ message: 'The tank volume has been confirmed.' });
   } catch (error) {
     handleError(
       next,
-      'Something went wrong, could not confirme tank volumes right now.'
+      'Something went wrong, could not confirm tank volumes right now.',
+      500
     );
   }
 };
