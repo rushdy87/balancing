@@ -30,6 +30,6 @@ router.patch(
   Unit52TanksControllers.updateOneTankVolume
 );
 
-router.patch('/confirmation', Unit52TanksControllers.confimTankVolume);
+router.patch('/confirmation', Unit52TanksControllers.confirmTankVolume);
 
 module.exports = router;

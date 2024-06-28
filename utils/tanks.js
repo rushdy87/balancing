@@ -1,31 +1,85 @@
-const { handleError } = require('./index');
+const { Op } = require('sequelize');
+const { TanksInfo } = require('../models');
 
-const findTanksByDate = async (model, day) => {
-  return await model.findAll({
-    where: { day },
-    attributes: ['id', 'day', 'tag_number', 'pumpable', 'isConfirmed'],
+const findTankInfo = async (tag_number) => {
+  return await TanksInfo.findOne({
+    where: { tag_number },
+    attributes: ['low_level', 'high_level', 'working_volume', 'product'],
   });
 };
 
-const confiremTank = async (model, tag_number, day) => {
+const findTankByDate = async (model, tag_number, day) => {
+  return await model.findOne({
+    where: { day, tag_number },
+    attributes: ['day', 'tag_number', 'pumpable', 'isConfirmed'],
+  });
+};
+
+const countTanksByDate = async (model, day) => {
+  return await model.count({ where: { day } });
+};
+
+const findTankByDateRange = async (model, tag_number, from, to) => {
+  return await model.findAll({
+    where: { tag_number, day: { [Op.between]: [from, to] } },
+    attributes: ['day', 'tag_number', 'pumpable', 'isConfirmed'],
+  });
+};
+
+const findAllTanksByDate = async (model, day) => {
+  return await model.findAll({
+    where: { day },
+    attributes: ['day', 'tag_number', 'pumpable', 'isConfirmed'],
+  });
+};
+
+const findAllTanksByDateRange = async (model, from, to) => {
+  return await model.findAll({
+    where: { day: { [Op.between]: [from, to] } },
+    attributes: ['day', 'tag_number', 'pumpable', 'isConfirmed'],
+  });
+};
+
+const addTankData = async (model, data) => {
+  return await model.create(data);
+};
+
+const editTank = async (model, tag_number, day, pumpable) => {
   const tank = await model.findOne({
     where: { tag_number, day },
   });
 
   if (!tank) {
-    return handleError(
-      next,
-      'Could not find a tank for the provided tag number and this date.',
-      404
-    );
+    return null;
+  }
+
+  tank.pumpable = pumpable;
+  await tank.save();
+  return tank;
+};
+
+const confirmTank = async (model, tag_number, day) => {
+  const tank = await model.findOne({
+    where: { tag_number, day },
+  });
+
+  if (!tank) {
+    return null;
   }
 
   tank.isConfirmed = true;
-
   await tank.save();
+  return tank;
 };
 
 module.exports = {
-  findTanksByDate,
-  confiremTank,
+  findTankInfo,
+  findTankByDate,
+  countTanksByDate,
+  findTankByDateRange,
+  findAllTanksByDate,
+  findAllTanksByDateRange,
+  addTankData,
+  editTank,
+  confirmTank,
 };

@@ -52,7 +52,7 @@ app.use('/api/u52', u52Routes);
 app.use('/api/u53', u53Routes);
 app.use('/api/u54', u54Routes);
 app.use('/api/u90', u90Routes);
-app.use('/api/reports', reportsRoutes);
+app.use('/reports', reportsRoutes);
 app.use('/api/tanks-info', tanksInfoRoutes);
 // app.use('/api/users', UsersRoutes);
 
