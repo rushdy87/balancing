@@ -20,12 +20,13 @@ const TanksInfo = sequelize.define('TanksInfo', {
     type: Sequelize.ENUM('u52', 'u53', 'u90'),
     allowNull: false,
   },
-  bottom: {
+
+  low_level: {
     type: Sequelize.INTEGER,
     allowNull: false,
     defaultValue: 0,
   },
-  factor: {
+  high_level: {
     type: Sequelize.INTEGER,
     allowNull: false,
     defaultValue: 0,

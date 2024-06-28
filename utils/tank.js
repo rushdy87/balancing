@@ -1,4 +1,12 @@
 const { Op } = require('sequelize');
+const { TanksInfo } = require('../models');
+
+const findTankInfo = async (tag_number) => {
+  return await TanksInfo.findOne({
+    where: { tag_number },
+    attributes: ['low_level', 'high_level', 'working_volume', 'product'],
+  });
+};
 
 const findTankByDate = async (model, tag_number, day) => {
   return await model.findOne({
@@ -6,6 +14,10 @@ const findTankByDate = async (model, tag_number, day) => {
     attributes: ['day', 'tag_number', 'pumpable', 'isConfirmed'],
     // attributes: ['day', 'tag_number', 'product', 'pumpable', 'isConfirmed'],
   });
+};
+
+const countTanksByDate = async (model, day) => {
+  return await model.count({ where: { day } });
 };
 
 const findTankByDateRange = async (model, tag_number, from, to) => {
@@ -31,9 +43,16 @@ const findAllTanksByDateRange = async (model, from, to) => {
   });
 };
 
+const addTankData = async (model, data) => {
+  return await model.create(data);
+};
+
 module.exports = {
+  findTankInfo,
   findTankByDate,
+  countTanksByDate,
   findTankByDateRange,
   findAllTanksByDate,
   findAllTanksByDateRange,
+  addTankData,
 };

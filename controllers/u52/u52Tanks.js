@@ -14,6 +14,9 @@ const {
   findTankByDate,
   findTankByDateRange,
   findAllTanksByDateRange,
+  findTankInfo,
+  addTankData,
+  countTanksByDate,
 } = require('../../utils/tank');
 
 // Utility function to check authorization
@@ -128,38 +131,49 @@ exports.getTankBetweenTwoDates = async (req, res, next) => {
 
 // Controller to add volume to tanks
 exports.addVolumeToTanks = async (req, res, next) => {
-  const { day, tanks } = req.body;
+  const { day, tanks: tanksData } = req.body;
   const formattedDate = moment(day, 'DD-MM-YYYY').toDate();
   const { userData } = req;
+
+  // Input validation
+  if (!day || !tanksData || typeof tanksData !== 'object') {
+    return handleError(next, 'Invalid input data.', 400);
+  }
 
   checkAuthorization(userData, 'u52', next);
 
   try {
-    const createPromises = Object.keys(tanks).map(async (tag_number) => {
-      const bottom = await findBottomByTag(tag_number);
+    // 1. Check if data exists for the given date in the DB
+    const existingTanksCount = await countTanksByDate(
+      Unit52Tank,
+      formattedDate
+    );
+    if (existingTanksCount > 0) {
+      return handleError(next, `There is already tanks data for ${day}.`, 400);
+    }
 
-      const factor = await findFactorByTag(tag_number);
+    // 2. Process each tank
+    const createPromises = Object.keys(tanksData).map(async (tag_number) => {
+      const { working_volume, low_level, high_level, product } =
+        await findTankInfo(tag_number);
 
-      const product = await findProductByTag(tag_number);
+      const tankVolume = tanksData[tag_number];
+      const pumpable = tankVolume === 0 ? tankVolume : tankVolume - low_level;
 
-      if (bottom === null || factor === null) {
+      if (pumpable > high_level) {
         return handleError(
           next,
-          `Could not find bottom for the tank: ${tag_number}`,
-          404
+          `The pumpable volume for tank ${tag_number} is greater than the high level.`,
+          500
         );
       }
 
-      const pumpable =
-        tanks[tag_number] === 0
-          ? tanks[tag_number]
-          : tanks[tag_number] - factor * bottom;
-
-      return Unit52Tank.create({
+      return addTankData(Unit52Tank, {
         tag_number,
+        day: formattedDate,
         product,
         pumpable,
-        day: formattedDate,
+        working_volume,
         userId: userData.id,
       });
     });
@@ -169,7 +183,7 @@ exports.addVolumeToTanks = async (req, res, next) => {
       .status(201)
       .json({ message: 'All tanks pumpable volumes have been added.' });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     handleError(
       next,
       'Something went wrong, could not add tank volumes right now.'
