@@ -21,7 +21,7 @@ router.patch(
   Unit90TanksControllers.updateOneTankVolume
 );
 
-router.patch('/confirmation', Unit90TanksControllers.confirmeTank);
+router.patch('/confirmation', Unit90TanksControllers.confirmTankVolume);
 // { tag_number, day }
 
 module.exports = router;
