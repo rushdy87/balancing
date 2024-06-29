@@ -14,6 +14,9 @@ const {
   confirmTank,
 } = require('./tanks');
 
+const { findOilByDate } = require('./crudeOil');
+const { findNaturalGasByDate } = require('./naturalGas');
+
 const formatDate = (date) => moment(date, 'DD-MM-YYYY').toDate();
 
 const validateInput = (input, fields, next) => {
@@ -43,4 +46,6 @@ module.exports = {
   addTankData,
   editTank,
   confirmTank,
+  findOilByDate,
+  findNaturalGasByDate,
 };

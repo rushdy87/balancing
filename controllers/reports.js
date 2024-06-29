@@ -2,14 +2,18 @@ const moment = require('moment');
 
 const { checkAuthorization } = require('../utils/authorization');
 
-const { handleError } = require('../utils');
+const {
+  handleError,
+  findAllTanksByDate,
+  findOilByDate,
+  findNaturalGasByDate,
+} = require('../utils');
 const {
   Unit52Tank,
   Unit53Tank,
   Unit90Tank,
   Unit54Storage,
 } = require('../models');
-const { findAllTanksByDate } = require('../utils/tanks');
 
 exports.getReportByDay = async (req, res, next) => {
   const { day } = req.params;
@@ -19,6 +23,8 @@ exports.getReportByDay = async (req, res, next) => {
   checkAuthorization(userData, 'u90', next);
 
   try {
+    const report = {};
+    // STORE
     const u52Tanks = await findAllTanksByDate(Unit52Tank, formattedDate);
     const u53Tanks = await findAllTanksByDate(Unit53Tank, formattedDate);
     const u90Tanks = await findAllTanksByDate(Unit90Tank, formattedDate);
@@ -52,7 +58,24 @@ exports.getReportByDay = async (req, res, next) => {
       pumpable: sulphurStore.actual_quantity,
       working_volume: sulphurStore.working_quantity,
     });
+    report.store = store;
 
-    res.json(store);
+    // CRUDE OIL
+    const { receiving, sending, w_v_m3, reservoir_m3, w_v_bbl, reservoir_bbl } =
+      await findOilByDate(formattedDate);
+    report.crudeOil = {
+      receiving,
+      sending,
+      m3: { working_volume: w_v_m3, pumpable: reservoir_m3 },
+      barrel: { working_volume: w_v_bbl, pumpable: reservoir_bbl },
+    };
+
+    // Natural Gas
+    const { receiving_m3, receiving_mscf } = await findNaturalGasByDate(
+      formattedDate
+    );
+    report.naturalGas = { m3: receiving_m3, mscf: receiving_mscf };
+
+    res.json(report);
   } catch (error) {}
 };
