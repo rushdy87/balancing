@@ -3,7 +3,12 @@ const moment = require('moment');
 const { checkAuthorization } = require('../utils/authorization');
 
 const { handleError } = require('../utils');
-const { Unit52Tank, Unit53Tank, Unit90Tank } = require('../models');
+const {
+  Unit52Tank,
+  Unit53Tank,
+  Unit90Tank,
+  Unit54Storage,
+} = require('../models');
 const { findAllTanksByDate } = require('../utils/tanks');
 
 exports.getReportByDay = async (req, res, next) => {
@@ -17,6 +22,11 @@ exports.getReportByDay = async (req, res, next) => {
     const u52Tanks = await findAllTanksByDate(Unit52Tank, formattedDate);
     const u53Tanks = await findAllTanksByDate(Unit53Tank, formattedDate);
     const u90Tanks = await findAllTanksByDate(Unit90Tank, formattedDate);
+
+    const sulphurStore = await Unit54Storage.findOne({
+      where: { day: formattedDate },
+      attributes: ['day', 'working_quantity', 'actual_quantity'],
+    });
 
     const allTanks = [...u52Tanks, ...u53Tanks, ...u90Tanks];
 
@@ -36,8 +46,13 @@ exports.getReportByDay = async (req, res, next) => {
     });
 
     // Convert the result object to an array
-    const mergedArray = Object.values(result);
+    const store = Object.values(result);
+    store.push({
+      product: 'sulphur',
+      pumpable: sulphurStore.actual_quantity,
+      working_volume: sulphurStore.working_quantity,
+    });
 
-    res.json(mergedArray);
+    res.json(store);
   } catch (error) {}
 };
