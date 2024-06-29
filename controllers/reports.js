@@ -7,6 +7,7 @@ const {
   findAllTanksByDate,
   findOilByDate,
   findNaturalGasByDate,
+  findBlendingByDate,
 } = require('../utils');
 const {
   Unit52Tank,
@@ -76,6 +77,25 @@ exports.getReportByDay = async (req, res, next) => {
     );
     report.naturalGas = { m3: receiving_m3, mscf: receiving_mscf };
 
+    // Blending
+    const {
+      lpg: lpgBlending,
+      pg: pgBlending,
+      rg: rgBlending,
+      diesel: dieselBlending,
+      hfo: hfoBlending,
+    } = await findBlendingByDate(formattedDate);
+
+    report.blending = {
+      lpgBlending,
+      pgBlending,
+      rgBlending,
+      dieselBlending,
+      hfoBlending,
+    };
+
     res.json(report);
-  } catch (error) {}
+  } catch (error) {
+    handleError(next, error.message, 500);
+  }
 };
