@@ -14,8 +14,11 @@ const {
   AuthRoutes,
   reportsRoutes,
 } = require('./routes');
-const { unsupportedRoutes, checkAuth } = require('./middlewares');
-const { errorHandling } = require('./middlewares/error-handling');
+const {
+  unsupportedRoutes,
+  checkAuth,
+  errorHandling,
+} = require('./middlewares');
 
 const app = express();
 
@@ -54,7 +57,7 @@ app.use('/api/u54', u54Routes);
 app.use('/api/u90', u90Routes);
 app.use('/reports', reportsRoutes);
 app.use('/api/tanks-info', tanksInfoRoutes);
-// app.use('/api/users', UsersRoutes);
+app.use('/api/users', UsersRoutes);
 
 // This medilware handle unsupported Routes
 app.use(unsupportedRoutes);

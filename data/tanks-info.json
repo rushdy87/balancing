@@ -1,0 +1,470 @@
+[
+  {
+    "tag_number": "TK-52-401A",
+    "product": "RG",
+    "unit": "u52",
+    "working_volume": "10600",
+    "high_level": "12035",
+    "low_level": "1435",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-52-401B",
+    "product": "RG",
+    "unit": "u52",
+    "working_volume": "10600",
+    "high_level": "11999",
+    "low_level": "1399",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-52-401C",
+    "product": "RG",
+    "unit": "u52",
+    "working_volume": "10600",
+    "high_level": "12011",
+    "low_level": "1411",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-52-402A",
+    "product": "PG",
+    "unit": "u52",
+    "working_volume": "10600",
+    "high_level": "12013",
+    "low_level": "1413",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-52-402B",
+    "product": "PG",
+    "unit": "u52",
+    "working_volume": "10600",
+    "high_level": "12008",
+    "low_level": "1408",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-52-402C",
+    "product": "PG",
+    "unit": "u52",
+    "working_volume": "10600",
+    "high_level": "12003",
+    "low_level": "1403",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-52-403A",
+    "product": "Kerosene",
+    "unit": "u52",
+    "working_volume": "7500",
+    "high_level": "8439",
+    "low_level": "939",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-52-403B",
+    "product": "Kerosene",
+    "unit": "u52",
+    "working_volume": "7500",
+    "high_level": "8446",
+    "low_level": "946",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-52-403C",
+    "product": "Kerosene",
+    "unit": "u52",
+    "working_volume": "7500",
+    "high_level": "8438",
+    "low_level": "938",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-52-404A",
+    "product": "ATK",
+    "unit": "u52",
+    "working_volume": "7500",
+    "high_level": "8540",
+    "low_level": "1040",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-52-404B",
+    "product": "ATK",
+    "unit": "u52",
+    "working_volume": "7500",
+    "high_level": "8551",
+    "low_level": "1051",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-52-404C",
+    "product": "ATK",
+    "unit": "u52",
+    "working_volume": "7500",
+    "high_level": "8554",
+    "low_level": "1054",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-52-405A",
+    "product": "Diesel",
+    "unit": "u52",
+    "working_volume": "14900",
+    "high_level": "16800",
+    "low_level": "1900",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-52-405B",
+    "product": "Diesel",
+    "unit": "u52",
+    "working_volume": "14900",
+    "high_level": "16806",
+    "low_level": "1906",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-52-405C",
+    "product": "Diesel",
+    "unit": "u52",
+    "working_volume": "14900",
+    "high_level": "16821",
+    "low_level": "1921",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-52-406A",
+    "product": "HD",
+    "unit": "u52",
+    "working_volume": "3200",
+    "high_level": "3643",
+    "low_level": "443",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-52-406B",
+    "product": "HD",
+    "unit": "u52",
+    "working_volume": "3200",
+    "high_level": "3646",
+    "low_level": "446",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-52-409A",
+    "product": "LPG",
+    "unit": "u52",
+    "working_volume": "1992",
+    "high_level": "2176",
+    "low_level": "184",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-52-409B",
+    "product": "LPG",
+    "unit": "u52",
+    "working_volume": "1992",
+    "high_level": "2178",
+    "low_level": "186",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-52-409C",
+    "product": "LPG",
+    "unit": "u52",
+    "working_volume": "1992",
+    "high_level": "2178",
+    "low_level": "186",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-52-409D",
+    "product": "LPG",
+    "unit": "u52",
+    "working_volume": "1992",
+    "high_level": "2175",
+    "low_level": "183",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-52-408A",
+    "product": "HFO",
+    "unit": "u52",
+    "working_volume": "34000",
+    "high_level": "38085",
+    "low_level": "4085",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-52-408B",
+    "product": "HFO",
+    "unit": "u52",
+    "working_volume": "34000",
+    "high_level": "38085",
+    "low_level": "4085",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-52-408C",
+    "product": "HFO",
+    "unit": "u52",
+    "working_volume": "34000",
+    "high_level": "38381",
+    "low_level": "4381",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-53-001A",
+    "product": "PA",
+    "unit": "u53",
+    "working_volume": "1000",
+    "high_level": "1281",
+    "low_level": "281",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-53-001B",
+    "product": "PA",
+    "unit": "u53",
+    "working_volume": "1000",
+    "high_level": "1280",
+    "low_level": "280",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-53-001C",
+    "product": "PA",
+    "unit": "u53",
+    "working_volume": "1000",
+    "high_level": "1282",
+    "low_level": "282",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-53-001D",
+    "product": "PA",
+    "unit": "u53",
+    "working_volume": "1000",
+    "high_level": "1283",
+    "low_level": "283",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-53-001E",
+    "product": "PA",
+    "unit": "u53",
+    "working_volume": "1000",
+    "high_level": "1283",
+    "low_level": "283",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-90-001A",
+    "product": "RG",
+    "unit": "u90",
+    "working_volume": "13000",
+    "high_level": "14941",
+    "low_level": "1941",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-90-001B",
+    "product": "RG",
+    "unit": "u90",
+    "working_volume": "13000",
+    "high_level": "14952",
+    "low_level": "1952",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-90-001C",
+    "product": "RG",
+    "unit": "u90",
+    "working_volume": "13000",
+    "high_level": "14935",
+    "low_level": "1935",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-90-002A",
+    "product": "PG",
+    "unit": "u90",
+    "working_volume": "13000",
+    "high_level": "14948",
+    "low_level": "1948",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-90-002B",
+    "product": "PG",
+    "unit": "u90",
+    "working_volume": "13000",
+    "high_level": "14957",
+    "low_level": "1957",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-90-002C",
+    "product": "PG",
+    "unit": "u90",
+    "working_volume": "13000",
+    "high_level": "14955",
+    "low_level": "1955",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-90-003A",
+    "product": "Kerosene",
+    "unit": "u90",
+    "working_volume": "7500",
+    "high_level": "8444",
+    "low_level": "944",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-90-003B",
+    "product": "Kerosene",
+    "unit": "u90",
+    "working_volume": "7500",
+    "high_level": "8489",
+    "low_level": "989",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-90-003C",
+    "product": "Kerosene",
+    "unit": "u90",
+    "working_volume": "7500",
+    "high_level": "8486",
+    "low_level": "986",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-90-004A",
+    "product": "ATK",
+    "unit": "u90",
+    "working_volume": "7500",
+    "high_level": "8573",
+    "low_level": "1073",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-90-004B",
+    "product": "ATK",
+    "unit": "u90",
+    "working_volume": "7500",
+    "high_level": "8564",
+    "low_level": "1064",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-90-004C",
+    "product": "ATK",
+    "unit": "u90",
+    "working_volume": "7500",
+    "high_level": "8562",
+    "low_level": "1062",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-90-005A",
+    "product": "Diesel",
+    "unit": "u90",
+    "working_volume": "21000",
+    "high_level": "23719",
+    "low_level": "2719",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-90-005B",
+    "product": "Diesel",
+    "unit": "u90",
+    "working_volume": "21000",
+    "high_level": "23071",
+    "low_level": "2071",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-90-005C",
+    "product": "Diesel",
+    "unit": "u90",
+    "working_volume": "21000",
+    "high_level": "23669",
+    "low_level": "2669",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-90-006A",
+    "product": "HD",
+    "unit": "u90",
+    "working_volume": "3200",
+    "high_level": "3643",
+    "low_level": "443",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-90-006B",
+    "product": "HD",
+    "unit": "u90",
+    "working_volume": "3200",
+    "high_level": "3645",
+    "low_level": "445",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-90-008A",
+    "product": "LPG",
+    "unit": "u90",
+    "working_volume": "1997",
+    "high_level": "2075",
+    "low_level": "78",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-90-008B",
+    "product": "LPG",
+    "unit": "u90",
+    "working_volume": "1997",
+    "high_level": "2069",
+    "low_level": "72",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-90-008C",
+    "product": "LPG",
+    "unit": "u90",
+    "working_volume": "1997",
+    "high_level": "2072",
+    "low_level": "75",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-90-008D",
+    "product": "LPG",
+    "unit": "u90",
+    "working_volume": "1997",
+    "high_level": "2073",
+    "low_level": "76",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-90-008E",
+    "product": "LPG",
+    "unit": "u90",
+    "working_volume": "1997",
+    "high_level": "2072",
+    "low_level": "75",
+    "userId": 1
+  },
+  {
+    "tag_number": "TK-90-008F",
+    "product": "LPG",
+    "unit": "u90",
+    "working_volume": "1997",
+    "high_level": "2074",
+    "low_level": "77",
+    "userId": 1
+  }
+]

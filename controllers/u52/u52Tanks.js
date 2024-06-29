@@ -31,7 +31,7 @@ exports.getAllTanksByDay = async (req, res, next) => {
     if (!tanks || tanks.length === 0) {
       return handleError(next, 'Could not find any tanks.', 404);
     }
-    res.status(200).json({ tanks });
+    res.status(200).json(tanks);
   } catch (error) {
     handleError(next, `Error fetching tanks for day: ${day}.`, 500);
   }
@@ -179,6 +179,7 @@ exports.addVolumeToTanks = async (req, res, next) => {
       .status(201)
       .json({ message: 'All tanks pumpable volumes have been added.' });
   } catch (error) {
+    console.log(error);
     handleError(
       next,
       'Something went wrong, could not add tank volumes right now.',
@@ -222,6 +223,7 @@ exports.addVolumeToOneTank = async (req, res, next) => {
 
     res.status(201).json({ message: 'Tank volume has been added.' });
   } catch (error) {
+    console.log(error.message);
     handleError(
       next,
       'Something went wrong, could not add tank volumes right now.',
