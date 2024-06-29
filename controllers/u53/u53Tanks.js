@@ -156,10 +156,10 @@ exports.addVolumeToTanks = async (req, res, next) => {
       const tankVolume = tanksData[tag_number];
       const pumpable = tankVolume === 0 ? tankVolume : tankVolume - low_level;
 
-      if (pumpable > high_level) {
+      if (pumpable > high_level || pumpable < 0) {
         return handleError(
           next,
-          `The pumpable volume for tank ${tag_number} is greater than the high level.`,
+          `The pumpable volume for tank ${tag_number} is out of the range.`,
           500
         );
       }
@@ -203,10 +203,10 @@ exports.addVolumeToOneTank = async (req, res, next) => {
 
     const pumpable = tov === 0 ? tov : tov - low_level;
 
-    if (pumpable > high_level) {
+    if (pumpable > high_level || pumpable < 0) {
       return handleError(
         next,
-        `The pumpable volume for tank ${tag_number} is greater than the high level.`,
+        `The pumpable volume for tank ${tag_number} is out of the range.`,
         500
       );
     }
@@ -250,11 +250,11 @@ exports.updateOneTankVolume = async (req, res, next) => {
 
     const pumpable = tov === 0 ? tov : tov - low_level;
 
-    if (pumpable > high_level) {
+    if (pumpable > high_level || pumpable < 0) {
       return handleError(
         next,
-        `The pumpable volume for tank ${tag_number} is greater than the high level.`,
-        400
+        `The pumpable volume for tank ${tag_number} is out of the range.`,
+        500
       );
     }
 
