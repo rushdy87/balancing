@@ -14,6 +14,7 @@ const {
   Unit53Tank,
   Unit90Tank,
   Unit54Storage,
+  SolidSulphurProduction,
 } = require('../models');
 
 exports.getReportByDay = async (req, res, next) => {
@@ -86,12 +87,19 @@ exports.getReportByDay = async (req, res, next) => {
       hfo: hfoBlending,
     } = await findBlendingByDate(formattedDate);
 
+    const { quantity: sulphurProduction } =
+      await SolidSulphurProduction.findOne({
+        where: { day: formattedDate },
+        attributes: ['quantity'],
+      });
+
     report.blending = {
       lpgBlending,
       pgBlending,
       rgBlending,
       dieselBlending,
       hfoBlending,
+      sulphurProduction,
     };
 
     res.json(report);
