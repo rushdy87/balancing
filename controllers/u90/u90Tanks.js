@@ -30,7 +30,7 @@ exports.getAllTanksByDay = async (req, res, next) => {
     if (!tanks || tanks.length === 0) {
       return handleError(next, 'Could not find any tanks.', 404);
     }
-    res.status(200).json({ tanks });
+    res.status(200).json(tanks);
   } catch (error) {
     handleError(next, `Error fetching tanks for day: ${day}.`, 500);
   }

@@ -61,7 +61,7 @@ exports.getAllTanksInfo = async (req, res, next) => {
       return next(new HttpError('Could not find any tanks.', 404));
     }
 
-    res.status(200).json({ tanks });
+    res.status(200).json(tanks);
   } catch (error) {
     console.error('Error fetching all tanks info', error);
     return next(
