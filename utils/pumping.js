@@ -1,5 +1,11 @@
 const { Op } = require('sequelize');
-const { handleError } = require('.');
+const { handleError } = require('./errors');
+const {
+  PGPumping,
+  RGPumping,
+  DieselPumping,
+  KerosenePumping,
+} = require('../models');
 
 exports.findPumping = async (model, day) => {
   return await model.findOne({
@@ -38,4 +44,30 @@ exports.confirmPumping = async (model, day, next) => {
     handleError(next, `Error confirming pumping. Error: ${error.message}`);
     return false;
   }
+};
+
+exports.findAllPumpingByDate = async (day) => {
+  const pgPumping = await PGPumping.findOne({
+    where: { day },
+    attributes: ['toKarbala', 'toNajaf'],
+  });
+  const rgPumping = await RGPumping.findOne({
+    where: { day },
+    attributes: ['toKarbala', 'toNajaf'],
+  });
+  const dieselPumping = await DieselPumping.findOne({
+    where: { day },
+    attributes: ['toKarbala', 'toNajaf'],
+  });
+  const kerosenePumping = await KerosenePumping.findOne({
+    where: { day },
+    attributes: ['toKarbala', 'toNajaf'],
+  });
+
+  return {
+    pgPumping: pgPumping.get(),
+    rgPumping: rgPumping.get(),
+    dieselPumping: dieselPumping.get(),
+    kerosenePumping: kerosenePumping.get(),
+  };
 };

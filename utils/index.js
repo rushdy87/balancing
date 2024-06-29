@@ -17,6 +17,7 @@ const {
 const { findOilByDate } = require('./crudeOil');
 const { findNaturalGasByDate } = require('./naturalGas');
 const { findBlendingByDate } = require('./blending');
+const { findAllPumpingByDate } = require('./pumping');
 
 const formatDate = (date) => moment(date, 'DD-MM-YYYY').toDate();
 
@@ -50,4 +51,5 @@ module.exports = {
   findOilByDate,
   findNaturalGasByDate,
   findBlendingByDate,
+  findAllPumpingByDate,
 };

@@ -8,6 +8,7 @@ const {
   findOilByDate,
   findNaturalGasByDate,
   findBlendingByDate,
+  findAllPumpingByDate,
 } = require('../utils');
 const {
   Unit52Tank,
@@ -100,6 +101,28 @@ exports.getReportByDay = async (req, res, next) => {
       dieselBlending,
       hfoBlending,
       sulphurProduction,
+    };
+
+    const { pgPumping, rgPumping, dieselPumping, kerosenePumping } =
+      await findAllPumpingByDate(formattedDate);
+
+    report.pumping = {
+      pgPumping: {
+        ...pgPumping,
+        total: pgPumping.toKarbala + pgPumping.toNajaf,
+      },
+      rgPumping: {
+        ...rgPumping,
+        total: rgPumping.toKarbala + rgPumping.toNajaf,
+      },
+      dieselPumping: {
+        ...dieselPumping,
+        total: dieselPumping.toKarbala + dieselPumping.toNajaf,
+      },
+      kerosenePumping: {
+        ...kerosenePumping,
+        total: kerosenePumping.toKarbala + kerosenePumping.toNajaf,
+      },
     };
 
     res.json(report);
