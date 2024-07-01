@@ -27,11 +27,6 @@ const NaturalGas = sequelize.define('NaturalGas', {
     defaultValue: false,
   },
 
-  notes: {
-    type: Sequelize.JSON,
-    allowNull: true,
-  },
-
   userId: {
     // Adding the foreign key
     type: Sequelize.INTEGER,

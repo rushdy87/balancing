@@ -28,10 +28,7 @@ const Unit54Storage = sequelize.define('Unit54Storage', {
     allowNull: false,
     defaultValue: false,
   },
-  notes: {
-    type: Sequelize.JSON,
-    allowNull: true,
-  },
+
   userId: {
     // Adding the foreign key
     type: Sequelize.INTEGER,

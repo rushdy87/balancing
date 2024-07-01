@@ -42,10 +42,7 @@ const Blending = sequelize.define('Blending', {
     allowNull: false,
     defaultValue: false,
   },
-  notes: {
-    type: Sequelize.JSON,
-    allowNull: true,
-  },
+
   userId: {
     type: Sequelize.INTEGER,
     allowNull: false,

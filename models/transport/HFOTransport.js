@@ -28,10 +28,7 @@ const HFOTransport = sequelize.define('HFOTransport', {
     allowNull: false,
     defaultValue: false,
   },
-  notes: {
-    type: Sequelize.JSON,
-    allowNull: true,
-  },
+
   userId: {
     // Adding the foreign key
     type: Sequelize.INTEGER,

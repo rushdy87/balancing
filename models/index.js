@@ -25,6 +25,11 @@ const ATKTransport = require('./transport/ATKTransport');
 const RGTransport = require('./transport/RGTransport');
 const SolidSulphurTransport = require('./transport/solidSulphurTransport');
 
+const U52Note = require('./notes/u52Notes');
+const U53Note = require('./notes/u53Notes');
+const U54Note = require('./notes/u54Notes');
+const U90Note = require('./notes/u90Notes');
+
 // Define associations
 User.hasMany(TanksInfo, { foreignKey: 'userId' });
 TanksInfo.belongsTo(User, { foreignKey: 'userId' });
@@ -83,6 +88,18 @@ RGTransport.belongsTo(User, { foreignKey: 'userId' });
 User.hasMany(SolidSulphurTransport, { foreignKey: 'userId' });
 SolidSulphurTransport.belongsTo(User, { foreignKey: 'userId' });
 
+User.hasMany(U52Note, { foreignKey: 'userId' });
+U52Note.belongsTo(User, { foreignKey: 'userId' });
+
+User.hasMany(U53Note, { foreignKey: 'userId' });
+U53Note.belongsTo(User, { foreignKey: 'userId' });
+
+User.hasMany(U54Note, { foreignKey: 'userId' });
+U54Note.belongsTo(User, { foreignKey: 'userId' });
+
+User.hasMany(U90Note, { foreignKey: 'userId' });
+U90Note.belongsTo(User, { foreignKey: 'userId' });
+
 module.exports = {
   User,
   HttpError,
@@ -105,4 +122,8 @@ module.exports = {
   ATKTransport,
   RGTransport,
   SolidSulphurTransport,
+  U52Note,
+  U53Note,
+  U54Note,
+  U90Note,
 };

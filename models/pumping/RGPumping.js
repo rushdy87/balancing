@@ -20,10 +20,7 @@ const RGPumping = sequelize.define('RGPumping', {
     allowNull: false,
     defaultValue: false,
   },
-  notes: {
-    type: Sequelize.JSON,
-    allowNull: true,
-  },
+
   userId: {
     // Adding the foreign key
     type: Sequelize.INTEGER,
