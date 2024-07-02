@@ -14,7 +14,7 @@ const U53Note = sequelize.define('U53Note', {
   },
   note: {
     type: Sequelize.STRING,
-    allowNull: True,
+    allowNull: true,
   },
   userId: {
     type: Sequelize.INTEGER,
