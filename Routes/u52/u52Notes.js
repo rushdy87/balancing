@@ -10,12 +10,12 @@ router.get('/:day', U52NoteControllers.getNotesByDate);
 // response ==> [{id, day, note}, ...]
 
 // add note
-router.post('/');
+router.post('/', U52NoteControllers.addOneNote);
 // request body ===> {day, note}
 
 // add notes
-router.post('/all');
-// request body ===> [{day, note}, ...]
+router.post('/all', U52NoteControllers.addNotesByDay);
+// request body ===> {day, notes:[]}
 
 // edit note
 router.patch('/:id');

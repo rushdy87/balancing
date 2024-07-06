@@ -5,4 +5,8 @@ const findNotesByDate = async (model, day) => {
   });
 };
 
-module.exports = { findNotesByDate };
+const addNote = async (model, data) => {
+  return await model.create(data);
+};
+
+module.exports = { findNotesByDate, addNote };
