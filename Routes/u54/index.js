@@ -3,6 +3,7 @@ const express = require('express');
 const u54StorageRoutes = require('./u54Storage');
 const solidSulphurTransportRoutes = require('./solidSulphurTransport');
 const solidSulphurProductionRoutes = require('./solidSulphurProduction');
+const u54NotesRoutes = require('./u54Notes');
 
 // /api/54/
 const router = express.Router();
@@ -10,5 +11,6 @@ const router = express.Router();
 router.use('/store', u54StorageRoutes);
 router.use('/transport', solidSulphurTransportRoutes);
 router.use('/production', solidSulphurProductionRoutes);
+router.use('/notes', u54NotesRoutes);
 
 module.exports = router;
