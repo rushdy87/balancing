@@ -22,6 +22,6 @@ router.patch('/:id', U52NoteControllers.updateNote);
 // request body ===> note
 
 // delete note
-router.delete('/:id');
+router.delete('/:id', U52NoteControllers.deleteNote);
 
 module.exports = router;

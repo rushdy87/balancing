@@ -8,6 +8,7 @@ const {
   findNotesByDate,
   addNote,
   editNote,
+  destroyNote,
 } = require('../../utils');
 
 exports.getNotesByDate = async (req, res, next) => {
@@ -107,6 +108,32 @@ exports.updateNote = async (req, res, next) => {
     handleError(
       next,
       'Something went wrong, could not update the note right now.',
+      500
+    );
+  }
+};
+
+exports.deleteNote = async (req, res, next) => {
+  const { id } = req.params;
+
+  const { userData } = req;
+
+  checkAuthorization(userData, 'u52', next);
+
+  try {
+    const deletionResult = await destroyNote(U52Note, id);
+    if (!deletionResult) {
+      return res
+        .status(404)
+        .json({ message: 'Could not find a note with this id.' });
+    }
+
+    res.status(200).json({ message: 'The note has been deleted.' });
+  } catch (error) {
+    console.log(error.message);
+    handleError(
+      next,
+      'Something went wrong, could not delete the note right now.',
       500
     );
   }

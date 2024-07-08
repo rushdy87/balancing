@@ -21,4 +21,11 @@ const editNote = async (module, id, note) => {
   return exsitingNote;
 };
 
-module.exports = { findNotesByDate, addNote, editNote };
+const destroyNote = async (module, id) => {
+  const note = await module.findByPk(id);
+  if (!note) return null;
+  await module.destroy({ where: { id } });
+  return note;
+};
+
+module.exports = { findNotesByDate, addNote, editNote, destroyNote };
