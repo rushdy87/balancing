@@ -18,7 +18,7 @@ router.post('/all', U52NoteControllers.addNotesByDay);
 // request body ===> {day, notes:[]}
 
 // edit note
-router.patch('/:id');
+router.patch('/:id', U52NoteControllers.updateNote);
 // request body ===> note
 
 // delete note

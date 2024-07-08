@@ -7,6 +7,7 @@ const {
   handleError,
   findNotesByDate,
   addNote,
+  editNote,
 } = require('../../utils');
 
 exports.getNotesByDate = async (req, res, next) => {
@@ -79,6 +80,33 @@ exports.addNotesByDay = async (req, res, next) => {
     handleError(
       next,
       'Something went wrong, could not add tank volumes right now.',
+      500
+    );
+  }
+};
+
+exports.updateNote = async (req, res, next) => {
+  const { id } = req.params;
+  const { note } = req.body;
+  const { userData } = req;
+
+  if (!validateInput(req.body, ['note'], next)) return;
+
+  checkAuthorization(userData, 'u52', next);
+
+  try {
+    const updatedNote = await editNote(U52Note, id, note);
+
+    if (!updatedNote) {
+      return handleError(next, 'Could not find a note with this id.', 404);
+    }
+
+    res.status(200).json({ message: 'The note has been updated.' });
+  } catch (error) {
+    console.log(error.message);
+    handleError(
+      next,
+      'Something went wrong, could not update the note right now.',
       500
     );
   }
