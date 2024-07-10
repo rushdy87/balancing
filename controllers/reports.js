@@ -11,6 +11,7 @@ const {
   findAllPumpingByDate,
   findLightTransportByDate,
   findPavingAsphaltTransportBayDate,
+  findSolidSulphurTransportBayDate,
 } = require('../utils');
 const {
   Unit52Tank,
@@ -135,6 +136,12 @@ exports.getReportByDay = async (req, res, next) => {
       formattedDate
     );
     report.pavingAsphaltTransport = pavingAsphaltTransport;
+
+    const solidSulphurTransport = await findSolidSulphurTransportBayDate(
+      formattedDate
+    );
+    report.solidSulphurTransport = solidSulphurTransport;
+
     res.json(report);
   } catch (error) {
     handleError(next, error.message, 500);

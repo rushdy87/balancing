@@ -5,6 +5,7 @@ const {
   RGTransport,
   ATKTransport,
   PavingAsphaltTransport,
+  SolidSulphurTransport,
 } = require('../models');
 
 const cheakTransportVolue = (transportObj) => {
@@ -87,4 +88,22 @@ exports.findPavingAsphaltTransportBayDate = async (day) => {
   });
 
   return cheakTransportVolue(PavingAsphaltTranspor);
+};
+
+exports.findPavingAsphaltTransportBayDate = async (day) => {
+  const PavingAsphaltTranspor = await PavingAsphaltTransport.findOne({
+    where: { day },
+    attributes: ['quantity', 'tankers'],
+  });
+
+  return cheakTransportVolue(PavingAsphaltTranspor);
+};
+
+exports.findSolidSulphurTransportBayDate = async (day) => {
+  const solidSulphurTransport = await SolidSulphurTransport.findOne({
+    where: { day },
+    attributes: ['quantity', 'tankers'],
+  });
+
+  return cheakTransportVolue(solidSulphurTransport);
 };

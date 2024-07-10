@@ -20,6 +20,7 @@ const { findAllPumpingByDate } = require('./pumping');
 const {
   findLightTransportByDate,
   findPavingAsphaltTransportBayDate,
+  findSolidSulphurTransportBayDate,
 } = require('./transport');
 const { findNotesByDate, addNote, editNote, destroyNote } = require('./notes');
 
@@ -58,6 +59,7 @@ module.exports = {
   findAllPumpingByDate,
   findLightTransportByDate,
   findPavingAsphaltTransportBayDate,
+  findSolidSulphurTransportBayDate,
   findNotesByDate,
   addNote,
   editNote,
