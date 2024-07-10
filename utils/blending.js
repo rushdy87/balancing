@@ -1,7 +1,20 @@
 const { Blending } = require('../models');
 
+const cheakBlending = (blendingObj) => {
+  if (!blendingObj) {
+    return {
+      lpg: 0,
+      pg: 0,
+      rg: 0,
+      diesel: 0,
+      hfo: 0,
+    };
+  }
+  return blendingObj;
+};
+
 const findBlendingByDate = async (day) => {
-  return await Blending.findOne({
+  const blending = await Blending.findOne({
     where: { day },
     attributes: [
       'id',
@@ -14,6 +27,8 @@ const findBlendingByDate = async (day) => {
       'isConfirmed',
     ],
   });
+
+  return cheakBlending(blending);
 };
 
 module.exports = {

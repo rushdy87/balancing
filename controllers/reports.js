@@ -12,6 +12,7 @@ const {
   findLightTransportByDate,
   findPavingAsphaltTransportBayDate,
   findSolidSulphurTransportBayDate,
+  findSolidSulphurStorageByDay,
 } = require('../utils');
 const {
   Unit52Tank,
@@ -35,10 +36,7 @@ exports.getReportByDay = async (req, res, next) => {
     const u53Tanks = await findAllTanksByDate(Unit53Tank, formattedDate);
     const u90Tanks = await findAllTanksByDate(Unit90Tank, formattedDate);
 
-    const sulphurStore = await Unit54Storage.findOne({
-      where: { day: formattedDate },
-      attributes: ['day', 'working_quantity', 'actual_quantity'],
-    });
+    const sulphurStore = await findSolidSulphurStorageByDay(formattedDate);
 
     const allTanks = [...u52Tanks, ...u53Tanks, ...u90Tanks];
 
@@ -91,11 +89,10 @@ exports.getReportByDay = async (req, res, next) => {
       hfo: hfoBlending,
     } = await findBlendingByDate(formattedDate);
 
-    const { quantity: sulphurProduction } =
-      await SolidSulphurProduction.findOne({
-        where: { day: formattedDate },
-        attributes: ['quantity'],
-      });
+    const sulphurProduction = await SolidSulphurProduction.findOne({
+      where: { day: formattedDate },
+      attributes: ['quantity'],
+    });
 
     report.blending = {
       lpgBlending,
@@ -103,7 +100,7 @@ exports.getReportByDay = async (req, res, next) => {
       rgBlending,
       dieselBlending,
       hfoBlending,
-      sulphurProduction,
+      sulphurProduction: sulphurProduction ? sulphurProduction.qquantity : 0,
     };
 
     const { pgPumping, rgPumping, dieselPumping, kerosenePumping } =

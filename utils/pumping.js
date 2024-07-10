@@ -7,6 +7,9 @@ const {
   KerosenePumping,
 } = require('../models');
 
+const cheakPumping = (pumping) =>
+  pumping ? pumping.get() : { toKarbala: 0, toNajaf: 0 };
+
 exports.findPumping = async (model, day) => {
   return await model.findOne({
     where: { day },
@@ -65,9 +68,9 @@ exports.findAllPumpingByDate = async (day) => {
   });
 
   return {
-    pgPumping: pgPumping.get(),
-    rgPumping: rgPumping.get(),
-    dieselPumping: dieselPumping.get(),
-    kerosenePumping: kerosenePumping.get(),
+    pgPumping: cheakPumping(pgPumping),
+    rgPumping: cheakPumping(rgPumping),
+    dieselPumping: cheakPumping(dieselPumping),
+    kerosenePumping: cheakPumping(kerosenePumping),
   };
 };

@@ -22,6 +22,7 @@ const {
   findPavingAsphaltTransportBayDate,
   findSolidSulphurTransportBayDate,
 } = require('./transport');
+const { findSolidSulphurStorageByDay } = require('./sulphurStorage');
 const { findNotesByDate, addNote, editNote, destroyNote } = require('./notes');
 
 const formatDate = (date) => moment(date, 'DD-MM-YYYY').toDate();
@@ -60,6 +61,7 @@ module.exports = {
   findLightTransportByDate,
   findPavingAsphaltTransportBayDate,
   findSolidSulphurTransportBayDate,
+  findSolidSulphurStorageByDay,
   findNotesByDate,
   addNote,
   editNote,
