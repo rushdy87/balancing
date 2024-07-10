@@ -9,6 +9,7 @@ const {
   findNaturalGasByDate,
   findBlendingByDate,
   findAllPumpingByDate,
+  findLightTransportByDate,
 } = require('../utils');
 const {
   Unit52Tank,
@@ -124,6 +125,11 @@ exports.getReportByDay = async (req, res, next) => {
         total: kerosenePumping.toKarbala + kerosenePumping.toNajaf,
       },
     };
+
+    const { lPGTransport, rGTransport, atkTransport } =
+      await findLightTransportByDate(formattedDate);
+
+    report.lightTransport = { lPGTransport, rGTransport, atkTransport };
 
     res.json(report);
   } catch (error) {

@@ -1,5 +1,6 @@
 const { Op } = require('sequelize');
-const { handleError } = require('.');
+const { handleError } = require('./errors');
+const { LPGTransport, RGTransport, ATKTransport } = require('../models');
 
 exports.findTransport = async (model, day) => {
   return await model.findOne({
@@ -44,4 +45,32 @@ exports.confirmTransport = async (model, day, next) => {
     handleError(next, `Error confirming transport. Error: ${error.message}`);
     return false;
   }
+};
+
+exports.findLightTransportByDate = async (day) => {
+  const cheakTransportVolue = (transportObj) => {
+    if (!transportObj) {
+      return { quantity: 0, tankers: 0 };
+    }
+    return transportObj;
+  };
+
+  const lPGTransport = await LPGTransport.findOne({
+    where: { day },
+    attributes: ['quantity', 'tankers'],
+  });
+  const rGTransport = await RGTransport.findOne({
+    where: { day },
+    attributes: ['quantity', 'tankers'],
+  });
+  const atkTransport = await ATKTransport.findOne({
+    where: { day },
+    attributes: ['quantity', 'tankers'],
+  });
+
+  return {
+    lPGTransport: cheakTransportVolue(lPGTransport),
+    rGTransport: cheakTransportVolue(rGTransport),
+    atkTransport: cheakTransportVolue(atkTransport),
+  };
 };
