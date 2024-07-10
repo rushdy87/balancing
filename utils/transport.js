@@ -1,6 +1,18 @@
 const { Op } = require('sequelize');
 const { handleError } = require('./errors');
-const { LPGTransport, RGTransport, ATKTransport } = require('../models');
+const {
+  LPGTransport,
+  RGTransport,
+  ATKTransport,
+  PavingAsphaltTransport,
+} = require('../models');
+
+const cheakTransportVolue = (transportObj) => {
+  if (!transportObj) {
+    return { quantity: 0, tankers: 0 };
+  }
+  return transportObj;
+};
 
 exports.findTransport = async (model, day) => {
   return await model.findOne({
@@ -48,13 +60,6 @@ exports.confirmTransport = async (model, day, next) => {
 };
 
 exports.findLightTransportByDate = async (day) => {
-  const cheakTransportVolue = (transportObj) => {
-    if (!transportObj) {
-      return { quantity: 0, tankers: 0 };
-    }
-    return transportObj;
-  };
-
   const lPGTransport = await LPGTransport.findOne({
     where: { day },
     attributes: ['quantity', 'tankers'],
@@ -73,4 +78,13 @@ exports.findLightTransportByDate = async (day) => {
     rGTransport: cheakTransportVolue(rGTransport),
     atkTransport: cheakTransportVolue(atkTransport),
   };
+};
+
+exports.findPavingAsphaltTransportBayDate = async (day) => {
+  const PavingAsphaltTranspor = await PavingAsphaltTransport.findOne({
+    where: { day },
+    attributes: ['quantity', 'tankers'],
+  });
+
+  return cheakTransportVolue(PavingAsphaltTranspor);
 };
