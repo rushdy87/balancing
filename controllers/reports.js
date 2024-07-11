@@ -15,6 +15,8 @@ const {
   findSolidSulphurStorageByDay,
   findHfoTransportByDay,
   findAllNotesByDay,
+  checkTanksList,
+  calculateTanksVolumes,
 } = require('../utils');
 const {
   Unit52Tank,
@@ -34,31 +36,18 @@ exports.getReportByDay = async (req, res, next) => {
   try {
     const report = {};
     // STORE
-    const u52Tanks = await findAllTanksByDate(Unit52Tank, formattedDate);
-    const u53Tanks = await findAllTanksByDate(Unit53Tank, formattedDate);
-    const u90Tanks = await findAllTanksByDate(Unit90Tank, formattedDate);
+    const u52T = await findAllTanksByDate(Unit52Tank, formattedDate);
+    const u52Tanks = await checkTanksList(u52T, 'u52');
+    const u53T = await findAllTanksByDate(Unit53Tank, formattedDate);
+    const u53Tanks = await checkTanksList(u53T, 'u53');
+    const u90T = await findAllTanksByDate(Unit90Tank, formattedDate);
+    const u90Tanks = await checkTanksList(u90T, 'u90');
 
     const sulphurStore = await findSolidSulphurStorageByDay(formattedDate);
 
     const allTanks = [...u52Tanks, ...u53Tanks, ...u90Tanks];
 
-    // Initialize a result object
-    const result = {};
-
-    // Iterate through the combined array
-    allTanks.forEach((item) => {
-      const { product, pumpable, working_volume } = item;
-
-      if (!result[product]) {
-        result[product] = { product, pumpable: 0, working_volume: 0 };
-      }
-
-      result[product].pumpable += pumpable;
-      result[product].working_volume += working_volume;
-    });
-
-    // Convert the result object to an array
-    const store = Object.values(result);
+    const store = calculateTanksVolumes(allTanks);
     store.push({
       product: 'sulphur',
       pumpable: sulphurStore.actual_quantity,

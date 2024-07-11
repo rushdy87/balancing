@@ -12,6 +12,7 @@ const {
   addTankData,
   editTank,
   confirmTank,
+  tanksDataFormatting,
 } = require('./tanks');
 const { findOilByDate } = require('./crudeOil');
 const { findNaturalGasByDate } = require('./naturalGas');
@@ -31,6 +32,8 @@ const {
   destroyNote,
   findAllNotesByDay,
 } = require('./notes');
+
+const { checkTanksList, calculateTanksVolumes } = require('./reports');
 
 const formatDate = (date) => moment(date, 'DD-MM-YYYY').toDate();
 
@@ -61,6 +64,7 @@ module.exports = {
   addTankData,
   editTank,
   confirmTank,
+  tanksDataFormatting,
   findOilByDate,
   findNaturalGasByDate,
   findBlendingByDate,
@@ -75,4 +79,6 @@ module.exports = {
   editNote,
   destroyNote,
   findAllNotesByDay,
+  checkTanksList,
+  calculateTanksVolumes,
 };

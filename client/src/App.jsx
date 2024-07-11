@@ -19,9 +19,14 @@ import {
 } from './pages';
 import { TanksInfoProvider } from './context/TanksInfoContext';
 import { Navbar } from './components';
+import { addTanksVolume } from './api/u52/tanks';
 
 function App() {
   const token = true;
+  async function makeRequest() {
+    await addTanksVolume();
+  }
+  makeRequest();
   const renderRoutes = token ? (
     <>
       <Navbar />

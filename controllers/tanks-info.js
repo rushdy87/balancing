@@ -43,6 +43,7 @@ exports.getAllTanksInfo = async (req, res, next) => {
   const { userData } = req;
 
   checkAuthorization(userData, 'all', next);
+
   try {
     const tanks = await TanksInfo.findAll({
       where: { is_active: true },
@@ -51,9 +52,10 @@ exports.getAllTanksInfo = async (req, res, next) => {
         'tag_number',
         'product',
         'unit',
-        'bottom',
-        'factor',
+        'low_level',
+        'high_level',
         'working_volume',
+        'is_active',
       ],
     });
 

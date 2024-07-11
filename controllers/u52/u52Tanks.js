@@ -14,7 +14,34 @@ const {
   confirmTank,
   validateInput,
   formatDate,
+  tanksDataFormatting,
 } = require('../../utils');
+
+// Controller to get a tank by day
+exports.getTankByDay = async (req, res, next) => {
+  const { tag_number, day } = req.params;
+  const { userData } = req;
+
+  if (!validateInput(req.params, ['tag_number', 'day'], next)) return;
+
+  const formattedDate = formatDate(day);
+  checkAuthorization(userData, 'u52', next);
+
+  try {
+    const tank = await findTankByDate(Unit52Tank, tag_number, formattedDate);
+
+    if (!tank) {
+      return handleError(
+        next,
+        `Could not find a tank for tag number: ${tag_number} on date: ${day}.`,
+        404
+      );
+    }
+    res.status(200).json(tank);
+  } catch (error) {
+    handleError(next, `Error fetching tank ${tag_number} on ${day}.`, 500);
+  }
+};
 
 // Controller to get all tanks by day
 exports.getAllTanksByDay = async (req, res, next) => {
@@ -34,31 +61,6 @@ exports.getAllTanksByDay = async (req, res, next) => {
     res.status(200).json(tanks);
   } catch (error) {
     handleError(next, `Error fetching tanks for day: ${day}.`, 500);
-  }
-};
-
-// Controller to get a tank by day
-exports.getTankByDay = async (req, res, next) => {
-  const { tag_number, day } = req.params;
-  const { userData } = req;
-
-  if (!validateInput(req.params, ['tag_number', 'day'], next)) return;
-
-  const formattedDate = formatDate(day);
-  checkAuthorization(userData, 'u52', next);
-
-  try {
-    const tank = await findTankByDate(Unit52Tank, tag_number, formattedDate);
-    if (!tank) {
-      return handleError(
-        next,
-        `Could not find a tank for tag number: ${tag_number} on date: ${day}.`,
-        404
-      );
-    }
-    res.status(200).json(tank);
-  } catch (error) {
-    handleError(next, `Error fetching tank ${tag_number} on ${day}.`, 500);
   }
 };
 
@@ -149,27 +151,23 @@ exports.addVolumeToTanks = async (req, res, next) => {
       return handleError(next, `There is already tanks data for ${day}.`, 400);
     }
 
-    const createPromises = Object.keys(tanksData).map(async (tag_number) => {
-      const { working_volume, low_level, high_level, product } =
-        await findTankInfo(tag_number);
+    const tanks = await tanksDataFormatting(tanksData);
 
-      const tankVolume = tanksData[tag_number];
-      const pumpable = tankVolume === 0 ? tankVolume : tankVolume - low_level;
+    if (!tanks || tanks === null) {
+      return handleError(
+        next,
+        `The pumpable volume for tank is out of the range.`,
+        500
+      );
+    }
 
-      if (pumpable > high_level || pumpable < 0) {
-        return handleError(
-          next,
-          `The pumpable volume for tank ${tag_number} is out of the range.`,
-          500
-        );
-      }
-
+    const createPromises = tanks.map(async (tank) => {
       return addTankData(Unit52Tank, {
-        tag_number,
+        tag_number: tank.tag_number,
         day: formattedDate,
-        product,
-        pumpable,
-        working_volume,
+        product: tank.product,
+        pumpable: tank.pumpable,
+        working_volume: tank.working_volume,
         userId: userData.id,
       });
     });

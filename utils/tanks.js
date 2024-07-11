@@ -100,6 +100,31 @@ const confirmTank = async (model, tag_number, day) => {
   return tank;
 };
 
+const tanksDataFormatting = async (tanksData) => {
+  const tankPromises = Object.keys(tanksData).map(async (tag_number) => {
+    const { working_volume, low_level, high_level, product } =
+      await findTankInfo(tag_number);
+
+    const tankVolume = tanksData[tag_number];
+    const pumpable = tankVolume === 0 ? tankVolume : tankVolume - low_level;
+
+    if (pumpable > high_level || pumpable < 0) {
+      return null;
+    }
+    return {
+      tag_number,
+      product,
+      pumpable,
+      working_volume,
+    };
+  });
+
+  const tanks = await Promise.all(tankPromises);
+
+  if (tanks.some((tank) => tank === null)) return null;
+  return tanks;
+};
+
 module.exports = {
   findTankInfo,
   findTankByDate,
@@ -110,4 +135,5 @@ module.exports = {
   addTankData,
   editTank,
   confirmTank,
+  tanksDataFormatting,
 };
