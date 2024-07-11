@@ -21,6 +21,7 @@ const {
   findLightTransportByDate,
   findPavingAsphaltTransportBayDate,
   findSolidSulphurTransportBayDate,
+  findHfoTransportByDay,
 } = require('./transport');
 const { findSolidSulphurStorageByDay } = require('./sulphurStorage');
 const { findNotesByDate, addNote, editNote, destroyNote } = require('./notes');
@@ -61,6 +62,7 @@ module.exports = {
   findLightTransportByDate,
   findPavingAsphaltTransportBayDate,
   findSolidSulphurTransportBayDate,
+  findHfoTransportByDay,
   findSolidSulphurStorageByDay,
   findNotesByDate,
   addNote,

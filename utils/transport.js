@@ -1,4 +1,4 @@
-const { Op } = require('sequelize');
+const { Op, where } = require('sequelize');
 const { handleError } = require('./errors');
 const {
   LPGTransport,
@@ -6,6 +6,7 @@ const {
   ATKTransport,
   PavingAsphaltTransport,
   SolidSulphurTransport,
+  HFOTransport,
 } = require('../models');
 
 const cheakTransportVolue = (transportObj) => {
@@ -106,4 +107,15 @@ exports.findSolidSulphurTransportBayDate = async (day) => {
   });
 
   return cheakTransportVolue(solidSulphurTransport);
+};
+
+exports.findHfoTransportByDay = async (side, day) => {
+  const hfoTransport = await HFOTransport.findOne({
+    where: { side, day },
+    attributes: ['id', 'day', 'side', 'quantity', 'tankers', 'isConfirmed'],
+  });
+  if (!hfoTransport) {
+    return { side, quantity: 0, tankers: 0 };
+  }
+  return hfoTransport;
 };
