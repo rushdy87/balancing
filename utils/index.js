@@ -24,7 +24,13 @@ const {
   findHfoTransportByDay,
 } = require('./transport');
 const { findSolidSulphurStorageByDay } = require('./sulphurStorage');
-const { findNotesByDate, addNote, editNote, destroyNote } = require('./notes');
+const {
+  findNotesByDate,
+  addNote,
+  editNote,
+  destroyNote,
+  findAllNotesByDay,
+} = require('./notes');
 
 const formatDate = (date) => moment(date, 'DD-MM-YYYY').toDate();
 
@@ -68,4 +74,5 @@ module.exports = {
   addNote,
   editNote,
   destroyNote,
+  findAllNotesByDay,
 };

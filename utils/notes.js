@@ -1,3 +1,5 @@
+const { U52Note, U53Note, U54Note, U90Note } = require('../models');
+
 const findNotesByDate = async (model, day) => {
   return await model.findAll({
     where: { day },
@@ -28,4 +30,30 @@ const destroyNote = async (module, id) => {
   return note;
 };
 
-module.exports = { findNotesByDate, addNote, editNote, destroyNote };
+const findAllNotesByDay = async (day) => {
+  const u52Notes = await U52Note.findAll({
+    where: { day },
+    attributes: ['note'],
+  });
+  const u53Notes = await U53Note.findAll({
+    where: { day },
+    attributes: ['note'],
+  });
+  const u54Notes = await U54Note.findAll({
+    where: { day },
+    attributes: ['note'],
+  });
+  const u90Notes = await U90Note.findAll({
+    where: { day },
+    attributes: ['note'],
+  });
+
+  return [...u52Notes, ...u53Notes, ...u54Notes, ...u90Notes];
+};
+module.exports = {
+  findNotesByDate,
+  addNote,
+  editNote,
+  destroyNote,
+  findAllNotesByDay,
+};

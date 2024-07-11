@@ -14,6 +14,7 @@ const {
   findSolidSulphurTransportBayDate,
   findSolidSulphurStorageByDay,
   findHfoTransportByDay,
+  findAllNotesByDay,
 } = require('../utils');
 const {
   Unit52Tank,
@@ -145,8 +146,10 @@ exports.getReportByDay = async (req, res, next) => {
       await findHfoTransportByDay('2', formattedDate),
       await findHfoTransportByDay('3', formattedDate),
     ];
-
     report.hfoTransport = hfoTransport;
+
+    const notes = await findAllNotesByDay(formattedDate);
+    report.notes = notes;
 
     res.json(report);
   } catch (error) {
