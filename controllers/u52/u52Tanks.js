@@ -153,14 +153,6 @@ exports.addVolumeToTanks = async (req, res, next) => {
 
     const tanks = await tanksDataFormatting(tanksData);
 
-    if (!tanks || tanks === null) {
-      return handleError(
-        next,
-        `The pumpable volume for tank is out of the range.`,
-        500
-      );
-    }
-
     const createPromises = tanks.map(async (tank) => {
       return addTankData(Unit52Tank, {
         tag_number: tank.tag_number,
@@ -178,11 +170,7 @@ exports.addVolumeToTanks = async (req, res, next) => {
       .json({ message: 'All tanks pumpable volumes have been added.' });
   } catch (error) {
     console.log(error);
-    handleError(
-      next,
-      'Something went wrong, could not add tank volumes right now.',
-      500
-    );
+    handleError(next, error.message, 500);
   }
 };
 

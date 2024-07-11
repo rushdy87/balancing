@@ -106,11 +106,12 @@ const tanksDataFormatting = async (tanksData) => {
       await findTankInfo(tag_number);
 
     const tankVolume = tanksData[tag_number];
-    const pumpable = tankVolume === 0 ? tankVolume : tankVolume - low_level;
+    const pumpable = tankVolume === 0 ? 0 : tankVolume - low_level;
 
     if (pumpable > high_level || pumpable < 0) {
-      return null;
+      throw new Error(`The pumpable volume for ${tag_number} is out of range.`);
     }
+
     return {
       tag_number,
       product,
@@ -119,10 +120,12 @@ const tanksDataFormatting = async (tanksData) => {
     };
   });
 
-  const tanks = await Promise.all(tankPromises);
-
-  if (tanks.some((tank) => tank === null)) return null;
-  return tanks;
+  try {
+    const tanks = await Promise.all(tankPromises);
+    return tanks;
+  } catch (error) {
+    throw error; // Re-throw the error to be caught in the controller
+  }
 };
 
 module.exports = {
