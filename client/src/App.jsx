@@ -20,18 +20,9 @@ import {
 import { TanksInfoProvider } from './context/TanksInfoContext';
 import { Navbar } from './components';
 
-import { adddNaturalGasVolumes } from './api/u52/natural-gas';
-
 function App() {
   const token = true;
-  async function makeRequest() {
-    await adddNaturalGasVolumes({
-      day: '01-05-2024',
-      receiving_m3: 48181,
-      receiving_mscf: 41,
-    });
-  }
-  makeRequest();
+
   const renderRoutes = token ? (
     <>
       <Navbar />
