@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const sequelize = require('../../utils/database');
+const sequelize = require('../../database');
 
 const RGPumping = sequelize.define('RGPumping', {
   id: {

@@ -1,29 +1,17 @@
 const express = require('express');
 require('dotenv').config();
-const bcryptjs = require('bcryptjs');
 
-const sequelize = require('./utils/database');
-const {
-  tanksInfoRoutes,
-  u52Routes,
-  u53Routes,
-  u54Routes,
-  u90Routes,
-  allTanksRoutes,
-  UsersRoutes,
-  AuthRoutes,
-  reportsRoutes,
-} = require('./routes');
+const sequelize = require('./database');
+
 const {
   unsupportedRoutes,
   checkAuth,
   errorHandling,
 } = require('./middlewares');
 
-const app = express();
+const { AuthRoutes } = require('./routes');
 
-// const { addTanksInfo } = require('./testing/addTanksInfo');
-// app.use(addTanksInfo);
+const app = express();
 
 app.use(express.json());
 
@@ -50,14 +38,14 @@ app.use((req, res, next) => {
 
 // ROUTES
 app.use('/api/auth', AuthRoutes);
-app.use(checkAuth);
-app.use('/api/u52', u52Routes);
-app.use('/api/u53', u53Routes);
-app.use('/api/u54', u54Routes);
-app.use('/api/u90', u90Routes);
-app.use('/api/reports', reportsRoutes);
-app.use('/api/tanks-info', tanksInfoRoutes);
-app.use('/api/users', UsersRoutes);
+// app.use(checkAuth);
+// app.use('/api/u52', u52Routes);
+// app.use('/api/u53', u53Routes);
+// app.use('/api/u54', u54Routes);
+// app.use('/api/u90', u90Routes);
+// app.use('/api/reports', reportsRoutes);
+// app.use('/api/tanks-info', tanksInfoRoutes);
+// app.use('/api/users', UsersRoutes);
 
 // This medilware handle unsupported Routes
 app.use(unsupportedRoutes);
