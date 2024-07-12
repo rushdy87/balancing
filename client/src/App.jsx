@@ -19,12 +19,19 @@ import {
 } from './pages';
 import { TanksInfoProvider } from './context/TanksInfoContext';
 import { Navbar } from './components';
-import { addTanksVolume } from './api/u52/tanks';
+
+import { addOilVolumes } from './api/u52/crude-oil';
 
 function App() {
   const token = true;
   async function makeRequest() {
-    await addTanksVolume();
+    await addOilVolumes({
+      day: '02-06-2024',
+      reservoir_m3: 138692,
+      reservoir_bbl: 872345,
+      receiving: 13834,
+      sending: 15000,
+    });
   }
   makeRequest();
   const renderRoutes = token ? (

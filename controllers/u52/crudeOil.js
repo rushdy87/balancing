@@ -89,7 +89,9 @@ exports.AddOilVolumes = async (req, res, next) => {
   checkAuthorization(userData, 'u52', next);
 
   try {
-    const existingVolumes = await findOilByDate(formattedDate);
+    const existingVolumes = await CrudeOil.findOne({
+      where: { day: formattedDate },
+    });
     if (existingVolumes) {
       return handleError(
         next,

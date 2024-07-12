@@ -2,11 +2,11 @@ import axios from 'axios';
 
 import { apiConfig } from '../api-config';
 
-export const addTanksVolume = async (tanksData) => {
+export const addOilVolumes = async (oilData) => {
   try {
     const response = await axios.post(
-      `${apiConfig.baseURL}/u52/tanks`,
-      tanksData
+      `${apiConfig.baseURL}/u52/crude`,
+      oilData
     );
     return response.data;
   } catch (error) {

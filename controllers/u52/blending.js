@@ -73,9 +73,10 @@ exports.AddBlendingVolumes = async (req, res, next) => {
   const { userData } = req;
 
   checkAuthorization(userData, 'u52', next);
-
   try {
-    const existingBlending = await findBlendingByDate(formattedDate);
+    const existingBlending = await Blending.findOne({
+      where: { day: formattedDate },
+    });
     if (existingBlending) {
       return handleError(
         next,
