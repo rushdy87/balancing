@@ -13,6 +13,7 @@ const {
   confirmTank,
   validateInput,
   formatDate,
+  tanksDataFormatting,
 } = require('../../utils');
 
 // Controller to get all tanks by day
@@ -148,27 +149,15 @@ exports.addVolumeToTanks = async (req, res, next) => {
       return handleError(next, `There is already tanks data for ${day}.`, 400);
     }
 
-    const createPromises = Object.keys(tanksData).map(async (tag_number) => {
-      const { working_volume, low_level, high_level, product } =
-        await findTankInfo(tag_number);
+    const tanks = await tanksDataFormatting(tanksData);
 
-      const tankVolume = tanksData[tag_number];
-      const pumpable = tankVolume === 0 ? tankVolume : tankVolume - low_level;
-
-      if (pumpable > high_level || pumpable < 0) {
-        return handleError(
-          next,
-          `The pumpable volume for tank ${tag_number} is out of the range.`,
-          500
-        );
-      }
-
+    const createPromises = tanks.map(async (tank) => {
       return addTankData(Unit90Tank, {
-        tag_number,
+        tag_number: tank.tag_number,
         day: formattedDate,
-        product,
-        pumpable,
-        working_volume,
+        product: tank.product,
+        pumpable: tank.pumpable,
+        working_volume: tank.working_volume,
         userId: userData.id,
       });
     });
@@ -178,11 +167,8 @@ exports.addVolumeToTanks = async (req, res, next) => {
       .status(201)
       .json({ message: 'All tanks pumpable volumes have been added.' });
   } catch (error) {
-    handleError(
-      next,
-      'Something went wrong, could not add tank volumes right now.',
-      500
-    );
+    console.log(error);
+    handleError(next, error.message, 500);
   }
 };
 
