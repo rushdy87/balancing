@@ -1,5 +1,13 @@
 const AuthRoutes = require('./auth');
+const Unit52Routes = require('./unit52');
+const Unit53Routes = require('./unit53');
+const Unit54Routes = require('./unit54');
+const Unit90Routes = require('./unit90');
 
 module.exports = {
   AuthRoutes,
+  Unit52Routes,
+  Unit53Routes,
+  Unit54Routes,
+  Unit90Routes,
 };

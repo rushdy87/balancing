@@ -9,7 +9,13 @@ const {
   errorHandling,
 } = require('./middlewares');
 
-const { AuthRoutes } = require('./routes');
+const {
+  AuthRoutes,
+  Unit52Routes,
+  Unit53Routes,
+  Unit54Routes,
+  Unit90Routes,
+} = require('./routes');
 
 const app = express();
 
@@ -38,11 +44,11 @@ app.use((req, res, next) => {
 
 // ROUTES
 app.use('/api/auth', AuthRoutes);
-// app.use(checkAuth);
-// app.use('/api/u52', u52Routes);
-// app.use('/api/u53', u53Routes);
-// app.use('/api/u54', u54Routes);
-// app.use('/api/u90', u90Routes);
+app.use(checkAuth);
+app.use('/api/u52', Unit52Routes);
+app.use('/api/u53', Unit53Routes);
+app.use('/api/u54', Unit54Routes);
+app.use('/api/u90', Unit90Routes);
 // app.use('/api/reports', reportsRoutes);
 // app.use('/api/tanks-info', tanksInfoRoutes);
 // app.use('/api/users', UsersRoutes);
