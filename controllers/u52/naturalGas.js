@@ -85,7 +85,9 @@ exports.AddNaturalGasVolumes = async (req, res, next) => {
   checkAuthorization(userData, 'u52', next);
 
   try {
-    const existingVolumes = await findNaturalGasByDate(formattedDate);
+    const existingVolumes = await NaturalGas.findOne({
+      where: { day: formattedDate },
+    });
     if (existingVolumes) {
       return handleError(
         next,

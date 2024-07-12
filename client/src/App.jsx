@@ -20,17 +20,15 @@ import {
 import { TanksInfoProvider } from './context/TanksInfoContext';
 import { Navbar } from './components';
 
-import { addOilVolumes } from './api/u52/crude-oil';
+import { adddNaturalGasVolumes } from './api/u52/natural-gas';
 
 function App() {
   const token = true;
   async function makeRequest() {
-    await addOilVolumes({
-      day: '02-06-2024',
-      reservoir_m3: 138692,
-      reservoir_bbl: 872345,
-      receiving: 13834,
-      sending: 15000,
+    await adddNaturalGasVolumes({
+      day: '01-05-2024',
+      receiving_m3: 48181,
+      receiving_mscf: 41,
     });
   }
   makeRequest();
