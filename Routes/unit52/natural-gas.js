@@ -1,5 +1,11 @@
 const express = require('express');
-const { getNaturalGasByDay } = require('../../controllers/unit52/natural-gas');
+const {
+  getNaturalGasByDay,
+  getNaturalGasBetweenTwoDates,
+  addNaturalGas,
+  updateNaturalGas,
+  confirmGasVolumes,
+} = require('../../controllers/unit52/natural-gas');
 
 const router = express.Router();
 
@@ -8,16 +14,16 @@ const router = express.Router();
 router.get('/:day', getNaturalGasByDay);
 // res. => {}
 
-router.get('/:from/:to');
+router.get('/:from/:to', getNaturalGasBetweenTwoDates);
 
-router.post('/');
+router.post('/', addNaturalGas);
 // req => {date, receiving_m3, receiving_mscf}
 
 // edit Blinding Volue
 // req {day, items: {}}
-router.patch('/');
+router.patch('/', updateNaturalGas);
 
 // confirm the blindings
-router.patch('/confirmation');
+router.patch('/confirmation', confirmGasVolumes);
 
 module.exports = router;

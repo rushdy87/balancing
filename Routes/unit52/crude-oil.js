@@ -2,9 +2,9 @@ const express = require('express');
 const {
   getCrudeOilByDay,
   getCrudeOilBetweenTwoDates,
-  AddCrudeOil,
   updateCrudeOil,
   confirmOilVolumes,
+  addCrudeOil,
 } = require('../../controllers/unit52/crude-oil');
 
 const router = express.Router();
@@ -17,7 +17,7 @@ router.get('/:day', getCrudeOilByDay);
 
 router.get('/:from/:to', getCrudeOilBetweenTwoDates);
 
-router.post('/', AddCrudeOil);
+router.post('/', addCrudeOil);
 // req => {date, reservoir_m3, reservoir_bbl', receiving, sending'}
 
 // req {day, items: {}}

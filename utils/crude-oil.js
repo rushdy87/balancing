@@ -38,7 +38,7 @@ const deleteCrudeOil = async (day) => {
   return await CrudeOil.destroy({ where: { day } });
 };
 
-const addCrudeOil = async (crudeOil) => {
+const addCrudeOilVolumes = async (crudeOil) => {
   return await CrudeOil.create(crudeOil);
 };
 
@@ -46,5 +46,5 @@ module.exports = {
   findCrudeOilByDate,
   findCrudeOilByDateRange,
   deleteCrudeOil,
-  addCrudeOil,
+  addCrudeOilVolumes,
 };

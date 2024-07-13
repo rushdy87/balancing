@@ -35,9 +35,14 @@ const {
   findCrudeOilByDate,
   findCrudeOilByDateRange,
   deleteCrudeOil,
-  addCrudeOil,
+  addCrudeOilVolumes,
 } = require('./crude-oil');
-const { findNaturalGasByDate } = require('./natural-gas');
+const {
+  findNaturalGasByDate,
+  findNaturalGasByDateRange,
+  deleteNaturalGas,
+  addNaturalGasVolumes,
+} = require('./natural-gas');
 
 const formatDate = (date) => moment(date, 'DD-MM-YYYY').toDate();
 
@@ -83,6 +88,9 @@ module.exports = {
   findCrudeOilByDate,
   findCrudeOilByDateRange,
   deleteCrudeOil,
-  addCrudeOil,
+  addCrudeOilVolumes,
   findNaturalGasByDate,
+  findNaturalGasByDateRange,
+  deleteNaturalGas,
+  addNaturalGasVolumes,
 };

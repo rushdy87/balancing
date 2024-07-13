@@ -5,7 +5,7 @@ const {
   findCrudeOilByDate,
   findCrudeOilByDateRange,
   deleteCrudeOil,
-  addCrudeOil,
+  addCrudeOilVolumes,
 } = require('../../utils');
 
 exports.getCrudeOilByDay = async (req, res, next) => {
@@ -67,7 +67,7 @@ exports.getCrudeOilBetweenTwoDates = async (req, res, next) => {
   }
 };
 
-exports.AddCrudeOil = async (req, res, next) => {
+exports.addCrudeOil = async (req, res, next) => {
   const data = req.body;
   if (!data || !data.day) {
     return handleError(next, 'Missing required data: day.', 400);
@@ -85,7 +85,7 @@ exports.AddCrudeOil = async (req, res, next) => {
       await deleteCrudeOil(formattedDate);
     }
 
-    const oilVolumes = await addCrudeOil({
+    const oilVolumes = await addCrudeOilVolumes({
       ...data,
       day: formattedDate,
       userId: userData.id,
