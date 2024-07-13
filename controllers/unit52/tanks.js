@@ -10,7 +10,10 @@ const {
   tanksDataFormatting,
   countTanksByDate,
   findTanksByDateRange,
+  findTankInfo,
+  editTank,
 } = require('../../utils');
+const { findUnitTanksInfo } = require('../../utils/tanks');
 
 exports.getTanksByDay = async (req, res, next) => {
   const { day } = req.params;
@@ -103,5 +106,57 @@ exports.addVolumeToTanks = async (req, res, next) => {
   } catch (error) {
     console.log(error);
     handleError(next, error.message, 500);
+  }
+};
+
+exports.updateOneTankVolume = async (req, res, next) => {
+  const { tag_number, day } = req.params;
+  const { tov } = req.body;
+  const { userData } = req;
+
+  if (
+    !validateInput(req.params, ['tag_number', 'day'], next) ||
+    !validateInput(req.body, ['tov'], next)
+  )
+    return;
+
+  const formattedDate = formatDate(day);
+  checkAuthorization(userData, 'u52', next);
+
+  try {
+    const { low_level, high_level } = await findTankInfo(tag_number);
+
+    const pumpable = tov === 0 ? tov : tov - low_level;
+
+    if (pumpable > high_level || pumpable < 0) {
+      return handleError(
+        next,
+        `The pumpable volume for tank ${tag_number} is out of the range.`,
+        500
+      );
+    }
+
+    const updatedTank = await editTank(
+      Unit52Tank,
+      tag_number,
+      formattedDate,
+      pumpable
+    );
+    if (!updatedTank) {
+      return handleError(
+        next,
+        `Could not find a tank for tag number: ${tag_number} on date: ${day}.`,
+        404
+      );
+    }
+
+    res.status(200).json({ message: 'The tank volume has been updated.' });
+  } catch (error) {
+    console.log(error.message);
+    handleError(
+      next,
+      'Something went wrong, could not update tank volumes right now.',
+      500
+    );
   }
 };

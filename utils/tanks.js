@@ -80,7 +80,22 @@ const tanksDataFormatting = async (tanksData) => {
   return await Promise.all(tankPromises);
 };
 
+const editTank = async (model, tag_number, day, pumpable) => {
+  const tank = await model.findOne({
+    where: { tag_number, day },
+  });
+
+  if (!tank) {
+    return null;
+  }
+
+  tank.pumpable = pumpable;
+  await tank.save();
+  return tank;
+};
+
 module.exports = {
+  findTankInfo,
   findUnitTanksInfo,
   findTanksByDate,
   findTanksByDateRange,
@@ -88,4 +103,5 @@ module.exports = {
   deleteTanksVolumes,
   addTankData,
   tanksDataFormatting,
+  editTank,
 };

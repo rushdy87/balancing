@@ -4,7 +4,13 @@ const { Unit54Storage } = require('../models');
 const findSolidSulphurByDate = async (day) => {
   return await Unit54Storage.findOne({
     where: { day },
-    attributes: ['day', 'working_quantity', 'actual_quantity', 'isConfirmed'],
+    attributes: [
+      'id',
+      'day',
+      'working_quantity',
+      'actual_quantity',
+      'isConfirmed',
+    ],
   });
 };
 

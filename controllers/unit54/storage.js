@@ -112,3 +112,40 @@ exports.addSolidSulphur = async (req, res, next) => {
     );
   }
 };
+
+exports.updateSolidSulphurStore = async (req, res, next) => {
+  const { day, actual_quantity } = req.body;
+  if (!day || !actual_quantity) {
+    return handleError(next, 'Missing required data: day.', 400);
+  }
+
+  const formattedDate = formatDate(day);
+  const { userData } = req;
+
+  checkAuthorization(userData, 'u54', next);
+
+  try {
+    const existingSulphurStore = await findSolidSulphurByDate(formattedDate);
+
+    if (!existingSulphurStore) {
+      return handleError(
+        next,
+        'Could not find any Solid Sulphur Storage in this day.',
+        404
+      );
+    }
+
+    existingSulphurStore.actual_quantity = actual_quantity;
+
+    await existingSulphurStore.save();
+
+    res.status(201).json({
+      message: 'The Solid Sulphur Storage have been successfully updated.',
+    });
+  } catch (error) {
+    handleError(
+      next,
+      `Error updating Solid Sulphur Storage in this day. Error: ${error.message}`
+    );
+  }
+};

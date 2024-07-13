@@ -9,6 +9,8 @@ const {
   addTankData,
   tanksDataFormatting,
   findTanksByDateRange,
+  findTankInfo,
+  editTank,
 } = require('./tanks');
 const {
   findSolidSulphurByDate,
@@ -40,6 +42,7 @@ module.exports = {
   handleError,
   formatDate,
   validateInput,
+  findTankInfo,
   findTanksByDate,
   findTanksByDateRange,
   findSolidSulphurByDate,
@@ -51,4 +54,5 @@ module.exports = {
   calculateTanksVolumes,
   findSolidSulphurStorageForReport,
   findSolidSulphurByDateRange,
+  editTank,
 };
