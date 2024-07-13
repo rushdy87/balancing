@@ -1,4 +1,5 @@
 const { Unit54Storage } = require('../models');
+const { findBlendingByDate } = require('./blending');
 const { findTanksByDate, findUnitTanksInfo } = require('./tanks');
 
 const checkTanksList = async (tanks, unit) => {
@@ -44,8 +45,24 @@ const findSolidSulphurStorageForReport = async (day) => {
   return sulphurStore;
 };
 
+const findBlendingByDateForReport = async (day) => {
+  const blending = await findBlendingByDate(day);
+
+  if (!blending) {
+    return {
+      lpg: 0,
+      pg: 0,
+      rg: 0,
+      diesel: 0,
+      hfo: 0,
+    };
+  }
+  return blending;
+};
+
 module.exports = {
   findTanksForReport,
   calculateTanksVolumes,
   findSolidSulphurStorageForReport,
+  findBlendingByDateForReport,
 };

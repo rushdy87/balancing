@@ -7,6 +7,7 @@ const {
   calculateTanksVolumes,
   findSolidSulphurStorageForReport,
   handleError,
+  findBlendingByDateForReport,
 } = require('../../utils');
 
 exports.getReportByDay = async (req, res, next) => {
@@ -39,6 +40,9 @@ exports.getReportByDay = async (req, res, next) => {
     });
 
     report.store = store;
+
+    const blending = await findBlendingByDateForReport(formattedDate);
+    report.blending = blending;
 
     res.status(200).json(report);
   } catch (error) {
