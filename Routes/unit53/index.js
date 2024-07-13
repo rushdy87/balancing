@@ -1,7 +1,7 @@
 const express = require('express');
 
 const u53TanksRoutes = require('./tanks');
-const PavingAsphaltTransportRoutes = require('./paving-asphalt-transport');
+const PavingAsphaltTransportRoutes = require('./transport');
 const NotesRoutes = require('./notes');
 
 // /api/u52/

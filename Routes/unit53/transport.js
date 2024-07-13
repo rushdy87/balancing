@@ -5,7 +5,7 @@ const {
   addPavingAsphaltTransport,
   updatePavingAsphaltTransport,
   confirmePavingAsphaltTransport,
-} = require('../../controllers/unit53/paving-asphalt-transport');
+} = require('../../controllers/unit53/transport');
 
 const router = express.Router();
 
