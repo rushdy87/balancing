@@ -43,6 +43,7 @@ const {
   deleteNaturalGas,
   addNaturalGasVolumes,
 } = require('./natural-gas');
+const { findNotesByDate, addNote, editNote, destroyNote } = require('./notes');
 
 const formatDate = (date) => moment(date, 'DD-MM-YYYY').toDate();
 
@@ -93,4 +94,8 @@ module.exports = {
   findNaturalGasByDateRange,
   deleteNaturalGas,
   addNaturalGasVolumes,
+  findNotesByDate,
+  addNote,
+  editNote,
+  destroyNote,
 };
