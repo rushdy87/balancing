@@ -1,5 +1,15 @@
 const { Op } = require('sequelize');
 
+const { TanksInfo } = require('../models');
+
+const findUnitTanksInfo = async (unit) => {
+  const tanks = await TanksInfo.findAll({
+    where: { unit },
+    attributes: ['tag_number', 'product', 'working_volume'],
+  });
+  return tanks.map((tank) => ({ ...tank.get(), pumpable: 0 }));
+};
+
 const findTanksByDate = async (model, day) => {
   return await model.findAll({
     where: { day },
@@ -28,4 +38,4 @@ const findTanksByDateRange = async (model, from, to) => {
   });
 };
 
-module.exports = { findTanksByDate, findTanksByDateRange };
+module.exports = { findUnitTanksInfo, findTanksByDate, findTanksByDateRange };

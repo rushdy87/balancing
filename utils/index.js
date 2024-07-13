@@ -4,6 +4,11 @@ const { checkAuthorization } = require('./authorization');
 const { handleError } = require('./errors');
 const { findTanksByDate } = require('./tanks');
 const { findSolidSulphurByDate } = require('./storage');
+const {
+  findTanksForReport,
+  calculateTanksVolumes,
+  findSolidSulphurStorageForReport,
+} = require('./reports');
 
 const formatDate = (date) => moment(date, 'DD-MM-YYYY').toDate();
 
@@ -27,4 +32,7 @@ module.exports = {
   validateInput,
   findTanksByDate,
   findSolidSulphurByDate,
+  findTanksForReport,
+  calculateTanksVolumes,
+  findSolidSulphurStorageForReport,
 };
