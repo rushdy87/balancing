@@ -23,7 +23,12 @@ const {
   findSolidSulphurStorageForReport,
   findBlendingByDateForReport,
 } = require('./reports');
-const { findBlendingByDate } = require('./blending');
+const {
+  findBlendingByDate,
+  findBlendingByDateRange,
+  deleteBlendingVolumes,
+  addBlendingVolumes,
+} = require('./blending');
 
 const formatDate = (date) => moment(date, 'DD-MM-YYYY').toDate();
 
@@ -56,6 +61,9 @@ module.exports = {
   editTank,
   confirmTank,
   findBlendingByDate,
+  findBlendingByDateRange,
+  deleteBlendingVolumes,
+  addBlendingVolumes,
   findTanksForReport,
   calculateTanksVolumes,
   findSolidSulphurStorageForReport,
