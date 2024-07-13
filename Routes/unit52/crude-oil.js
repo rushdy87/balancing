@@ -1,5 +1,11 @@
 const express = require('express');
-const { getCrudeOilByDay } = require('../../controllers/unit52/crude-oil');
+const {
+  getCrudeOilByDay,
+  getCrudeOilBetweenTwoDates,
+  AddCrudeOil,
+  updateCrudeOil,
+  confirmOilVolumes,
+} = require('../../controllers/unit52/crude-oil');
 
 const router = express.Router();
 
@@ -9,15 +15,15 @@ const router = express.Router();
 router.get('/:day', getCrudeOilByDay);
 // res. => {}
 
-router.get('/:from/:to');
+router.get('/:from/:to', getCrudeOilBetweenTwoDates);
 
-router.post('/');
+router.post('/', AddCrudeOil);
 // req => {date, reservoir_m3, reservoir_bbl', receiving, sending'}
 
 // req {day, items: {}}
-router.patch('/');
+router.patch('/', updateCrudeOil);
 
 // confirm the blindings
-router.patch('/confirmation');
+router.patch('/confirmation', confirmOilVolumes);
 
 module.exports = router;

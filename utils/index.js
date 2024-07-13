@@ -30,7 +30,12 @@ const {
   deleteBlendingVolumes,
   addBlendingVolumes,
 } = require('./blending');
-const { findCrudeOilByDate } = require('./crude-oil');
+const {
+  findCrudeOilByDate,
+  findCrudeOilByDateRange,
+  deleteCrudeOil,
+  addCrudeOil,
+} = require('./crude-oil');
 
 const formatDate = (date) => moment(date, 'DD-MM-YYYY').toDate();
 
@@ -73,4 +78,7 @@ module.exports = {
   findBlendingByDateForReport,
   findCrudeOilByDateForReport,
   findCrudeOilByDate,
+  findCrudeOilByDateRange,
+  deleteCrudeOil,
+  addCrudeOil,
 };
