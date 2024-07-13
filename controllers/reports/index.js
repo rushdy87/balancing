@@ -8,6 +8,7 @@ const {
   findSolidSulphurStorageForReport,
   handleError,
   findBlendingByDateForReport,
+  findCrudeOilByDateForReport,
 } = require('../../utils');
 
 exports.getReportByDay = async (req, res, next) => {
@@ -43,6 +44,10 @@ exports.getReportByDay = async (req, res, next) => {
 
     const blending = await findBlendingByDateForReport(formattedDate);
     report.blending = blending;
+
+    const crudeOil = await findCrudeOilByDateForReport(formattedDate);
+
+    report.crudeOil = crudeOil;
 
     res.status(200).json(report);
   } catch (error) {
