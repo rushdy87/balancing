@@ -9,6 +9,7 @@ const {
   handleError,
   findBlendingByDateForReport,
   findCrudeOilByDateForReport,
+  findNaturalGasByDateForReport,
 } = require('../../utils');
 
 exports.getReportByDay = async (req, res, next) => {
@@ -39,15 +40,16 @@ exports.getReportByDay = async (req, res, next) => {
       pumpable: u54Storege.actual_quantity,
       working_volume: u54Storege.working_quantity,
     });
-
     report.store = store;
 
     const blending = await findBlendingByDateForReport(formattedDate);
     report.blending = blending;
 
     const crudeOil = await findCrudeOilByDateForReport(formattedDate);
-
     report.crudeOil = crudeOil;
+
+    const naturalGas = await findNaturalGasByDateForReport(formattedDate);
+    report.naturalGas = naturalGas;
 
     res.status(200).json(report);
   } catch (error) {

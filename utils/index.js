@@ -23,6 +23,7 @@ const {
   findSolidSulphurStorageForReport,
   findBlendingByDateForReport,
   findCrudeOilByDateForReport,
+  findNaturalGasByDateForReport,
 } = require('./reports');
 const {
   findBlendingByDate,
@@ -36,6 +37,7 @@ const {
   deleteCrudeOil,
   addCrudeOil,
 } = require('./crude-oil');
+const { findNaturalGasByDate } = require('./natural-gas');
 
 const formatDate = (date) => moment(date, 'DD-MM-YYYY').toDate();
 
@@ -77,8 +79,10 @@ module.exports = {
   findSolidSulphurStorageForReport,
   findBlendingByDateForReport,
   findCrudeOilByDateForReport,
+  findNaturalGasByDateForReport,
   findCrudeOilByDate,
   findCrudeOilByDateRange,
   deleteCrudeOil,
   addCrudeOil,
+  findNaturalGasByDate,
 };

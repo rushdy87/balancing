@@ -1,6 +1,7 @@
 const { Unit54Storage } = require('../models');
 const { findBlendingByDate } = require('./blending');
 const { findCrudeOilByDate } = require('./crude-oil');
+const { findNaturalGasByDate } = require('./natural-gas');
 const { findTanksByDate, findUnitTanksInfo } = require('./tanks');
 
 const checkTanksList = async (tanks, unit) => {
@@ -91,10 +92,24 @@ const findCrudeOilByDateForReport = async (day) => {
   };
 };
 
+const findNaturalGasByDateForReport = async (day) => {
+  const naturalGas = await findNaturalGasByDate(day);
+
+  if (!naturalGas) {
+    return { receiving_m3: 0, receiving_mscf: 0 };
+  }
+
+  return {
+    receiving_m3: naturalGas.receiving_m3,
+    receiving_mscf: naturalGas.receiving_mscf,
+  };
+};
+
 module.exports = {
   findTanksForReport,
   calculateTanksVolumes,
   findSolidSulphurStorageForReport,
   findBlendingByDateForReport,
   findCrudeOilByDateForReport,
+  findNaturalGasByDateForReport,
 };
