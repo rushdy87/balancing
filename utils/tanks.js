@@ -2,6 +2,13 @@ const { Op } = require('sequelize');
 
 const { TanksInfo } = require('../models');
 
+const findTankInfo = async (tag_number) => {
+  return await TanksInfo.findOne({
+    where: { tag_number },
+    attributes: ['low_level', 'high_level', 'working_volume', 'product'],
+  });
+};
+
 const findUnitTanksInfo = async (unit) => {
   const tanks = await TanksInfo.findAll({
     where: { unit },
@@ -38,4 +45,47 @@ const findTanksByDateRange = async (model, from, to) => {
   });
 };
 
-module.exports = { findUnitTanksInfo, findTanksByDate, findTanksByDateRange };
+const countTanksByDate = async (model, day) => {
+  return await model.count({ where: { day } });
+};
+
+const deleteTanksVolumes = async (model, day) => {
+  return await model.destroy({ where: { day } });
+};
+
+const addTankData = async (model, data) => {
+  return await model.create(data);
+};
+
+const tanksDataFormatting = async (tanksData) => {
+  const tankPromises = Object.keys(tanksData).map(async (tag_number) => {
+    const { working_volume, low_level, high_level, product } =
+      await findTankInfo(tag_number);
+
+    const tankVolume = tanksData[tag_number];
+    const pumpable = tankVolume === 0 ? 0 : tankVolume - low_level;
+
+    if (pumpable > high_level || pumpable < 0) {
+      throw new Error(`The pumpable volume for ${tag_number} is out of range.`);
+    }
+
+    return {
+      tag_number,
+      product,
+      pumpable,
+      working_volume,
+    };
+  });
+
+  return await Promise.all(tankPromises);
+};
+
+module.exports = {
+  findUnitTanksInfo,
+  findTanksByDate,
+  findTanksByDateRange,
+  countTanksByDate,
+  deleteTanksVolumes,
+  addTankData,
+  tanksDataFormatting,
+};

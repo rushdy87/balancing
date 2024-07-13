@@ -1,6 +1,10 @@
 const express = require('express');
 
-const { getSolidSulphurByDay } = require('../../controllers/unit54/storage');
+const {
+  getSolidSulphurByDay,
+  getSolidSulphurBetweenTwoDates,
+  addSolidSulphur,
+} = require('../../controllers/unit54/storage');
 
 const router = express.Router();
 
@@ -9,9 +13,9 @@ const router = express.Router();
 router.get('/:day', getSolidSulphurByDay);
 // res => {day, working_quantity, actual_quantity, isConfirmed}
 
-router.get('/:from/:to');
+router.get('/:from/:to', getSolidSulphurBetweenTwoDates);
 
-router.post('/');
+router.post('/', addSolidSulphur);
 // body = {day, actual_quantity}
 
 router.patch('/');

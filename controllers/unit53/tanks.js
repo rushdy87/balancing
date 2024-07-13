@@ -5,8 +5,12 @@ const {
   checkAuthorization,
   handleError,
   findTanksByDate,
+  countTanksByDate,
+  findTanksByDateRange,
+  deleteTanksVolumes,
+  tanksDataFormatting,
+  addTankData,
 } = require('../../utils');
-const { findTanksByDateRange } = require('../../utils/tanks');
 
 exports.getTanksByDay = async (req, res, next) => {
   const { day } = req.params;
@@ -36,7 +40,7 @@ exports.getTanksBetweenTwoDates = async (req, res, next) => {
 
   const startDate = formatDate(from);
   const endDate = formatDate(to);
-  checkAuthorization(userData, 'u52', next);
+  checkAuthorization(userData, 'u53', next);
 
   try {
     const tanks = await findTanksByDateRange(Unit53Tank, startDate, endDate);
@@ -51,5 +55,53 @@ exports.getTanksBetweenTwoDates = async (req, res, next) => {
       `Error fetching tanks between dates: ${from} and ${to}.`,
       500
     );
+  }
+};
+
+exports.addVolumeToTanks = async (req, res, next) => {
+  const { day, tanks: tanksData } = req.body;
+  const { userData } = req;
+
+  if (!validateInput(req.body, ['day', 'tanks'], next)) return;
+
+  if (typeof tanksData !== 'object')
+    return handleError(
+      next,
+      'Invalid input data: tanks should be an object.',
+      400
+    );
+
+  const formattedDate = formatDate(day);
+  checkAuthorization(userData, 'u53', next);
+
+  try {
+    const existingTanksCount = await countTanksByDate(
+      Unit53Tank,
+      formattedDate
+    );
+    if (existingTanksCount > 0) {
+      await deleteTanksVolumes(Unit53Tank, formattedDate);
+    }
+
+    const tanks = await tanksDataFormatting(tanksData);
+
+    const createPromises = tanks.map((tank) => {
+      return addTankData(Unit53Tank, {
+        tag_number: tank.tag_number,
+        day: formattedDate,
+        product: tank.product,
+        pumpable: tank.pumpable,
+        working_volume: tank.working_volume,
+        userId: userData.id,
+      });
+    });
+
+    await Promise.all(createPromises);
+    res
+      .status(201)
+      .json({ message: 'All tanks pumpable volumes have been added.' });
+  } catch (error) {
+    console.log(error);
+    handleError(next, error.message, 500);
   }
 };

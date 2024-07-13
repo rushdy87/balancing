@@ -2,8 +2,18 @@ const moment = require('moment');
 
 const { checkAuthorization } = require('./authorization');
 const { handleError } = require('./errors');
-const { findTanksByDate } = require('./tanks');
-const { findSolidSulphurByDate } = require('./storage');
+const {
+  findTanksByDate,
+  deleteTanksVolumes,
+  countTanksByDate,
+  addTankData,
+  tanksDataFormatting,
+  findTanksByDateRange,
+} = require('./tanks');
+const {
+  findSolidSulphurByDate,
+  findSolidSulphurByDateRange,
+} = require('./storage');
 const {
   findTanksForReport,
   calculateTanksVolumes,
@@ -31,8 +41,14 @@ module.exports = {
   formatDate,
   validateInput,
   findTanksByDate,
+  findTanksByDateRange,
   findSolidSulphurByDate,
+  countTanksByDate,
+  addTankData,
+  tanksDataFormatting,
+  deleteTanksVolumes,
   findTanksForReport,
   calculateTanksVolumes,
   findSolidSulphurStorageForReport,
+  findSolidSulphurByDateRange,
 };
