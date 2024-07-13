@@ -94,6 +94,20 @@ const editTank = async (model, tag_number, day, pumpable) => {
   return tank;
 };
 
+const confirmTank = async (model, tag_number, day) => {
+  const tank = await model.findOne({
+    where: { tag_number, day },
+  });
+
+  if (!tank) {
+    return null;
+  }
+
+  tank.isConfirmed = true;
+  await tank.save();
+  return tank;
+};
+
 module.exports = {
   findTankInfo,
   findUnitTanksInfo,
@@ -104,4 +118,5 @@ module.exports = {
   addTankData,
   tanksDataFormatting,
   editTank,
+  confirmTank,
 };

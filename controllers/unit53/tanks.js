@@ -12,6 +12,7 @@ const {
   addTankData,
   findTankInfo,
   editTank,
+  confirmTank,
 } = require('../../utils');
 
 exports.getTanksByDay = async (req, res, next) => {
@@ -155,6 +156,39 @@ exports.updateOneTankVolume = async (req, res, next) => {
     handleError(
       next,
       'Something went wrong, could not update tank volumes right now.',
+      500
+    );
+  }
+};
+
+exports.confirmTankVolume = async (req, res, next) => {
+  const { tag_number, day } = req.body;
+  const { userData } = req;
+
+  if (!validateInput(req.body, ['tag_number', 'day'], next)) return;
+
+  const formattedDate = formatDate(day);
+  checkAuthorization(userData, 'u53', next);
+
+  try {
+    const confirmedTank = await confirmTank(
+      Unit53Tank,
+      tag_number,
+      formattedDate
+    );
+    if (!confirmedTank) {
+      return handleError(
+        next,
+        `Could not find a tank for tag number: ${tag_number} on date: ${day}.`,
+        404
+      );
+    }
+
+    res.status(200).json({ message: 'The tank volume has been confirmed.' });
+  } catch (error) {
+    handleError(
+      next,
+      'Something went wrong, could not confirm tank volumes right now.',
       500
     );
   }

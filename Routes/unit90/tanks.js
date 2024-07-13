@@ -5,6 +5,7 @@ const {
   getTanksBetweenTwoDates,
   addVolumeToTanks,
   updateOneTankVolume,
+  confirmTankVolume,
 } = require('../../controllers/unit90/tanks');
 
 const router = express.Router();
@@ -24,6 +25,6 @@ router.post('/tank');
 // {tov: $$$}
 router.patch('/:tag_number/:day', updateOneTankVolume);
 
-router.patch('/confirmation');
+router.patch('/confirmation', confirmTankVolume);
 
 module.exports = router;

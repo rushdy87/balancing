@@ -11,6 +11,7 @@ const {
   findTanksByDateRange,
   findTankInfo,
   editTank,
+  confirmTank,
 } = require('./tanks');
 const {
   findSolidSulphurByDate,
@@ -55,4 +56,5 @@ module.exports = {
   findSolidSulphurStorageForReport,
   findSolidSulphurByDateRange,
   editTank,
+  confirmTank,
 };

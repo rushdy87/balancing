@@ -149,3 +149,40 @@ exports.updateSolidSulphurStore = async (req, res, next) => {
     );
   }
 };
+
+exports.confirmeSolidSulphurStore = async (req, res, next) => {
+  const { day } = req.body;
+  if (!day) {
+    return handleError(next, 'Missing required day.', 400);
+  }
+
+  const formattedDate = formatDate(day);
+  const { userData } = req;
+
+  checkAuthorization(userData, 'u54', next);
+
+  try {
+    const existingSulphurStore = await findSolidSulphurByDate(formattedDate);
+
+    if (!existingSulphurStore) {
+      return handleError(
+        next,
+        'Could not find any Solid Sulphur Storage in this day.',
+        404
+      );
+    }
+
+    existingSulphurStore.isConfirmed = true;
+
+    await existingSulphurStore.save();
+
+    res.status(201).json({
+      message: 'The Solid Sulphur Storage have been successfully confirmed.',
+    });
+  } catch (error) {
+    handleError(
+      next,
+      `Error confirming Solid Sulphur Storage in this day. Error: ${error.message}`
+    );
+  }
+};
