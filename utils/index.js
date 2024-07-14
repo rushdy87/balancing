@@ -56,6 +56,12 @@ const {
   deleteSolidSulphurProduction,
   addSolidSulphurProduction,
 } = require('./production');
+const {
+  findPumping,
+  findPumpingInDateRange,
+  deletePumping,
+  createPumping,
+} = require('./pumping');
 
 const formatDate = (date) => moment(date, 'DD-MM-YYYY').toDate();
 
@@ -118,4 +124,8 @@ module.exports = {
   findSolidSulphurProductionByDateRange,
   deleteSolidSulphurProduction,
   addSolidSulphurProduction,
+  findPumping,
+  findPumpingInDateRange,
+  deletePumping,
+  createPumping,
 };
