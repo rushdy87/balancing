@@ -1,4 +1,4 @@
-const { LPGTransport } = require('../../../models');
+const { RGTransport } = require('../../../models');
 const {
   formatDate,
   checkAuthorization,
@@ -17,12 +17,12 @@ exports.getTransportbyDay = async (req, res, next) => {
   checkAuthorization(userData, 'u90', next);
 
   try {
-    const transport = await findTransport(LPGTransport, formattedDate);
+    const transport = await findTransport(RGTransport, formattedDate);
 
     if (!transport) {
       return handleError(
         next,
-        'Could not find any LPG Transport for this day.',
+        'Could not find any regular gasoline Transport for this day.',
         404
       );
     }
@@ -31,7 +31,7 @@ exports.getTransportbyDay = async (req, res, next) => {
   } catch (error) {
     handleError(
       next,
-      `Error fetching LPG Transport quantities for day: ${day}. Error: ${error.message}`
+      `Error fetching regular gasoline Transport quantities for day: ${day}. Error: ${error.message}`
     );
   }
 };
@@ -50,7 +50,7 @@ exports.getTransportBetweenTwoDates = async (req, res, next) => {
 
   try {
     const transport = await findTransportInDateRange(
-      LPGTransport,
+      RGTransport,
       startDate,
       endDate
     );
@@ -58,7 +58,7 @@ exports.getTransportBetweenTwoDates = async (req, res, next) => {
     if (!transport || transport.length === 0) {
       return handleError(
         next,
-        'There is no LPG Transport  in this date range.',
+        'There is no regular gasoline Transport  in this date range.',
         404
       );
     }
@@ -66,7 +66,7 @@ exports.getTransportBetweenTwoDates = async (req, res, next) => {
   } catch (error) {
     handleError(
       next,
-      `Error fetching LPG Transport quantities between ${from} and ${to}. Error: ${error.message}`
+      `Error fetching regular gasoline Transport quantities between ${from} and ${to}. Error: ${error.message}`
     );
   }
 };
@@ -83,13 +83,13 @@ exports.addTransport = async (req, res, next) => {
   checkAuthorization(userData, 'u90', next);
 
   try {
-    const existingTransport = await findTransport(LPGTransport, formattedDate);
+    const existingTransport = await findTransport(RGTransport, formattedDate);
 
     if (existingTransport) {
-      await deleteTransport(LPGTransport, formattedDate);
+      await deleteTransport(RGTransport, formattedDate);
     }
 
-    const transport = await createTransport(LPGTransport, {
+    const transport = await createTransport(RGTransport, {
       ...data,
       day: formattedDate,
       userId: userData.id,
@@ -98,18 +98,19 @@ exports.addTransport = async (req, res, next) => {
     if (!transport) {
       return handleError(
         next,
-        'Could not add LPG Transport at this time.',
+        'Could not add regular gasoline Transport at this time.',
         500
       );
     }
 
     res.status(201).json({
-      message: 'The LPG Transport quantities have been successfully added.',
+      message:
+        'The regular gasoline Transport quantities have been successfully added.',
     });
   } catch (error) {
     handleError(
       next,
-      `Error fetching LPG Transport quantities for day: ${data.day}. Error: ${error.message}`
+      `Error fetching regular gasoline Transport quantities for day: ${data.day}. Error: ${error.message}`
     );
   }
 };
@@ -126,10 +127,14 @@ exports.updateTransport = async (req, res, next) => {
   checkAuthorization(userData, 'u90', next);
 
   try {
-    const existingTransport = await findTransport(LPGTransport, formattedDate);
+    const existingTransport = await findTransport(RGTransport, formattedDate);
 
     if (!existingTransport) {
-      return handleError(next, 'There is no LPG Transport for this date.', 404);
+      return handleError(
+        next,
+        'There is no regular gasoline Transport for this date.',
+        404
+      );
     }
 
     for (const item in items) {
@@ -145,12 +150,13 @@ exports.updateTransport = async (req, res, next) => {
     await existingTransport.save();
 
     res.status(200).json({
-      message: 'The LPG Transport quantities have been successfully updated.',
+      message:
+        'The regular gasoline Transport quantities have been successfully updated.',
     });
   } catch (error) {
     handleError(
       next,
-      `Error updating LPG Transport quantities for day: ${data.day}. Error: ${error.message}`
+      `Error updating regular gasoline Transport quantities for day: ${data.day}. Error: ${error.message}`
     );
   }
 };
@@ -168,20 +174,24 @@ exports.confirmeTransport = async (req, res, next) => {
   checkAuthorization(userData, 'u90', next);
 
   try {
-    const existingTransport = await findTransport(LPGTransport, formattedDate);
+    const existingTransport = await findTransport(RGTransport, formattedDate);
     if (!existingTransport) {
-      return handleError(next, 'There is no LPG Transport for this date.', 404);
+      return handleError(
+        next,
+        'There is no regular gasoline Transport for this date.',
+        404
+      );
     }
     existingTransport.isConfirmed = true;
 
     await existingTransport.save();
     res.status(200).json({
-      message: 'LPG Transport has been successfully confirmed.',
+      message: 'regular gasoline Transport has been successfully confirmed.',
     });
   } catch (error) {
     handleError(
       next,
-      `Error confirming LPG Transportquantities for day: ${day}. Error: ${error.message}`
+      `Error confirming regular gasoline Transportquantities for day: ${day}. Error: ${error.message}`
     );
   }
 };
