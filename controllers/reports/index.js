@@ -10,6 +10,7 @@ const {
   findBlendingByDateForReport,
   findCrudeOilByDateForReport,
   findNaturalGasByDateForReport,
+  findSolidSulphurProductionForReport,
 } = require('../../utils');
 
 exports.getReportByDay = async (req, res, next) => {
@@ -43,6 +44,13 @@ exports.getReportByDay = async (req, res, next) => {
     report.store = store;
 
     const blending = await findBlendingByDateForReport(formattedDate);
+
+    const solidSulphur = await findSolidSulphurProductionForReport(
+      formattedDate
+    );
+
+    blending.solidSulphur = solidSulphur;
+
     report.blending = blending;
 
     const crudeOil = await findCrudeOilByDateForReport(formattedDate);

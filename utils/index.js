@@ -24,6 +24,7 @@ const {
   findBlendingByDateForReport,
   findCrudeOilByDateForReport,
   findNaturalGasByDateForReport,
+  findSolidSulphurProductionForReport,
 } = require('./reports');
 const {
   findBlendingByDate,
@@ -102,6 +103,7 @@ module.exports = {
   findSolidSulphurByDateRange,
   findSolidSulphurStorageForReport,
   findBlendingByDateForReport,
+  findSolidSulphurProductionForReport,
   findCrudeOilByDateForReport,
   findNaturalGasByDateForReport,
   findCrudeOilByDate,
