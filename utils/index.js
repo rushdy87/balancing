@@ -50,6 +50,12 @@ const {
   deleteTransport,
   createTransport,
 } = require('./transport');
+const {
+  findSolidSulphurProductionByDate,
+  findSolidSulphurProductionByDateRange,
+  deleteSolidSulphurProduction,
+  addSolidSulphurProduction,
+} = require('./production');
 
 const formatDate = (date) => moment(date, 'DD-MM-YYYY').toDate();
 
@@ -108,4 +114,8 @@ module.exports = {
   findTransportInDateRange,
   deleteTransport,
   createTransport,
+  findSolidSulphurProductionByDate,
+  findSolidSulphurProductionByDateRange,
+  deleteSolidSulphurProduction,
+  addSolidSulphurProduction,
 };
