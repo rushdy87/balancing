@@ -3,12 +3,14 @@ const express = require('express');
 const u90TanksRoutes = require('./tanks');
 const u90PumpingRoutes = require('./pumping');
 const u90TransportRoutes = require('./transport');
+const NotesRoutes = require('./notes');
 
-// /api/u52/
+// /api/u90/
 const router = express.Router();
 
 router.use('/tanks', u90TanksRoutes);
 router.use('/pumping', u90PumpingRoutes);
 router.use('/transport', u90TransportRoutes);
+router.use('/notes', NotesRoutes);
 
 module.exports = router;
