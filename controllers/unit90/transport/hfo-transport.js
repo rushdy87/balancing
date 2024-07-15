@@ -4,6 +4,7 @@ const {
   formatDate,
   checkAuthorization,
   handleError,
+  findHFOTransportBySide,
 } = require('../../../utils');
 
 exports.getHFOTransportBySide = async (req, res, next) => {
@@ -14,10 +15,11 @@ exports.getHFOTransportBySide = async (req, res, next) => {
   checkAuthorization(userData, 'u90', next);
 
   try {
-    const transport = await HFOTransport.findOne({
-      where: { side, day: formattedDate },
-      attributes: ['id', 'day', 'side', 'quantity', 'tankers', 'isConfirmed'],
-    });
+    const transport = await findHFOTransportBySide(
+      HFOTransport,
+      side,
+      formattedDate
+    );
 
     if (!transport) {
       return handleError(next, 'There is no HFO transport on this date.');

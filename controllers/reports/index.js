@@ -11,6 +11,7 @@ const {
   ATKTransport,
   PavingAsphaltTransport,
   SolidSulphurTransport,
+  HFOTransport,
 } = require('../../models');
 const {
   formatDate,
@@ -26,6 +27,8 @@ const {
   findSolidSulphurProductionForReport,
   findPumpingForReport,
   findTransportToReport,
+  findHFOTransportForReport,
+  getTotal,
 } = require('../../utils');
 
 exports.getReportByDay = async (req, res, next) => {
@@ -85,7 +88,24 @@ exports.getReportByDay = async (req, res, next) => {
       DieselPumping,
       formattedDate
     );
-    report.pumping = { pgPumping, rgPumping, kerosenePumping, dieselPumping };
+    report.pumping = {
+      pgPumping: {
+        ...pgPumping,
+        total: getTotal(pgPumping.toKarbala, pgPumping.toNajaf),
+      },
+      rgPumping: {
+        ...rgPumping,
+        total: getTotal(rgPumping.toKarbala, rgPumping.toNajaf),
+      },
+      kerosenePumping: {
+        ...kerosenePumping,
+        total: getTotal(kerosenePumping.toKarbala, kerosenePumping.toNajaf),
+      },
+      dieselPumping: {
+        ...dieselPumping,
+        total: getTotal(dieselPumping.toKarbala, dieselPumping.toNajaf),
+      },
+    };
 
     const lpgTransport = await findTransportToReport(
       LPGTransport,
@@ -111,6 +131,38 @@ exports.getReportByDay = async (req, res, next) => {
       formattedDate
     );
     report.solidSulphur = solidSulphurTransport;
+
+    const governmentalTransport = await findHFOTransportForReport(
+      HFOTransport,
+      1,
+      formattedDate
+    );
+    const nonGovernmentalTransport = await findHFOTransportForReport(
+      HFOTransport,
+      2,
+      formattedDate
+    );
+    const exportTransport = await findHFOTransportForReport(
+      HFOTransport,
+      3,
+      formattedDate
+    );
+
+    report.hfoTransport = {
+      governmentalTransport,
+      nonGovernmentalTransport,
+      exportTransport,
+      quantityTotlal: getTotal(
+        governmentalTransport.quantity,
+        nonGovernmentalTransport.quantity,
+        exportTransport.quantity
+      ),
+      tankersTotlal: getTotal(
+        governmentalTransport.tankers,
+        nonGovernmentalTransport.tankers,
+        exportTransport.tankers
+      ),
+    };
 
     res.status(200).json(report);
   } catch (error) {

@@ -5,7 +5,7 @@ const { findNaturalGasByDate } = require('./natural-gas');
 const { findSolidSulphurProductionByDate } = require('./production');
 const { findPumping } = require('./pumping');
 const { findTanksByDate, findUnitTanksInfo } = require('./tanks');
-const { findTransport } = require('./transport');
+const { findTransport, findHFOTransportBySide } = require('./transport');
 
 const checkTanksList = async (tanks, unit) => {
   if (!tanks || tanks.length === 0) {
@@ -132,6 +132,18 @@ const findTransportToReport = async (model, day) => {
   return { quantity: transport.quantity, tankers: transport.tankers };
 };
 
+const findHFOTransportForReport = async (module, side, day) => {
+  const hfoTransport = await findHFOTransportBySide(module, side, day);
+  if (!hfoTransport) {
+    return { quantity: 0, tankers: 0 };
+  }
+  return { quantity: hfoTransport.quantity, tankers: hfoTransport.tankers };
+};
+
+const getTotal = (...args) => {
+  return args.reduce((accumulator, num) => (accumulator += num), 0);
+};
+
 module.exports = {
   findTanksForReport,
   calculateTanksVolumes,
@@ -142,4 +154,6 @@ module.exports = {
   findNaturalGasByDateForReport,
   findPumpingForReport,
   findTransportToReport,
+  findHFOTransportForReport,
+  getTotal,
 };

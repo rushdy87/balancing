@@ -27,6 +27,8 @@ const {
   findSolidSulphurProductionForReport,
   findPumpingForReport,
   findTransportToReport,
+  findHFOTransportForReport,
+  getTotal,
 } = require('./reports');
 const {
   findBlendingByDate,
@@ -52,6 +54,7 @@ const {
   findTransportInDateRange,
   deleteTransport,
   createTransport,
+  findHFOTransportBySide,
 } = require('./transport');
 const {
   findSolidSulphurProductionByDate,
@@ -110,6 +113,8 @@ module.exports = {
   findNaturalGasByDateForReport,
   findPumpingForReport,
   findTransportToReport,
+  findHFOTransportForReport,
+  getTotal,
   findCrudeOilByDate,
   findCrudeOilByDateRange,
   deleteCrudeOil,
@@ -124,6 +129,7 @@ module.exports = {
   destroyNote,
   findTransport,
   findTransportInDateRange,
+  findHFOTransportBySide,
   deleteTransport,
   createTransport,
   findSolidSulphurProductionByDate,

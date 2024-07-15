@@ -25,9 +25,17 @@ const createTransport = async (model, transportData) => {
   });
 };
 
+const findHFOTransportBySide = async (module, side, day) => {
+  return await module.findOne({
+    where: { side, day },
+    attributes: ['id', 'day', 'side', 'quantity', 'tankers', 'isConfirmed'],
+  });
+};
+
 module.exports = {
   findTransport,
   findTransportInDateRange,
   deleteTransport,
   createTransport,
+  findHFOTransportBySide,
 };
