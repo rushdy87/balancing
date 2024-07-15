@@ -6,6 +6,11 @@ const {
   RGPumping,
   KerosenePumping,
   DieselPumping,
+  LPGTransport,
+  RGTransport,
+  ATKTransport,
+  PavingAsphaltTransport,
+  SolidSulphurTransport,
 } = require('../../models');
 const {
   formatDate,
@@ -20,6 +25,7 @@ const {
   findNaturalGasByDateForReport,
   findSolidSulphurProductionForReport,
   findPumpingForReport,
+  findTransportToReport,
 } = require('../../utils');
 
 exports.getReportByDay = async (req, res, next) => {
@@ -80,6 +86,31 @@ exports.getReportByDay = async (req, res, next) => {
       formattedDate
     );
     report.pumping = { pgPumping, rgPumping, kerosenePumping, dieselPumping };
+
+    const lpgTransport = await findTransportToReport(
+      LPGTransport,
+      formattedDate
+    );
+    report.lpgTransport = lpgTransport;
+
+    const rgTransport = await findTransportToReport(RGTransport, formattedDate);
+    const atkTransport = await findTransportToReport(
+      ATKTransport,
+      formattedDate
+    );
+    report.lightProdectsTransport = { rgTransport, atkTransport };
+
+    const asphaltTransport = await findTransportToReport(
+      PavingAsphaltTransport,
+      formattedDate
+    );
+    report.asphaltTransport = asphaltTransport;
+
+    const solidSulphurTransport = await findTransportToReport(
+      SolidSulphurTransport,
+      formattedDate
+    );
+    report.solidSulphur = solidSulphurTransport;
 
     res.status(200).json(report);
   } catch (error) {
