@@ -1,4 +1,12 @@
-const { Unit52Tank, Unit53Tank, Unit90Tank } = require('../../models');
+const {
+  Unit52Tank,
+  Unit53Tank,
+  Unit90Tank,
+  PGPumping,
+  RGPumping,
+  KerosenePumping,
+  DieselPumping,
+} = require('../../models');
 const {
   formatDate,
   validateInput,
@@ -11,6 +19,7 @@ const {
   findCrudeOilByDateForReport,
   findNaturalGasByDateForReport,
   findSolidSulphurProductionForReport,
+  findPumpingForReport,
 } = require('../../utils');
 
 exports.getReportByDay = async (req, res, next) => {
@@ -58,6 +67,19 @@ exports.getReportByDay = async (req, res, next) => {
 
     const naturalGas = await findNaturalGasByDateForReport(formattedDate);
     report.naturalGas = naturalGas;
+
+    // Pumping
+    const pgPumping = await findPumpingForReport(PGPumping, formattedDate);
+    const rgPumping = await findPumpingForReport(RGPumping, formattedDate);
+    const kerosenePumping = await findPumpingForReport(
+      KerosenePumping,
+      formattedDate
+    );
+    const dieselPumping = await findPumpingForReport(
+      DieselPumping,
+      formattedDate
+    );
+    report.pumping = { pgPumping, rgPumping, kerosenePumping, dieselPumping };
 
     res.status(200).json(report);
   } catch (error) {
