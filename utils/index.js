@@ -29,6 +29,7 @@ const {
   findTransportToReport,
   findHFOTransportForReport,
   getTotal,
+  findNotesForReport,
 } = require('./reports');
 const {
   findBlendingByDate,
@@ -114,6 +115,7 @@ module.exports = {
   findPumpingForReport,
   findTransportToReport,
   findHFOTransportForReport,
+  findNotesForReport,
   getTotal,
   findCrudeOilByDate,
   findCrudeOilByDateRange,

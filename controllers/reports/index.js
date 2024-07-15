@@ -29,6 +29,7 @@ const {
   findTransportToReport,
   findHFOTransportForReport,
   getTotal,
+  findNotesForReport,
 } = require('../../utils');
 
 exports.getReportByDay = async (req, res, next) => {
@@ -163,6 +164,10 @@ exports.getReportByDay = async (req, res, next) => {
         exportTransport.tankers
       ),
     };
+
+    const notes = await findNotesForReport(formattedDate);
+
+    report.notes = notes;
 
     res.status(200).json(report);
   } catch (error) {

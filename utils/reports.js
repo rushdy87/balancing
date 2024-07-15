@@ -1,7 +1,14 @@
-const { Unit54Storage } = require('../models');
+const {
+  Unit54Storage,
+  U52Note,
+  U90Note,
+  U54Note,
+  U53Note,
+} = require('../models');
 const { findBlendingByDate } = require('./blending');
 const { findCrudeOilByDate } = require('./crude-oil');
 const { findNaturalGasByDate } = require('./natural-gas');
+const { findNotesByDate } = require('./notes');
 const { findSolidSulphurProductionByDate } = require('./production');
 const { findPumping } = require('./pumping');
 const { findTanksByDate, findUnitTanksInfo } = require('./tanks');
@@ -140,6 +147,15 @@ const findHFOTransportForReport = async (module, side, day) => {
   return { quantity: hfoTransport.quantity, tankers: hfoTransport.tankers };
 };
 
+const findNotesForReport = async (day) => {
+  const u52Notes = await findNotesByDate(U52Note, day);
+  const u53Notes = await findNotesByDate(U53Note, day);
+  const u54Notes = await findNotesByDate(U54Note, day);
+  const u90Notes = await findNotesByDate(U90Note, day);
+
+  return [...u52Notes, ...u53Notes, ...u54Notes, ...u90Notes];
+};
+
 const getTotal = (...args) => {
   return args.reduce((accumulator, num) => (accumulator += num), 0);
 };
@@ -155,5 +171,6 @@ module.exports = {
   findPumpingForReport,
   findTransportToReport,
   findHFOTransportForReport,
+  findNotesForReport,
   getTotal,
 };
