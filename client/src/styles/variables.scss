@@ -1,0 +1,25 @@
+// colors
+$primary: #1877f2;
+$secondary: #6c757d;
+$success: green;
+$info: cyan;
+$warning: yellow;
+$danger: red;
+$light: #f8f9fa;
+$dark: #212529;
+
+// spacing
+$spacing-md: 16px;
+$spacing-lg: 32px;
+
+// border radius
+$borderRadius: 8px;
+
+@mixin breakpoint($point) {
+  @if $point == md {
+    // 768px
+    @media (min-width: 768px) {
+      @content;
+    }
+  }
+}
