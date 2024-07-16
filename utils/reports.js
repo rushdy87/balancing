@@ -52,7 +52,7 @@ const findSolidSulphurStorageForReport = async (day) => {
     attributes: ['day', 'working_quantity', 'actual_quantity'],
   });
   if (!sulphurStore) {
-    return { working_quantity: 0, actual_quantity: 0 };
+    return { working_quantity: 9720, actual_quantity: 0 };
   }
   return sulphurStore;
 };

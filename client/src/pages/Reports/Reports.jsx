@@ -1,17 +1,35 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { useReactToPrint } from 'react-to-print';
+
+import { Button, Datepicker, ReportView } from '../../components';
 import './Reports.scss';
-import { getReportByDate } from '../api/report';
 
 const Reports = () => {
-  const [report, setReport] = useState(null);
-  const fetchReport = async () => {
-    const data = await getReportByDate('1-6-2024');
-    setReport(data);
+  const [day, setDay] = useState('');
+
+  const contentToPrint = useRef(null);
+  const handlePrint = useReactToPrint({
+    documentTitle: 'Print This Document',
+    onBeforePrint: () => console.log('before printing...'),
+    onAfterPrint: () => console.log('after printing...'),
+    removeAfterPrint: true,
+  });
+
+  const changeDate = (newDate) => {
+    setDay(
+      `${newDate.getDate()}-${newDate.getMonth() + 1}-${newDate.getFullYear()}`
+    );
   };
+
   return (
-    <div>
-      <button onClick={fetchReport}>Fetch Data</button>
-      {report && <div>{report.notes[0].note}</div>}
+    <div className='Reports_container'>
+      <Datepicker date={day} changeDate={changeDate} />
+
+      <ReportView day={day} contentToPrint={contentToPrint} />
+
+      <Button onClick={() => handlePrint(null, () => contentToPrint.current)}>
+        طباعة
+      </Button>
     </div>
   );
 };
