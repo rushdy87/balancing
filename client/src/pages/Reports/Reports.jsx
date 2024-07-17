@@ -9,9 +9,9 @@ const Reports = () => {
 
   const contentToPrint = useRef(null);
   const handlePrint = useReactToPrint({
-    documentTitle: 'Print This Document',
-    onBeforePrint: () => console.log('before printing...'),
-    onAfterPrint: () => console.log('after printing...'),
+    documentTitle: `الموقف اليومي${day}`,
+    onBeforePrint: () => console.log('onBeforePrint'),
+    onAfterPrint: () => console.log('onAfterPrint'),
     removeAfterPrint: true,
   });
 
@@ -27,7 +27,11 @@ const Reports = () => {
 
       <ReportView day={day} contentToPrint={contentToPrint} />
 
-      <Button onClick={() => handlePrint(null, () => contentToPrint.current)}>
+      <Button
+        onClick={() => {
+          handlePrint(null, () => contentToPrint.current);
+        }}
+      >
         طباعة
       </Button>
     </div>

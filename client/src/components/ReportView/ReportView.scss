@@ -7,6 +7,33 @@
   justify-content: center;
   width: 95vw;
 
+  .report_header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    .report_header_ref_name {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  .report_footer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+
+    .report_footer_signature {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
   .report-wrapper {
     display: flex;
     flex-direction: column;

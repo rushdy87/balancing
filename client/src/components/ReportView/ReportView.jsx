@@ -15,7 +15,7 @@ const arabicStoreItemsnames = {
   sulphur: 'الكبريت الصلب',
 };
 
-const ReportView = ({ day, contentToPrint }) => {
+const ReportView = ({ day, contentToPrint, printMode }) => {
   const [reportData, setReportData] = useState([]);
   const isFirstRender = useRef(true); // Ref to track the initial render
 
@@ -420,7 +420,31 @@ const ReportView = ({ day, contentToPrint }) => {
   return (
     <div className='ReportView_container' ref={contentToPrint}>
       <div className='ReportView_tanks_balance'>
-        {reportData ? renderReport : 'any thing'}
+        {reportData ? (
+          <>
+            <div className='report_header'>
+              <div className='report_header_ref_name'>
+                <span>مصفى كربلاء</span>
+                <span>شعبة الاستلام والتجهيز</span>
+              </div>
+              <div className='report_header_date'>
+                التاريخ:{' '}
+                <span>{`${new Date().getDate()}-${
+                  new Date().getMonth() + 1
+                }-${new Date().getFullYear()}`}</span>
+              </div>
+            </div>
+            {renderReport}
+            <div className='report_footer'>
+              <div className='report_footer_signature'>
+                <span>نذير طالب عبد الله</span>
+                <span>م. شعبة الاستلام والتجهيز</span>
+              </div>
+            </div>
+          </>
+        ) : (
+          ''
+        )}
       </div>
     </div>
   );
