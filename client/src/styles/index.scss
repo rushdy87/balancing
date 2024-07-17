@@ -31,3 +31,10 @@ input[type='number']::-webkit-outer-spin-button {
   border-color: $secondary;
   margin: 10px auto;
 }
+
+.heading_bullet {
+  display: list-item; /* This has to be "list-item"                                          */
+  margin-left: 1em; /* If you use default list-style-position 'outside', you may need this */
+  background: rgba($color: $secondary, $alpha: 0.1);
+  width: fit-content;
+}

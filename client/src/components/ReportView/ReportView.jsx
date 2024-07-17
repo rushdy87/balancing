@@ -43,7 +43,7 @@ const ReportView = ({ day, contentToPrint }) => {
       </h3>
       <div className='report-context'>
         <div className='report-context_section'>
-          <h4>استلام المواد الخام</h4>
+          <h4 className='heading_bullet'>استلام المواد الخام</h4>
           <div className='context_section_items'>
             <div className='report_column'>
               <span className='report_column_header'>
@@ -67,7 +67,7 @@ const ReportView = ({ day, contentToPrint }) => {
         </div>
 
         <div className='report-context_section'>
-          <h4>خزين النفط الخام</h4>
+          <h4 className='heading_bullet'>خزين النفط الخام</h4>
           <div className='context_section_items'>
             <div className='report_column'>
               <span className='report_column_header'>النفط الخام</span>
@@ -108,47 +108,61 @@ const ReportView = ({ day, contentToPrint }) => {
         </div>
 
         <div className='report-context_section'>
-          <h4>المنتجات النهائية</h4>
-          <div className='report_column blending'>
-            <div className='report_column_body_row'>
-              <span className='report_column_body_row_subtitle'>
-                الغاز السائل
-              </span>
-              <span>{reportData?.blending?.lpg}</span>
+          <h4 className='heading_bullet'>المنتجات النهائية</h4>
+          <div className='report-context_blending'>
+            <div className='report_column'>
+              <div className='report_column_body_row'>
+                <span className='report_column_body_row_subtitle'>
+                  الغاز السائل
+                </span>
+                <span>{reportData?.blending?.lpg}</span>
+              </div>
             </div>
-            <div className='report_column_body_row'>
-              <span className='report_column_body_row_subtitle'>
-                البنزين السوبر
-              </span>
-              <span>{reportData?.blending?.pg}</span>
+            <div className='report_column'>
+              <div className='report_column_body_row'>
+                <span className='report_column_body_row_subtitle'>
+                  البنزين السوبر
+                </span>
+                <span>{reportData?.blending?.pg}</span>
+              </div>
             </div>
-            <div className='report_column_body_row'>
-              <span className='report_column_body_row_subtitle'>
-                البنزين المحسن
-              </span>
-              <span>{reportData?.blending?.rg}</span>
+            <div className='report_column'>
+              <div className='report_column_body_row'>
+                <span className='report_column_body_row_subtitle'>
+                  البنزين المحسن
+                </span>
+                <span>{reportData?.blending?.rg}</span>
+              </div>
             </div>
-            <div className='report_column_body_row'>
-              <span className='report_column_body_row_subtitle'>زيت الغاز</span>
-              <span>{reportData?.blending?.diesel}</span>
+            <div className='report_column'>
+              <div className='report_column_body_row'>
+                <span className='report_column_body_row_subtitle'>
+                  زيت الغاز
+                </span>
+                <span>{reportData?.blending?.diesel}</span>
+              </div>
             </div>
-            <div className='report_column_body_row'>
-              <span className='report_column_body_row_subtitle'>
-                زيت الوقود الثقيل
-              </span>
-              <span>{reportData?.blending?.hfo}</span>
+            <div className='report_column'>
+              <div className='report_column_body_row'>
+                <span className='report_column_body_row_subtitle'>
+                  زيت الوقود الثقيل
+                </span>
+                <span>{reportData?.blending?.hfo}</span>
+              </div>
             </div>
-            <div className='report_column_body_row'>
-              <span className='report_column_body_row_subtitle'>
-                الكبريت الصلب
-              </span>
-              <span>{reportData?.blending?.solidSulphur}</span>
+            <div className='report_column'>
+              <div className='report_column_body_row'>
+                <span className='report_column_body_row_subtitle'>
+                  الكبريت الصلب
+                </span>
+                <span>{reportData?.blending?.solidSulphur}</span>
+              </div>
             </div>
           </div>
         </div>
 
         <div className='report-context_section'>
-          <h4>خزين المنتجات</h4>
+          <h4 className='heading_bullet'>خزين المنتجات</h4>
           <div className='report-context_store'>
             {reportData?.store?.map((item) => {
               return (
@@ -175,7 +189,7 @@ const ReportView = ({ day, contentToPrint }) => {
         </div>
 
         <div className='report-context_section pumping'>
-          <h4>
+          <h4 className='heading_bullet'>
             ضخ المنتجات الخفيفة الى شركة خطوط الانابيب النفطية - مستودعي (
             كربلاء والنجف)
           </h4>
@@ -245,7 +259,7 @@ const ReportView = ({ day, contentToPrint }) => {
           {/* التحميل */}
 
           <div className='report-context_section'>
-            <h4>تحميل الغاز السائل</h4>
+            <h4 className='heading_bullet'>تحميل الغاز السائل</h4>
             <div className='report_column'>
               <span className='report_column_header'>الغاز السائل</span>
               <div className='report_column_body_row'>
@@ -257,7 +271,7 @@ const ReportView = ({ day, contentToPrint }) => {
 
               <div className='report_column_body_row'>
                 <span className='report_column_body_row_subtitle'>
-                  عدد الصهاريج
+                  الصهاريج
                 </span>
                 <span>{reportData?.lpgTransport?.tankers}</span>
               </div>
@@ -265,18 +279,22 @@ const ReportView = ({ day, contentToPrint }) => {
           </div>
 
           <div className='report-context_section'>
-            <h4>تحميل المنتجات الخفيفة</h4>
+            <h4 className='heading_bullet'>تحميل المنتجات الخفيفة</h4>
             <div className='light-prodects-transport'>
               <div className='report_column'>
                 <span className='report_column_header'>وقود الطائرات</span>
                 <div className='report_column_body_row'>
-                  <span>الكمية (م3)</span>
+                  <span className='report_column_body_row_subtitle'>
+                    الكمية (م3)
+                  </span>
                   <span>
                     {reportData?.lightProdectsTransport?.atkTransport?.quantity}
                   </span>
                 </div>
                 <div className='report_column_body_row'>
-                  <span>عدد الصهاريج</span>
+                  <span className='report_column_body_row_subtitle'>
+                    الصهاريج
+                  </span>
                   <span>
                     {reportData?.lightProdectsTransport?.atkTransport?.tankers}
                   </span>
@@ -286,13 +304,17 @@ const ReportView = ({ day, contentToPrint }) => {
               <div className='report_column'>
                 <span className='report_column_header'>البنزين المحسن</span>
                 <div className='report_column_body_row'>
-                  <span>الكمية (م3)</span>
+                  <span className='report_column_body_row_subtitle'>
+                    الكمية (م3)
+                  </span>
                   <span>
                     {reportData?.lightProdectsTransport?.rgTransport?.quantity}
                   </span>
                 </div>
                 <div className='report_column_body_row'>
-                  <span>عدد الصهاريج</span>
+                  <span className='report_column_body_row_subtitle'>
+                    الصهاريج
+                  </span>
                   <span>
                     {reportData?.lightProdectsTransport?.rgTransport?.tankers}
                   </span>
@@ -301,66 +323,91 @@ const ReportView = ({ day, contentToPrint }) => {
             </div>
           </div>
         </div>
-        {/* HFO */}
-        <div>
-          <h4>تحميل زيت الوقود الثقيل</h4>
-          <table>
-            <thead>
-              <tr>
-                <th>جهة التجهيز</th>
-                <th>الكمية (م3)</th>
-                <th>عدد الصهاريج</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>المعامل الحكومية</td>
-                <td>
-                  {reportData?.hfoTransport?.governmentalTransport?.quantity}
-                </td>
-                <td>
-                  {reportData?.hfoTransport?.governmentalTransport?.tankers}
-                </td>
-              </tr>
-              <tr>
-                <td>المعامل الأهلية</td>
-                <td>
-                  {reportData?.hfoTransport?.nonGovernmentalTransport?.quantity}
-                </td>
-                <td>
-                  {reportData?.hfoTransport?.nonGovernmentalTransport?.tankers}
-                </td>
-              </tr>
-              <tr>
-                <td>التصدير</td>
-                <td>{reportData?.hfoTransport?.exportTransport?.quantity}</td>
-                <td>{reportData?.hfoTransport?.exportTransport?.tankers}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        {/* HFO, Asphalt and Solid Sulphur  */}
 
-        <div>
-          <h4>تحميل أسفلت الرصف</h4>
-          <div>
-            <span>الكمية (طن)</span>
-            <span>{reportData?.asphaltTransport?.quantity}</span>
+        <div className='hfo_a_ss_transport'>
+          <div className='report-context_section'>
+            <h4 className='heading_bullet'>تحميل زيت الوقود الثقيل</h4>
+            <table>
+              <thead>
+                <tr>
+                  <th className='table_header'>جهة التجهيز</th>
+                  <th className='table_header'>الكمية (م3)</th>
+                  <th className='table_header'> الصهاريج</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className='table_header'>المعامل الحكومية</td>
+                  <td className='table_cell'>
+                    {reportData?.hfoTransport?.governmentalTransport?.quantity}
+                  </td>
+                  <td className='table_cell'>
+                    {reportData?.hfoTransport?.governmentalTransport?.tankers}
+                  </td>
+                </tr>
+                <tr>
+                  <td className='table_header'>المعامل الأهلية</td>
+                  <td className='table_cell'>
+                    {
+                      reportData?.hfoTransport?.nonGovernmentalTransport
+                        ?.quantity
+                    }
+                  </td>
+                  <td className='table_cell'>
+                    {
+                      reportData?.hfoTransport?.nonGovernmentalTransport
+                        ?.tankers
+                    }
+                  </td>
+                </tr>
+                <tr>
+                  <td className='table_header'>التصدير</td>
+                  <td className='table_cell'>
+                    {reportData?.hfoTransport?.exportTransport?.quantity}
+                  </td>
+                  <td className='table_cell'>
+                    {reportData?.hfoTransport?.exportTransport?.tankers}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <div>
-            <span>عدد الصهاريج</span>
-            <span>{reportData?.asphaltTransport?.tankers}</span>
-          </div>
-        </div>
 
-        <div>
-          <h4>تحميل الكبريت الصلب</h4>
-          <div>
-            <span>الكمية (طن)</span>
-            <span>{reportData?.solidSulphur?.quantity}</span>
+          <div className='report-context_section'>
+            <h4 className='heading_bullet'>تحميل أسفلت الرصف</h4>
+            <div className='report_column'>
+              <div className='report_column_body_row'>
+                <span className='report_column_body_row_subtitle'>
+                  الكمية (طن)
+                </span>
+                <span>{reportData?.asphaltTransport?.quantity}</span>
+              </div>
+              <div className='report_column_body_row'>
+                <span className='report_column_body_row_subtitle'>
+                  الصهاريج
+                </span>
+                <span>{reportData?.asphaltTransport?.tankers}</span>
+              </div>
+            </div>
           </div>
-          <div>
-            <span>عدد الصهاريج</span>
-            <span>{reportData?.solidSulphur?.tankers}</span>
+
+          <div className='report-context_section'>
+            <h4 className='heading_bullet'>تحميل الكبريت الصلب</h4>
+            <div className='report_column'>
+              <div className='report_column_body_row'>
+                <span className='report_column_body_row_subtitle'>
+                  الكمية (طن)
+                </span>
+                <span>{reportData?.solidSulphur?.quantity}</span>
+              </div>
+              <div className='report_column_body_row'>
+                <span className='report_column_body_row_subtitle'>
+                  الصهاريج
+                </span>
+                <span>{reportData?.solidSulphur?.tankers}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -368,7 +415,7 @@ const ReportView = ({ day, contentToPrint }) => {
   );
 
   if (isFirstRender.current) {
-    return <h4>الرجاء اختيار التاريخ</h4>;
+    return <h3>الرجاء اختيار التاريخ</h3>;
   }
   return (
     <div className='ReportView_container' ref={contentToPrint}>

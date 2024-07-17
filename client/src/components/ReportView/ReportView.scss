@@ -46,7 +46,7 @@
           gap: 10px;
         }
       }
-      .blending {
+      .report-context_store {
         width: 300px !important;
       }
 
@@ -56,8 +56,20 @@
 
       .report-context_store {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         grid-template-rows: repeat(3, 1fr);
+        grid-column-gap: 1px;
+        grid-row-gap: 1px;
+
+        .report_column {
+          width: 140px;
+        }
+      }
+
+      .report-context_blending {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
         grid-column-gap: 1px;
         grid-row-gap: 1px;
       }
@@ -65,6 +77,15 @@
       .reprt_transport_section {
         display: flex;
         gap: 20px;
+      }
+      .hfo_a_ss_transport {
+        display: flex;
+        gap: 10px;
+
+        .report_column {
+          width: 160px;
+          height: fit-content;
+        }
       }
     }
   }
@@ -76,6 +97,7 @@
     align-items: center;
     justify-content: center;
     border: 2px solid $dark;
+    height: 100%;
 
     .report_column_header {
       font-weight: bold;
