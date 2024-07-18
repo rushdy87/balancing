@@ -410,6 +410,17 @@ const ReportView = ({ day, contentToPrint, printMode }) => {
             </div>
           </div>
         </div>
+
+        {reportData?.notes?.length > 0 && (
+          <div className='report-context_section'>
+            <h4>{reportData?.notes.length === 1 ? 'ملاحظة' : 'ملاحظات'}</h4>
+            {reportData?.notes.map((note) => (
+              <h5 key={note.note.replace(/\s/g, '')} className='heading_bullet'>
+                {note.note}
+              </h5>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
