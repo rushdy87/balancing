@@ -13,12 +13,14 @@ const findTankInfo = async (tag_number) => {
       'low_level',
       'high_level',
       'working_volume',
+      'is_active',
     ],
   });
 };
 
 const findAllTanksInfo = async () => {
   return await TanksInfo.findAll({
+    where: { is_active: true },
     attributes: [
       'id',
       'tag_number',
@@ -27,6 +29,20 @@ const findAllTanksInfo = async () => {
       'low_level',
       'high_level',
       'working_volume',
+      'is_active',
+    ],
+  });
+};
+
+const findTanksInfoByUnit = async (unit) => {
+  return await TanksInfo.findAll({
+    where: { unit, is_active: true },
+    attributes: [
+      'tag_number',
+      'product',
+      'working_volume',
+      'low_level',
+      'high_level',
     ],
   });
 };
@@ -133,6 +149,7 @@ const confirmTank = async (model, tag_number, day) => {
 module.exports = {
   findTankInfo,
   findAllTanksInfo,
+  findTanksInfoByUnit,
   findUnitTanksInfo,
   findTanksByDate,
   findTanksByDateRange,

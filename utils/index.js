@@ -13,6 +13,7 @@ const {
   editTank,
   confirmTank,
   findAllTanksInfo,
+  findTanksInfoByUnit,
 } = require('./tanks');
 const {
   findSolidSulphurByDate,
@@ -93,6 +94,7 @@ module.exports = {
   validateInput,
   findTankInfo,
   findAllTanksInfo,
+  findTanksInfoByUnit,
   findTanksByDate,
   findTanksByDateRange,
   findSolidSulphurByDate,
