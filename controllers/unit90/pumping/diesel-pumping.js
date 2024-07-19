@@ -14,9 +14,8 @@ exports.getPumpingByDay = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u90', next);
-
   try {
+    checkAuthorization(userData, 'u90', next);
     const pumping = await findPumping(DieselPumping, formattedDate);
 
     if (!pumping) {
@@ -41,9 +40,8 @@ exports.getPumpingBetweenTwoDates = async (req, res, next) => {
   const endDate = formatDate(to);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u90', next);
-
   try {
+    checkAuthorization(userData, 'u90', next);
     const pumping = await findPumpingInDateRange(
       DieselPumping,
       startDate,
@@ -73,9 +71,8 @@ exports.addPumping = async (req, res, next) => {
   const formattedDate = formatDate(data.day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u90', next);
-
   try {
+    checkAuthorization(userData, 'u90', next);
     const existingPumping = await findPumping(DieselPumping, formattedDate);
 
     if (existingPumping) {
@@ -115,9 +112,8 @@ exports.updatePumping = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u90', next);
-
   try {
+    checkAuthorization(userData, 'u90', next);
     const existingPumping = await findPumping(DieselPumping, formattedDate);
 
     if (!existingPumping) {
@@ -155,9 +151,8 @@ exports.confirmPumping = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u90', next);
-
   try {
+    checkAuthorization(userData, 'u90', next);
     const existingPumping = await findPumping(DieselPumping, formattedDate);
 
     if (!existingPumping) {

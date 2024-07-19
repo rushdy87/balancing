@@ -14,9 +14,8 @@ exports.getPavingAsphaltTransportbyDay = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u53', next);
-
   try {
+    checkAuthorization(userData, 'u53', next);
     const transport = await findTransport(
       PavingAsphaltTransport,
       formattedDate
@@ -49,9 +48,8 @@ exports.getPavingAsphaltTransportBetweenTwoDates = async (req, res, next) => {
   const endDate = formatDate(to);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u53', next);
-
   try {
+    checkAuthorization(userData, 'u53', next);
     const transport = await findTransportInDateRange(
       PavingAsphaltTransport,
       startDate,
@@ -83,9 +81,8 @@ exports.addPavingAsphaltTransport = async (req, res, next) => {
   const formattedDate = formatDate(data.day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u53', next);
-
   try {
+    checkAuthorization(userData, 'u53', next);
     const existingTransport = await findTransport(
       PavingAsphaltTransport,
       formattedDate
@@ -130,9 +127,8 @@ exports.updatePavingAsphaltTransport = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u53', next);
-
   try {
+    checkAuthorization(userData, 'u53', next);
     const existingTransport = await findTransport(
       PavingAsphaltTransport,
       formattedDate
@@ -180,9 +176,8 @@ exports.confirmePavingAsphaltTransport = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u53', next);
-
   try {
+    checkAuthorization(userData, 'u53', next);
     const existingTransport = await findTransport(
       PavingAsphaltTransport,
       formattedDate

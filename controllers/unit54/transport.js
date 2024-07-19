@@ -14,9 +14,8 @@ exports.getSolidSulphurTransportbyDay = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u54', next);
-
   try {
+    checkAuthorization(userData, 'u54', next);
     const transport = await findTransport(SolidSulphurTransport, formattedDate);
 
     if (!transport) {
@@ -46,9 +45,8 @@ exports.getSolidSulphurTransportBetweenTwoDates = async (req, res, next) => {
   const endDate = formatDate(to);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u54', next);
-
   try {
+    checkAuthorization(userData, 'u54', next);
     const transport = await findTransportInDateRange(
       SolidSulphurTransport,
       startDate,
@@ -80,9 +78,8 @@ exports.addSolidSulphurTransport = async (req, res, next) => {
   const formattedDate = formatDate(data.day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u54', next);
-
   try {
+    checkAuthorization(userData, 'u54', next);
     const existingTransport = await findTransport(
       SolidSulphurTransport,
       formattedDate
@@ -127,9 +124,8 @@ exports.updateSolidSulphurTransport = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u54', next);
-
   try {
+    checkAuthorization(userData, 'u54', next);
     const existingTransport = await findTransport(
       SolidSulphurTransport,
       formattedDate
@@ -177,9 +173,8 @@ exports.confirmeSolidSulphurTransport = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u54', next);
-
   try {
+    checkAuthorization(userData, 'u54', next);
     const existingTransport = await findTransport(
       SolidSulphurTransport,
       formattedDate

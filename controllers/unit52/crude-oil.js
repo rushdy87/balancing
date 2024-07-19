@@ -13,9 +13,8 @@ exports.getCrudeOilByDay = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u52', next);
-
   try {
+    checkAuthorization(userData, 'u52', next);
     const crudeOil = await findCrudeOilByDate(formattedDate);
 
     if (!crudeOil) {
@@ -45,9 +44,8 @@ exports.getCrudeOilBetweenTwoDates = async (req, res, next) => {
   const endDate = formatDate(to);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u52', next);
-
   try {
+    checkAuthorization(userData, 'u52', next);
     const oilResults = await findCrudeOilByDateRange(startDate, endDate);
 
     if (!oilResults || oilResults.length === 0) {
@@ -76,9 +74,8 @@ exports.addCrudeOil = async (req, res, next) => {
   const formattedDate = formatDate(data.day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u52', next);
-
   try {
+    checkAuthorization(userData, 'u52', next);
     const existingVolumes = await findCrudeOilByDate(formattedDate);
 
     if (existingVolumes) {
@@ -114,9 +111,8 @@ exports.updateCrudeOil = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u52', next);
-
   try {
+    checkAuthorization(userData, 'u52', next);
     const existingCrudeOil = await findCrudeOilByDate(formattedDate);
     if (!existingCrudeOil) {
       return handleError(
@@ -157,9 +153,8 @@ exports.confirmOilVolumes = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u52', next);
-
   try {
+    checkAuthorization(userData, 'u52', next);
     const existingCrudeOil = await findCrudeOilByDate(formattedDate);
 
     if (!existingCrudeOil) {

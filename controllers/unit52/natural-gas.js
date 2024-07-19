@@ -13,9 +13,8 @@ exports.getNaturalGasByDay = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u52', next);
-
   try {
+    checkAuthorization(userData, 'u52', next);
     const gasResult = await findNaturalGasByDate(formattedDate);
 
     if (!gasResult) {
@@ -45,9 +44,8 @@ exports.getNaturalGasBetweenTwoDates = async (req, res, next) => {
   const endDate = formatDate(to);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u52', next);
-
   try {
+    checkAuthorization(userData, 'u52', next);
     const gasResults = await findNaturalGasByDateRange(startDate, endDate);
 
     if (!gasResults || gasResults.length === 0) {
@@ -76,9 +74,8 @@ exports.addNaturalGas = async (req, res, next) => {
   const formattedDate = formatDate(data.day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u52', next);
-
   try {
+    checkAuthorization(userData, 'u52', next);
     const existingVolumes = await findNaturalGasByDate(formattedDate);
 
     if (existingVolumes) {
@@ -119,9 +116,8 @@ exports.updateNaturalGas = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u52', next);
-
   try {
+    checkAuthorization(userData, 'u52', next);
     const gasResults = await findNaturalGasByDate(formattedDate);
 
     if (!gasResults) {
@@ -164,9 +160,8 @@ exports.confirmGasVolumes = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u52', next);
-
   try {
+    checkAuthorization(userData, 'u52', next);
     const existingGas = await findNaturalGasByDate(formattedDate);
 
     if (!existingGas) {

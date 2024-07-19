@@ -14,9 +14,8 @@ exports.getTransportbyDay = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u90', next);
-
   try {
+    checkAuthorization(userData, 'u90', next);
     const transport = await findTransport(ATKTransport, formattedDate);
 
     if (!transport) {
@@ -46,9 +45,8 @@ exports.getTransportBetweenTwoDates = async (req, res, next) => {
   const endDate = formatDate(to);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u90', next);
-
   try {
+    checkAuthorization(userData, 'u90', next);
     const transport = await findTransportInDateRange(
       ATKTransport,
       startDate,
@@ -80,9 +78,8 @@ exports.addTransport = async (req, res, next) => {
   const formattedDate = formatDate(data.day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u90', next);
-
   try {
+    checkAuthorization(userData, 'u90', next);
     const existingTransport = await findTransport(ATKTransport, formattedDate);
 
     if (existingTransport) {
@@ -123,9 +120,8 @@ exports.updateTransport = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u90', next);
-
   try {
+    checkAuthorization(userData, 'u90', next);
     const existingTransport = await findTransport(ATKTransport, formattedDate);
 
     if (!existingTransport) {
@@ -165,9 +161,8 @@ exports.confirmeTransport = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u90', next);
-
   try {
+    checkAuthorization(userData, 'u90', next);
     const existingTransport = await findTransport(ATKTransport, formattedDate);
     if (!existingTransport) {
       return handleError(next, 'There is no ATK Transport for this date.', 404);

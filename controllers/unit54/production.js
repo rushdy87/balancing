@@ -13,9 +13,8 @@ exports.getSolidSulphurProduction = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u54', next);
-
   try {
+    checkAuthorization(userData, 'u54', next);
     const sulphurProduction = await findSolidSulphurProductionByDate(
       formattedDate
     );
@@ -80,9 +79,8 @@ exports.addSolidSulphur = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u54', next);
-
   try {
+    checkAuthorization(userData, 'u54', next);
     const existingSulphurProduction = await findSolidSulphurProductionByDate(
       formattedDate
     );
@@ -125,9 +123,8 @@ exports.updateSolidSulphurProduction = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u54', next);
-
   try {
+    checkAuthorization(userData, 'u54', next);
     const existingSulphurProduction = await findSolidSulphurProductionByDate(
       formattedDate
     );
@@ -164,9 +161,8 @@ exports.confirmeSolidSulphurProduction = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u54', next);
-
   try {
+    checkAuthorization(userData, 'u54', next);
     const existingSulphurProduction = await findSolidSulphurProductionByDate(
       formattedDate
     );

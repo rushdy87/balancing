@@ -13,9 +13,8 @@ exports.getBlendingByDay = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u52', next);
-
   try {
+    checkAuthorization(userData, 'u52', next);
     const blendingResult = await findBlendingByDate(formattedDate);
 
     if (!blendingResult) {
@@ -45,9 +44,8 @@ exports.getBlendingBetweenTwoDates = async (req, res, next) => {
   const endDate = formatDate(to);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u52', next);
-
   try {
+    checkAuthorization(userData, 'u52', next);
     const blendingResults = await findBlendingByDateRange(startDate, endDate);
 
     if (!blendingResults || blendingResults.length === 0) {
@@ -72,8 +70,8 @@ exports.AddBlendingVolumes = async (req, res, next) => {
   const formattedDate = formatDate(data.day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u52', next);
   try {
+    checkAuthorization(userData, 'u52', next);
     const existingBlending = await findBlendingByDate(formattedDate);
     if (existingBlending) {
       await deleteBlendingVolumes(formattedDate);
@@ -113,9 +111,8 @@ exports.updateBlendingVolumes = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u52', next);
-
   try {
+    checkAuthorization(userData, 'u52', next);
     const blendingResult = await findBlendingByDate(formattedDate);
 
     if (!blendingResult) {
@@ -152,9 +149,8 @@ exports.confirmBlending = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u52', next);
-
   try {
+    checkAuthorization(userData, 'u52', next);
     const blendingResult = await findBlendingByDate(formattedDate);
 
     if (!blendingResult) {

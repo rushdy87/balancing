@@ -12,9 +12,8 @@ exports.getTankInfo = async (req, res, next) => {
 
   if (!validateInput(req.params, ['tag_number'], next)) return;
 
-  checkAuthorization(userData, null, next);
-
   try {
+    checkAuthorization(userData, null, next);
     const tank = await findTankInfo(tag_number);
 
     if (!tank) {
@@ -34,9 +33,9 @@ exports.getTankInfo = async (req, res, next) => {
 };
 exports.getTanksInfo = async (req, res, next) => {
   const { userData } = req;
-  checkAuthorization(userData, null, next);
 
   try {
+    checkAuthorization(userData, null, next);
     const tanks = await findAllTanksInfo();
 
     if (!tanks || tanks.length === 0) {

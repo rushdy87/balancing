@@ -22,9 +22,9 @@ exports.getTanksByDay = async (req, res, next) => {
   if (!validateInput(req.params, ['day'], next)) return;
 
   const formattedDate = formatDate(day);
-  checkAuthorization(userData, 'u52', next);
 
   try {
+    checkAuthorization(userData, 'u52', next);
     const tanks = await findTanksByDate(Unit52Tank, formattedDate);
     if (!tanks || tanks.length === 0) {
       return handleError(next, 'Could not find any tanks.', 404);
@@ -43,9 +43,9 @@ exports.getTanksBetweenTwoDates = async (req, res, next) => {
 
   const startDate = formatDate(from);
   const endDate = formatDate(to);
-  checkAuthorization(userData, 'u52', next);
 
   try {
+    checkAuthorization(userData, 'u52', next);
     const tanks = await findTanksByDateRange(Unit52Tank, startDate, endDate);
 
     if (!tanks || tanks.length === 0) {
@@ -75,9 +75,9 @@ exports.addVolumeToTanks = async (req, res, next) => {
     );
 
   const formattedDate = formatDate(day);
-  checkAuthorization(userData, 'u52', next);
 
   try {
+    checkAuthorization(userData, 'u52', next);
     const existingTanksCount = await countTanksByDate(
       Unit52Tank,
       formattedDate
@@ -121,9 +121,9 @@ exports.updateOneTankVolume = async (req, res, next) => {
     return;
 
   const formattedDate = formatDate(day);
-  checkAuthorization(userData, 'u52', next);
 
   try {
+    checkAuthorization(userData, 'u52', next);
     const { low_level, high_level } = await findTankInfo(tag_number);
 
     const pumpable = tov === 0 ? tov : tov - low_level;
@@ -168,9 +168,9 @@ exports.confirmTankVolume = async (req, res, next) => {
   if (!validateInput(req.body, ['tag_number', 'day'], next)) return;
 
   const formattedDate = formatDate(day);
-  checkAuthorization(userData, 'u52', next);
 
   try {
+    checkAuthorization(userData, 'u52', next);
     const confirmedTank = await confirmTank(
       Unit52Tank,
       tag_number,

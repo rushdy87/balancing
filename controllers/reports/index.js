@@ -41,10 +41,9 @@ exports.getReportByDay = async (req, res, next) => {
 
   const { userData } = req;
 
-  // This is not need unit!
-  checkAuthorization(userData, 'u90', next);
-
   try {
+    checkAuthorization(userData, null, next);
+
     const report = {};
 
     const u52Tanks = await findTanksForReport(Unit52Tank, 'u52', formattedDate);

@@ -17,9 +17,9 @@ exports.getNotesByDate = async (req, res, next) => {
   if (!validateInput(req.params, ['day'], next)) return;
 
   const formattedDate = formatDate(day);
-  checkAuthorization(userData, 'u90', next);
 
   try {
+    checkAuthorization(userData, 'u90', next);
     const notes = await findNotesByDate(U90Note, formattedDate);
 
     if (!notes || notes.length === 0) {
@@ -39,9 +39,9 @@ exports.addOneNote = async (req, res, next) => {
   if (!validateInput(req.body, ['day', 'note'], next)) return;
 
   const formattedDate = formatDate(day);
-  checkAuthorization(userData, 'u90', next);
 
   try {
+    checkAuthorization(userData, 'u90', next);
     await addNote(U90Note, { note, day: formattedDate, userId: userData.id });
 
     res.status(201).json({ message: 'The note has been added.' });
@@ -62,9 +62,9 @@ exports.addNotes = async (req, res, next) => {
   if (!validateInput(req.body, ['day', 'notes'], next)) return;
 
   const formattedDate = formatDate(day);
-  checkAuthorization(userData, 'u90', next);
 
   try {
+    checkAuthorization(userData, 'u90', next);
     const createPromises = notes.map(
       async (note) =>
         await addNote(U90Note, {
@@ -92,9 +92,8 @@ exports.updateNote = async (req, res, next) => {
 
   if (!validateInput(req.body, ['note'], next)) return;
 
-  checkAuthorization(userData, 'u90', next);
-
   try {
+    checkAuthorization(userData, 'u90', next);
     const updatedNote = await editNote(U90Note, id, note);
 
     if (!updatedNote) {
@@ -117,9 +116,8 @@ exports.deleteNote = async (req, res, next) => {
 
   const { userData } = req;
 
-  checkAuthorization(userData, 'u90', next);
-
   try {
+    checkAuthorization(userData, 'u90', next);
     const deletionResult = await destroyNote(U90Note, id);
     if (!deletionResult) {
       return res

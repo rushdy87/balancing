@@ -12,9 +12,8 @@ exports.getHFOTransportBySide = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u90', next);
-
   try {
+    checkAuthorization(userData, 'u90', next);
     const transport = await findHFOTransportBySide(
       HFOTransport,
       side,
@@ -39,9 +38,8 @@ exports.getHFOTransportByDay = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u90', next);
-
   try {
+    checkAuthorization(userData, 'u90', next);
     const transport = await HFOTransport.findAll({
       where: { day: formattedDate },
       attributes: ['id', 'day', 'side', 'quantity', 'tankers', 'isConfirmed'],
@@ -70,9 +68,8 @@ exports.getHFOTransportBySideBetweenTwoDates = async (req, res, next) => {
   const endDate = formatDate(to);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u90', next);
-
   try {
+    checkAuthorization(userData, 'u90', next);
     const transport = await HFOTransport.findAll({
       where: { side, day: { [Op.between]: [startDate, endDate] } },
       attributes: ['id', 'day', 'side', 'quantity', 'tankers', 'isConfirmed'],
@@ -101,9 +98,8 @@ exports.getHFOTransportBetweenTwoDates = async (req, res, next) => {
   const endDate = formatDate(to);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u90', next);
-
   try {
+    checkAuthorization(userData, 'u90', next);
     const transport = await HFOTransport.findAll({
       where: { day: { [Op.between]: [startDate, endDate] } },
       attributes: ['id', 'day', 'side', 'quantity', 'tankers', 'isConfirmed'],
@@ -130,9 +126,8 @@ exports.addHFOTransport = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u90', next);
-
   try {
+    checkAuthorization(userData, 'u90', next);
     const existingTransport = await HFOTransport.findAll({
       where: { day: formattedDate },
     });
@@ -169,9 +164,8 @@ exports.updateHFOTransport = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u90', next);
-
   try {
+    checkAuthorization(userData, 'u90', next);
     const existingTransport = await HFOTransport.findOne({
       where: { day: formattedDate, side: items.side },
     });
@@ -211,9 +205,8 @@ exports.confirmHFOTransport = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u90', next);
-
   try {
+    checkAuthorization(userData, 'u90', next);
     const existingTransport = await HFOTransport.findOne({
       where: { day: formattedDate, side },
     });

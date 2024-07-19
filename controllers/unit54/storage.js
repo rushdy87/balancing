@@ -17,9 +17,8 @@ exports.getSolidSulphurByDay = async (req, res, next) => {
 
   const { userData } = req;
 
-  checkAuthorization(userData, 'u53', next);
-
   try {
+    checkAuthorization(userData, 'u53', next);
     const sulphurStore = await findSolidSulphurByDate(formattedDate);
 
     if (!sulphurStore) {
@@ -49,8 +48,8 @@ exports.getSolidSulphurBetweenTwoDates = async (req, res, next) => {
   const endDate = formatDate(to);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u54', next);
   try {
+    checkAuthorization(userData, 'u54', next);
     const sulphurStore = await findSolidSulphurByDateRange(startDate, endDate);
 
     if (!sulphurStore || sulphurStore.length === 0) {
@@ -79,9 +78,8 @@ exports.addSolidSulphur = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u54', next);
-
   try {
+    checkAuthorization(userData, 'u54', next);
     const existingSulphurStore = await findSolidSulphurByDate(formattedDate);
 
     if (existingSulphurStore) {
@@ -122,9 +120,8 @@ exports.updateSolidSulphurStore = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u54', next);
-
   try {
+    checkAuthorization(userData, 'u54', next);
     const existingSulphurStore = await findSolidSulphurByDate(formattedDate);
 
     if (!existingSulphurStore) {
@@ -159,9 +156,8 @@ exports.confirmeSolidSulphurStore = async (req, res, next) => {
   const formattedDate = formatDate(day);
   const { userData } = req;
 
-  checkAuthorization(userData, 'u54', next);
-
   try {
+    checkAuthorization(userData, 'u54', next);
     const existingSulphurStore = await findSolidSulphurByDate(formattedDate);
 
     if (!existingSulphurStore) {
