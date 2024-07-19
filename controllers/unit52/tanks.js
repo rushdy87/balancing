@@ -14,7 +14,6 @@ const {
   editTank,
   confirmTank,
 } = require('../../utils');
-const { findUnitTanksInfo } = require('../../utils/tanks');
 
 exports.getTanksByDay = async (req, res, next) => {
   const { day } = req.params;

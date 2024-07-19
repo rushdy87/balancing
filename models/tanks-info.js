@@ -11,6 +11,7 @@ const TanksInfo = sequelize.define('TanksInfo', {
   tag_number: {
     type: Sequelize.STRING,
     allowNull: false,
+    unique: true,
   },
   product: {
     type: Sequelize.STRING,

@@ -16,6 +16,7 @@ const {
   Unit54Routes,
   Unit90Routes,
   ReportsRoutes,
+  TanksInfoRoutes,
 } = require('./routes');
 
 const app = express();
@@ -51,7 +52,7 @@ app.use('/api/u53', Unit53Routes);
 app.use('/api/u54', Unit54Routes);
 app.use('/api/u90', Unit90Routes);
 app.use('/api/reports', ReportsRoutes);
-// app.use('/api/tanks-info', tanksInfoRoutes);
+app.use('/api/tanks-info', TanksInfoRoutes);
 // app.use('/api/users', UsersRoutes);
 
 // This medilware handle unsupported Routes

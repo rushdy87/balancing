@@ -5,7 +5,29 @@ const { TanksInfo } = require('../models');
 const findTankInfo = async (tag_number) => {
   return await TanksInfo.findOne({
     where: { tag_number },
-    attributes: ['low_level', 'high_level', 'working_volume', 'product'],
+    attributes: [
+      'id',
+      'tag_number',
+      'product',
+      'unit',
+      'low_level',
+      'high_level',
+      'working_volume',
+    ],
+  });
+};
+
+const findAllTanksInfo = async () => {
+  return await TanksInfo.findAll({
+    attributes: [
+      'id',
+      'tag_number',
+      'product',
+      'unit',
+      'low_level',
+      'high_level',
+      'working_volume',
+    ],
   });
 };
 
@@ -110,6 +132,7 @@ const confirmTank = async (model, tag_number, day) => {
 
 module.exports = {
   findTankInfo,
+  findAllTanksInfo,
   findUnitTanksInfo,
   findTanksByDate,
   findTanksByDateRange,

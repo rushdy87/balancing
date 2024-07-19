@@ -149,11 +149,6 @@ exports.updateBlendingVolumes = async (req, res, next) => {
 };
 
 exports.confirmBlending = async (req, res, next) => {
-  const { day } = req.body;
-  if (!day) {
-    return handleError(next, 'Missing required data: day.', 400);
-  }
-
   const formattedDate = formatDate(day);
   const { userData } = req;
 
