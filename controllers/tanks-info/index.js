@@ -58,7 +58,7 @@ exports.getTanksInfoByUnit = async (req, res, next) => {
 
   try {
     checkAuthorization(userData, unit, next);
-    console.log(unit);
+
     const tanks = await findTanksInfoByUnit(unit);
     if (!tanks || tanks.length === 0) {
       return handleError(next, 'Could not find any tank.', 404);

@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import './ReportView.scss';
-import { getReportByDate } from '../../pages/api/report';
+import { getReportByDate } from '../../api/report';
 
 const arabicStoreItemsnames = {
   RG: 'البنزين السوبر',
