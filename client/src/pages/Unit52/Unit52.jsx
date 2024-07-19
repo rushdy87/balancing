@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, Datepicker, TanksInputs } from '../../components';
+import { Blending, Button, Datepicker, TanksInputs } from '../../components';
 import { getTanksByUnit } from '../../api/tanks';
 import './Unit52.scss';
 
@@ -24,9 +24,19 @@ const Unit52 = () => {
     })();
   }, []);
 
+  // Blending
+  const [blendingQuantities, setBlendingQuantities] = useState({
+    lpg: 0,
+    pg: 0,
+    rg: 0,
+    diesel: 0,
+    hfo: 0,
+  });
+
   const handleChange = (event) => {
     event.preventDefault();
     console.log(tanks);
+    console.log(blendingQuantities);
   };
 
   return (
@@ -40,6 +50,13 @@ const Unit52 = () => {
         <div className='u52_tanks'>
           <h3 className='u52_subheading'>الخزين</h3>
           <TanksInputs tanks={tanks} setTanks={setTanks} />
+        </div>
+
+        <div className='u52_blending'>
+          <h3 className='u52_subheading'>مزج المنتجات</h3>
+          <div>
+            <Blending setBlendingQuantities={setBlendingQuantities} />
+          </div>
         </div>
         <Button type='sumit'>معاينة</Button>
       </form>

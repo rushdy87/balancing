@@ -36,6 +36,14 @@
       align-items: start;
       justify-content: center;
     }
+    .u52_blending,
+    .u52_crudeOil,
+    .u52_gas {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      justify-content: center;
+    }
   }
   .u52_subheading {
     background-color: rgba($color: $info, $alpha: 0.2);
