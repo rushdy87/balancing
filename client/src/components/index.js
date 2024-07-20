@@ -11,3 +11,4 @@ export { default as Blending } from './Blending/Blending';
 export { default as CrudeOil } from './CrudeOil/CrudeOil';
 export { default as NaturalGas } from './NaturalGas/NaturalGas';
 export { default as Transport } from './Transport/Transport';
+export { default as Pumping } from './Pumping/Pumping';
