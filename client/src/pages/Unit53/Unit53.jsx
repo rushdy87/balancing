@@ -7,6 +7,7 @@ import {
   Datepicker,
   Modal,
   TanksInputs,
+  Transport,
 } from '../../components';
 import { prepareTanksObject } from '../../utils/tanks';
 
@@ -32,6 +33,11 @@ const Unit53 = () => {
     })();
   }, []);
 
+  const [pavingAsphaltTransport, setPavingAsphaltTransport] = useState({
+    quantity: 0,
+    tankers: 0,
+  });
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setShowPreview(true);
@@ -49,6 +55,15 @@ const Unit53 = () => {
           <h3 className='u53_subheading'>الخزين</h3>
           <TanksInputs tanks={tanks} setTanks={setTanks} />
         </div>
+        <div className='u53_transport'>
+          <h3 className='u53_subheading'>تحميل اسفلت الرصف</h3>
+          <div>
+            <Transport
+              item='PavingAsphalt'
+              setTransport={setPavingAsphaltTransport}
+            />
+          </div>
+        </div>
         <Button type='sumit'>معاينة</Button>
       </form>
 
@@ -62,6 +77,7 @@ const Unit53 = () => {
                 unit: 'Unit 52',
                 subjects: {
                   tanks: prepareTanksObject(tanks),
+                  pavingAsphaltTransport,
                 },
               }}
             />

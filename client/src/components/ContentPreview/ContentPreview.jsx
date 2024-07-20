@@ -22,6 +22,7 @@ const ArSubjects = {
   hfo1Transport: 'تحميل المعامل الحكومية',
   hfo2Transport: 'تحميل المعامل الأهلية',
   hfo3Transport: 'تحميل التصدير',
+  pavingAsphaltTransport: 'تحميل اسفلت الرصف',
 };
 
 const ArWords = {
