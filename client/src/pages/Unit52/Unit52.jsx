@@ -2,15 +2,19 @@ import { useEffect, useState } from 'react';
 import {
   Blending,
   Button,
+  ContentPreview,
   CrudeOil,
   Datepicker,
+  Modal,
   NaturalGas,
   TanksInputs,
 } from '../../components';
 import { getTanksByUnit } from '../../api/tanks';
 import './Unit52.scss';
+import { prepareTanksObject } from '../../utils/tanks';
 
 const Unit52 = () => {
+  const [showPreview, setShowPreview] = useState(false);
   const [day, setDay] = useState(
     `${new Date().getDate()}-${
       new Date().getMonth() + 1
@@ -54,12 +58,17 @@ const Unit52 = () => {
     receiving_mscf: 0,
   });
 
-  const handleChange = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(tanks);
-    console.log(blendingQuantities);
-    console.log(crudeOil);
-    console.log(naturalGas);
+    setShowPreview(true);
+    // add tanks // {day, tanks}
+    console.log({ day, tanks });
+    // add blending
+    console.log({ day, ...blendingQuantities });
+    // add crude
+    console.log({ day, ...crudeOil });
+    // add Gas
+    console.log({ day, ...naturalGas });
   };
 
   return (
@@ -69,7 +78,7 @@ const Unit52 = () => {
         <Datepicker date={day} changeDate={changeDate} />
       </div>
       <div className='hr' />
-      <form className='u52_form' onSubmit={handleChange}>
+      <form className='u52_form' onSubmit={handleSubmit}>
         <div className='u52_tanks'>
           <h3 className='u52_subheading'>الخزين</h3>
           <TanksInputs tanks={tanks} setTanks={setTanks} />
@@ -100,6 +109,28 @@ const Unit52 = () => {
 
         <Button type='sumit'>معاينة</Button>
       </form>
+
+      {/* Modal */}
+      {showPreview && (
+        <Modal
+          renderedContent={
+            <ContentPreview
+              content={{
+                day,
+                unit: 'Unit 52',
+                subjects: {
+                  tanks: prepareTanksObject(tanks),
+                  blendingQuantities,
+                  crudeOil,
+                  naturalGas,
+                },
+              }}
+            />
+          }
+          save={() => console.log('Save')}
+          close={() => setShowPreview(false)}
+        />
+      )}
     </div>
   );
 };

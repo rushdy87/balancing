@@ -20,3 +20,10 @@ export const groupedTanksByProductName = (tanks) => {
 
   return groupedTanks;
 };
+
+export const prepareTanksObject = (tanks) => {
+  return tanks.reduce((acc, tank) => {
+    acc[tank.tag_number] = tank.volume;
+    return acc;
+  }, {});
+};

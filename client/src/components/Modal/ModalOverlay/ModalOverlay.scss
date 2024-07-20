@@ -1,0 +1,29 @@
+.ModalOverlay-container {
+  z-index: 100;
+  position: fixed;
+  top: 10vh; /* Adjusted to fit better within the viewport */
+  left: 10%;
+  width: 80%;
+  max-height: 80vh; /* Set a maximum height for the modal */
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column; /* Ensure the modal content stacks vertically */
+
+  .ModalOverlay-header {
+    /* Add styles if needed */
+  }
+  .ModalOverlay-body {
+    flex: 1; /* Allow the body to take up remaining space */
+    overflow-y: auto; /* Enable scrolling for the modal body */
+  }
+  .ModalOverlay-footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 1rem; /* Ensure the footer is always visible */
+  }
+}
