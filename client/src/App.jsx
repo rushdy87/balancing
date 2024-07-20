@@ -5,12 +5,13 @@ import {
   Navigate,
 } from 'react-router-dom';
 
-import { Reports, Unit52 } from './pages';
+import { Reports, Unit52, Unit53, Unit54, Unit90 } from './pages';
+import { Navbar } from './components';
 
 function App() {
   const renderRoutes = true ? (
     <>
-      {/* <Navbar /> */}
+      <Navbar />
       <Routes>
         {/* <Route path='/' element={<Home />} /> */}
 
@@ -18,9 +19,9 @@ function App() {
         {/* <Route path='/tanks-info' element={<TanksInfo />} /> */}
 
         <Route path='/u52' element={<Unit52 />} />
-        {/* <Route path='/u53' element={<Unit53 />} /> */}
-        {/* <Route path='/u54' element={<Unit54 />} /> */}
-        {/* <Route path='/u90' element={<Unit90 />} /> */}
+        <Route path='/u53' element={<Unit53 />} />
+        <Route path='/u54' element={<Unit54 />} />
+        <Route path='/u90' element={<Unit90 />} />
 
         <Route path='/reports' element={<Reports />} />
 

@@ -37,10 +37,15 @@ const TanksInputs = ({ tanks, setTanks }) => {
         break;
     }
   };
-
   return (
     <div className='TanksInputs-container'>
-      <div className='TanksInputs_inputs'>
+      <div
+        className={`${
+          groupedTanks?.length === 1
+            ? 'U53TanksInputs_inputs'
+            : 'TanksInputs_inputs'
+        }`}
+      >
         {groupedTanks.map((gt) => {
           return (
             <fieldset className='TanksInputs_fieldset' key={gt.product}>
