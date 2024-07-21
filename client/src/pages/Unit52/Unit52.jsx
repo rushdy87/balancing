@@ -9,9 +9,10 @@ import {
   NaturalGas,
   TanksInputs,
 } from '../../components';
-import { getTanksByUnit } from '../../api/tanks';
+import { addTanks, getTanksByUnit } from '../../api/tanks';
 import './Unit52.scss';
 import { prepareTanksObject } from '../../utils/tanks';
+import { addBlending } from '../../api/blending';
 
 const Unit52 = () => {
   const [showPreview, setShowPreview] = useState(false);
@@ -62,13 +63,34 @@ const Unit52 = () => {
     event.preventDefault();
     setShowPreview(true);
     // add tanks // {day, tanks}
-    console.log({ day, tanks });
+
     // add blending
     console.log({ day, ...blendingQuantities });
     // add crude
     console.log({ day, ...crudeOil });
     // add Gas
     console.log({ day, ...naturalGas });
+  };
+
+  const addVolumes = async () => {
+    // const tanksRes = await addTanks('u52', {
+    //   day,
+    //   tanks: prepareTanksObject(tanks),
+    // });
+    // console.log(tanksRes);
+    // const u52Tanks = await getTanksByUnit('u52');
+    // setTanks(u52Tanks.map((tank) => ({ ...tank, volume: 0 })));
+
+    // const blendingRes = await addBlending({ day, ...blendingQuantities });
+    // console.log(blendingRes);
+    // setBlendingQuantities({
+    //   lpg: 0,
+    //   pg: 0,
+    //   rg: 0,
+    //   diesel: 0,
+    //   hfo: 0,
+    // });
+    setShowPreview(false);
   };
 
   return (
@@ -127,7 +149,7 @@ const Unit52 = () => {
               }}
             />
           }
-          save={() => console.log('Save')}
+          save={addVolumes}
           close={() => setShowPreview(false)}
         />
       )}
