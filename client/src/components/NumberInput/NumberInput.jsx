@@ -1,6 +1,6 @@
 import './NumberInput.scss';
 
-function NumberInput({ id, name, onChange }) {
+function NumberInput({ id, name, onChange, value }) {
   const handleKeyDown = (event) => {
     switch (event.keyCode) {
       case 38: // Up arrow
@@ -21,7 +21,7 @@ function NumberInput({ id, name, onChange }) {
       type='number'
       id={id}
       name={name}
-      defaultValue={0}
+      value={value}
       onChange={onChange}
       onKeyDown={handleKeyDown}
     />

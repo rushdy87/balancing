@@ -2,7 +2,7 @@ import NumberInput from '../NumberInput/NumberInput';
 
 import './NaturalGas.scss';
 
-const NaturalGas = ({ setNaturalGas }) => {
+const NaturalGas = ({ naturalGas, setNaturalGas }) => {
   const handleChange = (event) => {
     setNaturalGas((prev) => ({
       ...prev,
@@ -23,6 +23,7 @@ const NaturalGas = ({ setNaturalGas }) => {
           type='number'
           name='receiving_m3'
           id='receiving_m3'
+          value={naturalGas.receiving_m3}
           onChange={handleChange}
         />
       </div>
@@ -34,6 +35,7 @@ const NaturalGas = ({ setNaturalGas }) => {
           type='number'
           name='receiving_mscf'
           id='receiving_mscf'
+          value={naturalGas.receiving_mscf}
           onChange={handleChange}
         />
       </div>

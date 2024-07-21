@@ -59,7 +59,7 @@ const TanksInputs = ({ tanks, setTanks }) => {
                       type='number'
                       id={tank.tag_number}
                       name={tank.tag_number}
-                      defaultValue={0}
+                      value={tank.volume}
                       onChange={handleValuesChange}
                       onKeyDown={handleKeyDown}
                     />

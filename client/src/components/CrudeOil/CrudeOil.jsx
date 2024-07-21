@@ -1,7 +1,7 @@
 import NumberInput from '../NumberInput/NumberInput';
 import './CrudeOil.scss';
 
-const CrudeOil = ({ setCrudeOil }) => {
+const CrudeOil = ({ crudeOil, setCrudeOil }) => {
   const handleChange = (event) => {
     setCrudeOil((prev) => ({
       ...prev,
@@ -13,7 +13,7 @@ const CrudeOil = ({ setCrudeOil }) => {
     <div className='CrudeOil_container'>
       <div className='CrudeOil_inputFiled'>
         <label htmlFor='reservoir_m3'>
-          النفط الخام القابل{' '}
+          النفط الخام القابل
           <span>
             (م<sup>3</sup>)
           </span>
@@ -22,6 +22,7 @@ const CrudeOil = ({ setCrudeOil }) => {
           type='number'
           name='reservoir_m3'
           id='reservoir_m3'
+          value={crudeOil.reservoir_m3}
           onChange={handleChange}
         />
       </div>
@@ -33,6 +34,7 @@ const CrudeOil = ({ setCrudeOil }) => {
           type='number'
           name='reservoir_bbl'
           id='reservoir_bbl'
+          value={crudeOil.reservoir_bbl}
           onChange={handleChange}
         />
       </div>
@@ -47,6 +49,7 @@ const CrudeOil = ({ setCrudeOil }) => {
           type='number'
           name='receiving'
           id='receiving'
+          value={crudeOil.receiving}
           onChange={handleChange}
         />
       </div>
@@ -61,6 +64,7 @@ const CrudeOil = ({ setCrudeOil }) => {
           type='number'
           name='sending'
           id='sending'
+          value={crudeOil.sending}
           onChange={handleChange}
         />
       </div>

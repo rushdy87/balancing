@@ -64,42 +64,35 @@ const Unit52 = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setShowPreview(true);
-    // add tanks // {day, tanks}
-
-    // add blending
-
-    // add crude
-    // add Gas
-    console.log({ day, ...naturalGas });
   };
 
   const addVolumes = async () => {
-    // const tanksRes = await addTanks('u52', {
-    //   day,
-    //   tanks: prepareTanksObject(tanks),
-    // });
-    // console.log(tanksRes);
-    // const u52Tanks = await getTanksByUnit('u52');
-    // setTanks(u52Tanks.map((tank) => ({ ...tank, volume: 0 })));
+    const tanksRes = await addTanks('u52', {
+      day,
+      tanks: prepareTanksObject(tanks),
+    });
+    console.log(tanksRes);
+    const u52Tanks = await getTanksByUnit('u52');
+    setTanks(u52Tanks.map((tank) => ({ ...tank, volume: 0 })));
 
-    // const blendingRes = await addBlending({ day, ...blendingQuantities });
-    // console.log(blendingRes);
-    // setBlendingQuantities({
-    //   lpg: 0,
-    //   pg: 0,
-    //   rg: 0,
-    //   diesel: 0,
-    //   hfo: 0,
-    // });
+    const blendingRes = await addBlending({ day, ...blendingQuantities });
+    console.log(blendingRes);
+    setBlendingQuantities({
+      lpg: 0,
+      pg: 0,
+      rg: 0,
+      diesel: 0,
+      hfo: 0,
+    });
 
-    // const crudeRes = await addCrudeOil({ day, ...crudeOil });
-    // console.log(crudeRes);
-    // setCrudeOil({
-    //   reservoir_m3: 0,
-    //   reservoir_bbl: 0,
-    //   receiving: 0,
-    //   sending: 0,
-    // });
+    const crudeRes = await addCrudeOil({ day, ...crudeOil });
+    console.log(crudeRes);
+    setCrudeOil({
+      reservoir_m3: 0,
+      reservoir_bbl: 0,
+      receiving: 0,
+      sending: 0,
+    });
 
     const naturalGasRes = await addNaturalGas({ day, ...naturalGas });
     console.log(naturalGasRes);
@@ -127,21 +120,27 @@ const Unit52 = () => {
           <div className='u52_blending'>
             <h3 className='u52_subheading'>مزج المنتجات</h3>
             <div>
-              <Blending setBlendingQuantities={setBlendingQuantities} />
+              <Blending
+                blendingQuantities={blendingQuantities}
+                setBlendingQuantities={setBlendingQuantities}
+              />
             </div>
           </div>
 
           <div className='u52_crudeOil'>
             <h3 className='u52_subheading'>النفط الخام</h3>
             <div>
-              <CrudeOil setCrudeOil={setCrudeOil} />
+              <CrudeOil crudeOil={crudeOil} setCrudeOil={setCrudeOil} />
             </div>
           </div>
 
           <div className='u52_gas'>
             <h3 className='u52_subheading'>الغاز الطبيعي</h3>
             <div>
-              <NaturalGas setNaturalGas={setNaturalGas} />
+              <NaturalGas
+                naturalGas={naturalGas}
+                setNaturalGas={setNaturalGas}
+              />
             </div>
           </div>
         </div>
