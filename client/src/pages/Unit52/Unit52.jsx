@@ -14,6 +14,7 @@ import './Unit52.scss';
 import { prepareTanksObject } from '../../utils/tanks';
 import { addBlending } from '../../api/blending';
 import { addCrudeOil } from '../../api/crude-oil';
+import { addNaturalGas } from '../../api/natural-gas';
 
 const Unit52 = () => {
   const [showPreview, setShowPreview] = useState(false);
@@ -68,7 +69,6 @@ const Unit52 = () => {
     // add blending
 
     // add crude
-    console.log({ day, ...crudeOil });
     // add Gas
     console.log({ day, ...naturalGas });
   };
@@ -92,13 +92,20 @@ const Unit52 = () => {
     //   hfo: 0,
     // });
 
-    const crudeRes = await addCrudeOil({ day, ...crudeOil });
-    console.log(crudeRes);
-    setCrudeOil({
-      reservoir_m3: 0,
-      reservoir_bbl: 0,
-      receiving: 0,
-      sending: 0,
+    // const crudeRes = await addCrudeOil({ day, ...crudeOil });
+    // console.log(crudeRes);
+    // setCrudeOil({
+    //   reservoir_m3: 0,
+    //   reservoir_bbl: 0,
+    //   receiving: 0,
+    //   sending: 0,
+    // });
+
+    const naturalGasRes = await addNaturalGas({ day, ...naturalGas });
+    console.log(naturalGasRes);
+    setNaturalGas({
+      receiving_m3: 0,
+      receiving_mscf: 0,
     });
     setShowPreview(false);
   };
