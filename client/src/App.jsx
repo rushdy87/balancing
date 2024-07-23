@@ -19,7 +19,7 @@ import {
 import { Navbar } from './components';
 
 function App() {
-  const renderRoutes = true ? (
+  const renderRoutes = false ? (
     <>
       <Navbar />
       <Routes>
