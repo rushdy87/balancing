@@ -1,15 +1,22 @@
 import { useState } from 'react';
 import { Button, Input } from '../../components';
 import './Login.scss';
+import { login } from '../../api/auth';
 
 const Login = () => {
-  const [loginData, setLoginData] = useState({
+  const [userData, setUserData] = useState({
     username: '',
     password: '',
   });
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(loginData);
+    console.log(userData);
+    const loginRes = await login(userData);
+    console.log(loginRes);
+    setUserData({
+      username: '',
+      password: '',
+    });
   };
   return (
     <div className='Login_container'>
@@ -22,9 +29,9 @@ const Login = () => {
               type='text'
               id='username'
               name='username'
-              value={loginData.username}
+              value={userData.username}
               onChange={(e) =>
-                setLoginData((prev) => ({ ...prev, username: e.target.value }))
+                setUserData((prev) => ({ ...prev, username: e.target.value }))
               }
             />
             <Input
@@ -32,9 +39,9 @@ const Login = () => {
               type='password'
               id='password'
               name='password'
-              value={loginData.password}
+              value={userData.password}
               onChange={(e) =>
-                setLoginData((prev) => ({ ...prev, password: e.target.value }))
+                setUserData((prev) => ({ ...prev, password: e.target.value }))
               }
             />
             <Button type='submit'>Login</Button>

@@ -17,9 +17,13 @@ import {
   Users,
 } from './pages';
 import { Navbar } from './components';
+import { useAuth } from './hooks';
+import { AuthContext } from './context';
 
 function App() {
-  const renderRoutes = false ? (
+  const { token, login, logout, userId } = useAuth();
+
+  const renderRoutes = token ? (
     <>
       <Navbar />
       <Routes>
@@ -45,7 +49,13 @@ function App() {
     </Routes>
   );
 
-  return <Router>{renderRoutes}</Router>;
+  return (
+    <AuthContext.Provider
+      value={{ isLoggedIn: !!token, token, userId, login, logout }}
+    >
+      <Router>{renderRoutes}</Router>
+    </AuthContext.Provider>
+  );
 }
 
 export default App;
