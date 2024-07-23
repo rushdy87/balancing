@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getTanksByUnit } from '../../api/tanks';
+import { addTanks, getTanksByUnit } from '../../api/tanks';
 import './Unit53.scss';
 import {
   Button,
@@ -10,6 +10,7 @@ import {
   Transport,
 } from '../../components';
 import { prepareTanksObject } from '../../utils/tanks';
+import { addTransport } from '../../api/transport';
 
 const Unit53 = () => {
   const [showPreview, setShowPreview] = useState(false);
@@ -43,6 +44,28 @@ const Unit53 = () => {
     setShowPreview(true);
   };
 
+  const addVolumes = async () => {
+    const tanksRes = await addTanks('u53', {
+      day,
+      tanks: prepareTanksObject(tanks),
+    });
+    console.log(tanksRes);
+    const u52Tanks = await getTanksByUnit('u53');
+    setTanks(u52Tanks.map((tank) => ({ ...tank, volume: 0 })));
+
+    const tarnsportResult = await addTransport('u53', {
+      day,
+      ...pavingAsphaltTransport,
+    });
+    console.log(tarnsportResult);
+    setPavingAsphaltTransport({
+      quantity: 0,
+      tankers: 0,
+    });
+
+    setShowPreview(false);
+  };
+
   return (
     <div className='u53-container'>
       <div className='u53_header'>
@@ -60,6 +83,7 @@ const Unit53 = () => {
           <div>
             <Transport
               item='PavingAsphalt'
+              pavingAsphaltTransport={pavingAsphaltTransport}
               setTransport={setPavingAsphaltTransport}
             />
           </div>
@@ -82,7 +106,7 @@ const Unit53 = () => {
               }}
             />
           }
-          save={() => console.log('Save')}
+          save={addVolumes}
           close={() => setShowPreview(false)}
         />
       )}
