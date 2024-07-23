@@ -7,8 +7,8 @@ export const login = async (userData) => {
     userData
   );
   if (response.error) {
-    console.log(response.error);
+    return { error: response.error };
   } else {
-    return response;
+    return { error: '', ...response };
   }
 };
