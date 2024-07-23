@@ -50,8 +50,8 @@ const Unit53 = () => {
       tanks: prepareTanksObject(tanks),
     });
     console.log(tanksRes);
-    const u52Tanks = await getTanksByUnit('u53');
-    setTanks(u52Tanks.map((tank) => ({ ...tank, volume: 0 })));
+    const u53Tanks = await getTanksByUnit('u53');
+    setTanks(u53Tanks.map((tank) => ({ ...tank, volume: 0 })));
 
     const tarnsportResult = await addTransport('u53', {
       day,
@@ -83,7 +83,7 @@ const Unit53 = () => {
           <div>
             <Transport
               item='PavingAsphalt'
-              pavingAsphaltTransport={pavingAsphaltTransport}
+              transport={pavingAsphaltTransport}
               setTransport={setPavingAsphaltTransport}
             />
           </div>

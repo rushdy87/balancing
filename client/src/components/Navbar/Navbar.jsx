@@ -2,8 +2,11 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import './Navbar.scss';
+import { useAuth } from '../../hooks';
 
 const Navbar = () => {
+  const { role, unit } = useAuth();
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [size, setSize] = useState({ width: undefined, height: undefined });
 
@@ -35,30 +38,44 @@ const Navbar = () => {
         onClick={(e) => (menuOpen ? setMenuOpen(false) : null)}
       >
         <ul>
-          <li>
-            <Link to='/'>الرئيسية</Link>
-          </li>
-          <li>
-            <Link to='/u52'>الوحدة 52</Link>
-          </li>
-          <li>
-            <Link to='/u53'>الوحدة 53</Link>
-          </li>
-          <li>
-            <Link to='/u54'>الوحدة 54</Link>
-          </li>
-          <li>
-            <Link to='/u90'>الوحدة 90</Link>
-          </li>
-          <li>
-            <Link to='/reports'>التقارير</Link>
-          </li>
-          <li>
-            <Link to='/tanks-info'>بيانات الخزانات</Link>
-          </li>
-          <li>
-            <Link to='/users'>المستخدمين</Link>
-          </li>
+          {role === '0' && (
+            <li>
+              <Link to='/'>الرئيسية</Link>
+            </li>
+          )}
+          {(role === '0' || unit === 'u52') && (
+            <li>
+              <Link to='/u52'>الوحدة 52</Link>
+            </li>
+          )}
+          {(role === '0' || unit === 'u53') && (
+            <li>
+              <Link to='/u53'>الوحدة 53</Link>
+            </li>
+          )}
+          {(role === '0' || unit === 'u54') && (
+            <li>
+              <Link to='/u54'>الوحدة 54</Link>
+            </li>
+          )}
+          {(role === '0' || unit === 'u54') && (
+            <li>
+              <Link to='/u90'>الوحدة 90</Link>
+            </li>
+          )}
+          {role === '0' && (
+            <>
+              <li>
+                <Link to='/reports'>التقارير</Link>
+              </li>
+              <li>
+                <Link to='/tanks-info'>بيانات الخزانات</Link>
+              </li>
+              <li>
+                <Link to='/users'>المستخدمين</Link>
+              </li>
+            </>
+          )}
         </ul>
       </nav>
       <div className='navbar_content-toggle'>

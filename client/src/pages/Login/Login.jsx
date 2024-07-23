@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, Input } from '../../components';
 import './Login.scss';
 import { login } from '../../api/auth';
@@ -13,6 +14,8 @@ const Login = () => {
   });
   const [error, setError] = useState('');
 
+  const navigate = useNavigate();
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setUserData((prev) => ({ ...prev, [name]: value }));
@@ -21,17 +24,26 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const loginRes = await login(userData);
-    if (loginRes.error !== '') {
-      setError(loginRes.error);
-    } else {
-      loginHook(loginRes.userId, loginRes.token, loginRes.role);
-      setUserData({
-        username: '',
-        password: '',
-      });
+
+    try {
+      const loginRes = await login(userData);
+      const { error, userId, token, role, unit } = loginRes;
+
+      if (error) {
+        setError(error);
+      } else {
+        loginHook(userId, token, role, unit);
+        if (unit) {
+          navigate(`/${unit}`);
+        }
+        setUserData({ username: '', password: '' });
+      }
+    } catch (err) {
+      console.error('Login error:', err);
+      setError('An unexpected error occurred. Please try again.');
     }
   };
+
   return (
     <div className='Login_container'>
       <div className='Login_form_wrapper'>

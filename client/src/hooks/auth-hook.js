@@ -7,11 +7,13 @@ export const useAuth = () => {
   const [tokenExpirationDate, setTokenExpirationDate] = useState(null);
   const [userId, setUserId] = useState(null);
   const [role, setRole] = useState(null);
+  const [unit, setUnit] = useState(null);
 
-  const login = useCallback((uid, token, role, expirationDate) => {
+  const login = useCallback((uid, token, role, unit, expirationDate) => {
     setToken(token);
     setUserId(uid);
     setRole(role);
+    setUnit(unit);
     // this 'tokenExpirationDate' varible in different scope than the state
     const tokenExpirationDate =
       expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
@@ -24,6 +26,7 @@ export const useAuth = () => {
         userId: uid,
         token: token,
         role,
+        unit,
         expiration: tokenExpirationDate.toISOString(),
       })
     );
@@ -32,6 +35,8 @@ export const useAuth = () => {
     setToken(null);
     setTokenExpirationDate(null);
     setUserId(null);
+    setRole(null);
+    setUnit(null);
     localStorage.removeItem('userData');
   }, []);
 
@@ -56,10 +61,11 @@ export const useAuth = () => {
         storedData.userId,
         storedData.token,
         storedData.role,
+        storedData.unit,
         new Date(storedData.expiration)
       );
     }
   }, [login]);
 
-  return { token, login, logout, userId, role };
+  return { token, login, logout, userId, role, unit };
 };

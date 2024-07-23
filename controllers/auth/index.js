@@ -35,6 +35,7 @@ exports.login = async (req, res, next) => {
       userId: user.id,
       username: user.username,
       role: user.role,
+      unit: user.unit,
       token,
     });
   } catch (error) {
