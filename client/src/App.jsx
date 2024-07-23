@@ -5,7 +5,17 @@ import {
   Navigate,
 } from 'react-router-dom';
 
-import { Reports, Unit52, Unit53, Unit54, Unit90 } from './pages';
+import {
+  Home,
+  Login,
+  Reports,
+  TanksInfo,
+  Unit52,
+  Unit53,
+  Unit54,
+  Unit90,
+  Users,
+} from './pages';
 import { Navbar } from './components';
 
 function App() {
@@ -13,10 +23,10 @@ function App() {
     <>
       <Navbar />
       <Routes>
-        {/* <Route path='/' element={<Home />} /> */}
+        <Route path='/' element={<Home />} />
 
-        {/* <Route path='/users' element={<Users />} /> */}
-        {/* <Route path='/tanks-info' element={<TanksInfo />} /> */}
+        <Route path='/users' element={<Users />} />
+        <Route path='/tanks-info' element={<TanksInfo />} />
 
         <Route path='/u52' element={<Unit52 />} />
         <Route path='/u53' element={<Unit53 />} />
@@ -30,8 +40,8 @@ function App() {
     </>
   ) : (
     <Routes>
-      {/* <Route path='/login' element={<Login />} /> */}
-      {/* <Route path='*' element={<Navigate to='/login' replace />} /> */}
+      <Route path='/login' element={<Login />} />
+      <Route path='*' element={<Navigate to='/login' replace />} />
     </Routes>
   );
 
