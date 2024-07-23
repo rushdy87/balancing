@@ -12,7 +12,7 @@ const ArSubjects = {
   3: 'التصدير',
 };
 
-const Transport = ({ item, pavingAsphaltTransport, setTransport }) => {
+const Transport = ({ item, transport, setTransport }) => {
   const handleChange = (event) => {
     setTransport((prev) => ({
       ...prev,
@@ -37,7 +37,7 @@ const Transport = ({ item, pavingAsphaltTransport, setTransport }) => {
           type='number'
           name='quantity'
           id='quantity'
-          value={pavingAsphaltTransport.quantity}
+          value={transport.quantity}
           onChange={handleChange}
         />
       </div>
@@ -47,7 +47,7 @@ const Transport = ({ item, pavingAsphaltTransport, setTransport }) => {
           type='number'
           name='tankers'
           id='tankers'
-          value={pavingAsphaltTransport.tankers}
+          value={transport.tankers}
           onChange={handleChange}
         />
       </div>

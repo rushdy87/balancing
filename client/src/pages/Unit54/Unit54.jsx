@@ -8,6 +8,9 @@ import {
   NumberInput,
   Transport,
 } from '../../components';
+import { addSolidSulphurStore } from '../../api/solid-sulphur-store';
+import { addSolidSulphurProduct } from '../../api/solid-sulphur-production';
+import { addTransport } from '../../api/transport';
 
 const Unit54 = () => {
   const [showPreview, setShowPreview] = useState(false);
@@ -42,6 +45,35 @@ const Unit54 = () => {
     event.preventDefault();
     setShowPreview(true);
   };
+
+  const addVolumes = async () => {
+    const storingResult = await addSolidSulphurStore({
+      day,
+      ...solidSulphurStorge,
+    });
+    console.log(storingResult);
+    setSolidSulphurStorge({ actual_quantity: 0 });
+
+    const productionResult = await addSolidSulphurProduct({
+      day,
+      ...solidSulphurProduction,
+    });
+    console.log(productionResult);
+    setSolidSulphurProduction({ quantity: 0 });
+
+    const tarnsportResult = await addTransport('u54', {
+      day,
+      ...solidSulphurTransport,
+    });
+    console.log(tarnsportResult);
+    setSolidSulphurTransport({
+      quantity: 0,
+      tankers: 0,
+    });
+
+    setShowPreview(false);
+  };
+
   return (
     <div className='u54-container'>
       <div className='u54_header'>
@@ -59,6 +91,7 @@ const Unit54 = () => {
                 <NumberInput
                   id='actual_quantity'
                   name='actual_quantity'
+                  value={solidSulphurStorge.actual_quantity}
                   onChange={(e) => {
                     setSolidSulphurStorge({ actual_quantity: e.target.value });
                   }}
@@ -75,6 +108,7 @@ const Unit54 = () => {
                 <NumberInput
                   id='quantity'
                   name='quantity'
+                  value={solidSulphurProduction.quantity}
                   onChange={(e) => {
                     setSolidSulphurProduction({ quantity: e.target.value });
                   }}
@@ -88,6 +122,7 @@ const Unit54 = () => {
 
             <Transport
               item='solidSulphur'
+              transport={solidSulphurTransport}
               setTransport={setSolidSulphurTransport}
             />
           </div>
@@ -111,7 +146,7 @@ const Unit54 = () => {
               }}
             />
           }
-          save={() => console.log('Save')}
+          save={addVolumes}
           close={() => setShowPreview(false)}
         />
       )}
