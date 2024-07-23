@@ -9,8 +9,10 @@ import {
   TanksInputs,
   Transport,
 } from '../../components';
-import { getTanksByUnit } from '../../api/tanks';
+import { addTanks, getTanksByUnit } from '../../api/tanks';
 import { prepareTanksObject } from '../../utils/tanks';
+import { addPomping } from '../../api/pumping';
+import { addLightTransport } from '../../api/transport';
 
 const Unit90 = () => {
   const [showPreview, setShowPreview] = useState(false);
@@ -65,6 +67,77 @@ const Unit90 = () => {
     setShowPreview(true);
   };
 
+  const addVolumes = async () => {
+    const tanksRes = await addTanks('u90', {
+      day,
+      tanks: prepareTanksObject(tanks),
+    });
+    console.log(tanksRes);
+    const u90Tanks = await getTanksByUnit('u90');
+    setTanks(u90Tanks.map((tank) => ({ ...tank, volume: 0 })));
+
+    const pgPumpingRes = await addPomping('pg', {
+      day,
+      ...pumpingQuantities.pgPumping,
+    });
+    console.log(pgPumpingRes);
+    const rgPumpingRes = await addPomping('rg', {
+      day,
+      ...pumpingQuantities.rgPumping,
+    });
+    console.log(rgPumpingRes);
+    const dieselPumpingRes = await addPomping('diesel', {
+      day,
+      ...pumpingQuantities.dieselPumping,
+    });
+    console.log(dieselPumpingRes);
+    const kerosenePumpingRes = await addPomping('kerosene', {
+      day,
+      ...pumpingQuantities.kerosenePumping,
+    });
+    console.log(kerosenePumpingRes);
+    setPumpingQuantities({
+      pgPumping: { toKarbala: 0, toNajaf: 0 },
+      rgPumping: { toKarbala: 0, toNajaf: 0 },
+      dieselPumping: { toKarbala: 0, toNajaf: 0 },
+      kerosenePumping: { toKarbala: 0, toNajaf: 0 },
+    });
+
+    const lpgTransportRes = await addLightTransport('lpg', {
+      day,
+      ...lpgTransport,
+    });
+    console.log(lpgTransportRes);
+    setLPGTransport({ quantity: 0, tankers: 0 });
+    const rgTransportRes = await addLightTransport('rg', {
+      day,
+      ...rgTransport,
+    });
+    console.log(rgTransportRes);
+    setRGTransport({ quantity: 0, tankers: 0 });
+    const atkTransportRes = await addLightTransport('atk', {
+      day,
+      ...atkTransport,
+    });
+    console.log(atkTransportRes);
+    setATKTransport({ quantity: 0, tankers: 0 });
+
+    const hfoTransportRes = await addLightTransport('hfo', {
+      day,
+      data: [
+        { side: 1, ...hfo1Transport },
+        { side: 2, ...hfo2Transport },
+        { side: 3, ...hfo3Transport },
+      ],
+    });
+    console.log(hfoTransportRes);
+    setHFO1Transport({ quantity: 0, tankers: 0 });
+    setHFO2Transport({ quantity: 0, tankers: 0 });
+    setHFO3Transport({ quantity: 0, tankers: 0 });
+
+    setShowPreview(false);
+  };
+
   return (
     <div className='u90-container'>
       <div className='u90_header'>
@@ -94,18 +167,42 @@ const Unit90 = () => {
         <div className='u90_transport'>
           <h3 className='u90_subheading'>تحميل المنتجات الخفيفة</h3>
           <div className='u90_transport_items'>
-            <Transport item='lpg' setTransport={setLPGTransport} />
-            <Transport item='rg' setTransport={setRGTransport} />
-            <Transport item='atk' setTransport={setATKTransport} />
+            <Transport
+              item='lpg'
+              transport={lpgTransport}
+              setTransport={setLPGTransport}
+            />
+            <Transport
+              item='rg'
+              transport={rgTransport}
+              setTransport={setRGTransport}
+            />
+            <Transport
+              item='atk'
+              transport={atkTransport}
+              setTransport={setATKTransport}
+            />
           </div>
         </div>
 
         <div className='u90_transport'>
           <h3 className='u90_subheading'>تحميل زيت الوقود الثقيل</h3>
           <div className='u90_transport_items'>
-            <Transport item='1' setTransport={setHFO1Transport} />
-            <Transport item='2' setTransport={setHFO2Transport} />
-            <Transport item='3' setTransport={setHFO3Transport} />
+            <Transport
+              item='1'
+              transport={hfo1Transport}
+              setTransport={setHFO1Transport}
+            />
+            <Transport
+              item='2'
+              transport={hfo2Transport}
+              setTransport={setHFO2Transport}
+            />
+            <Transport
+              item='3'
+              transport={hfo3Transport}
+              setTransport={setHFO3Transport}
+            />
           </div>
         </div>
 
@@ -133,7 +230,7 @@ const Unit90 = () => {
               }}
             />
           }
-          save={() => console.log('Save')}
+          save={addVolumes}
           close={() => setShowPreview(false)}
         />
       )}
