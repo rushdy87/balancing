@@ -5,7 +5,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 95vw;
+  font-size: 12px;
 
   .report_header {
     width: 100%;
@@ -35,150 +35,211 @@
     }
   }
 
-  .report-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
+  .report_body {
+    height: 247mm;
+    width: 180mm;
 
-    .report-main-header {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-    }
+    .report-wrapper {
+      margin-top: 5px;
 
-    .report-context {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: center;
-
-      .report-context_section {
+      .report-main-header {
         display: flex;
         flex-direction: column;
-        margin: 0;
-
-        h4 {
-          margin: 5px;
-        }
-
-        .context_section_items {
-          display: flex;
-          flex-direction: row;
-          gap: 2px;
-        }
-        .light-prodects-transport {
-          display: flex;
-          flex-direction: row;
-          margin: 0;
-          gap: 10px;
-        }
+        align-items: center;
+        margin: 12px;
       }
-      .report-context_store {
-        width: 300px !important;
-      }
-
-      .pumping {
-        margin-top: 5px;
-      }
-
-      .report-context_store {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: repeat(3, 1fr);
-        grid-column-gap: 1px;
-        grid-row-gap: 1px;
-
-        .report_column {
-          width: 140px;
-        }
-      }
-
-      .report-context_blending {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(2, 1fr);
-        grid-column-gap: 1px;
-        grid-row-gap: 1px;
-      }
-
-      .reprt_transport_section {
-        display: flex;
-        gap: 20px;
-      }
-      .hfo_a_ss_transport {
-        display: flex;
-        gap: 10px;
-
-        .report_column {
-          width: 160px;
-          height: fit-content;
-        }
-      }
-    }
-  }
-
-  .report_column {
-    width: 200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid $dark;
-    height: 100%;
-
-    .report_column_header {
-      font-weight: bold;
-      background-color: rgba($secondary, 0.1);
-      width: 100%;
-      border-bottom: 1px solid $dark;
-      text-align: center;
-    }
-
-    .report_column_body {
-      width: 100%;
-      text-align: center;
-    }
-    .report_column_body_row {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      border-bottom: 1px solid $dark;
-
-      .report_column_body_row_subtitle {
-        background-color: rgba($secondary, 0.07);
-        border-left: 1px solid $dark;
-      }
-
-      span {
-        width: 50%;
+      .report_sub_header {
+        background-color: rgba($secondary, $alpha: 0.2);
+        padding: 2px 5px;
+        font-weight: 500;
         text-align: center;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
       }
-    }
-  }
+      .report_row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        border-top: 1px solid $dark;
+        width: 166px;
+        height: 25px;
 
-  table {
-    border: 1px solid $dark;
-    .table_header {
-      width: 200;
-      font-weight: bold;
-      background-color: rgba($secondary, 0.1);
-      border-bottom: 1px solid $dark;
-      text-align: center;
-    }
+        .report_row_label {
+          width: 60%;
+          text-align: center;
+          border-left: 1px solid $dark;
+          background-color: rgba($secondary, $alpha: 0.05);
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .report_row_value {
+          width: 40%;
+          text-align: center;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
 
-    .table_cell {
-      width: 200;
-      border-bottom: 1px solid $dark;
-      text-align: center;
-    }
+      .crude_and_oil_receiving {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        width: 100%;
 
-    tr:last-of-type {
-      td {
-        border: none;
+        .oil_receiving {
+          border: 1px solid $dark;
+        }
+        .crude {
+          border: 1px solid $dark;
+        }
+      }
+
+      .products_store {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 10px;
+        .report_store_items {
+          width: 100%;
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          grid-template-rows: repeat(2, 1fr);
+          grid-column-gap: 1px;
+          grid-row-gap: 1px;
+          margin: 6px 0;
+
+          .store_item {
+            border: 1px solid $dark;
+            width: 135px;
+          }
+          .report_sub_header {
+            width: 133px;
+          }
+          .report_row {
+            width: 133px;
+          }
+        }
+      }
+
+      .blending_and_pumbing {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 10px;
+        width: 100%;
+
+        .report_pumbing {
+          h4 {
+            width: 75%;
+          }
+          .pumbing_items {
+            border: 1px solid $dark;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: 138px;
+
+            .pumbing_items_header {
+              background-color: rgba($secondary, $alpha: 0.05);
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              font-weight: 500;
+              border: 1px solid $dark;
+              width: 100%;
+
+              .pumbing_column1,
+              .pumbing_column2,
+              .pumbing_column3,
+              .pumbing_column4 {
+                height: 20px;
+              }
+            }
+
+            .pumbing_items_row {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              border: 1px solid $dark;
+              height: 100%;
+              border-top: none;
+              width: 100%;
+            }
+
+            .pumbing_column1 {
+              text-align: center;
+              background-color: rgba($secondary, $alpha: 0.05);
+              width: 110px;
+              border-left: 1px solid $dark;
+              height: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+            .pumbing_column2 {
+              text-align: center;
+              width: 105px;
+              border-left: 1px solid $dark;
+              height: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+            .pumbing_column3 {
+              text-align: center;
+              width: 105px;
+              border-left: 1px solid $dark;
+              height: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+            .pumbing_column4 {
+              text-align: center;
+              width: 75px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+          }
+        }
+
+        .report_blending {
+          .blending_items {
+            border: 1px solid $dark;
+            .blending_row {
+              width: 220px;
+            }
+          }
+        }
+      }
+
+      .light_transport {
+        margin: 10px 0;
+
+        .items_transport {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+
+          .gas_transport,
+          .atk_transport,
+          .rg_transport,
+          .pg_transport {
+            border: 1px solid $dark;
+          }
+        }
       }
     }
   }
@@ -186,7 +247,7 @@
   @media print {
     padding: 10mm 20mm;
     @page {
-      size: 50mm 150mm;
+      size: 210mm 297mm;
     }
   }
 }
