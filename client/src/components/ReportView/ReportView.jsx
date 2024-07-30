@@ -323,6 +323,101 @@ const ReportView = ({ day, contentToPrint, printMode }) => {
           </div>
         </div>
       </div>
+
+      <div className='non_light_transport'>
+        <div className='hfo_transport'>
+          <h4>تحميل زيت الوقود الثقيل</h4>
+          <div className='hfo_items'>
+            <div className='hfo_items_header'>
+              <div className='hfo_column1'>جهة التجهيز</div>
+              <div className='hfo_column2'>الكمية</div>
+              <div className='hfo_column3'>عدد الصهاريج</div>
+            </div>
+            <div className='hfo_items_row'>
+              <div className='hfo_column1'>المعامل الحكومية</div>
+              <div className='hfo_column2'>
+                {reportData?.hfoTransport?.governmentalTransport?.quantity}
+              </div>
+              <div className='hfo_column3'>
+                {reportData?.hfoTransport?.governmentalTransport?.tankers}
+              </div>
+            </div>
+            <div className='hfo_items_row'>
+              <div className='hfo_column1'>المعامل الاهلية</div>
+              <div className='hfo_column2'>
+                {reportData?.hfoTransport?.nonGovernmentalTransport?.quantity}
+              </div>
+              <div className='hfo_column3'>
+                {reportData?.hfoTransport?.nonGovernmentalTransport?.tankers}
+              </div>
+            </div>
+            <div className='hfo_items_row'>
+              <div className='hfo_column1'>التصدير</div>
+              <div className='hfo_column2'>
+                {reportData?.hfoTransport?.exportTransport?.quantity}
+              </div>
+              <div className='hfo_column3'>
+                {reportData?.hfoTransport?.exportTransport?.tankers}
+              </div>
+            </div>
+            <div className='hfo_items_row'>
+              <div className='hfo_column1'>المجموع</div>
+              <div className='hfo_column2'>
+                {reportData?.hfoTransport?.quantityTotlal}
+              </div>
+              <div className='hfo_column3'>
+                {reportData?.hfoTransport?.tankersTotlal}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className='asphalt_and_solidSulphur_transport'>
+          <div className='asphalt_transport'>
+            <h4>تحميل اسفلت الرصف</h4>
+            <div className='asphalt_transport_rows'>
+              <div className='report_row'>
+                <div className='report_row_label'>الكمية (طن)</div>
+                <div className='report_row_value'>
+                  {reportData?.asphaltTransport?.quantity}
+                </div>
+              </div>
+              <div className='report_row'>
+                <div className='report_row_label'>عدد الصهاريج</div>
+                <div className='report_row_value'>
+                  {reportData?.asphaltTransport?.tankers}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='solidSulphur_transport'>
+            <h4>تحميل الكبريت الصلب</h4>
+            <div className='solidSulphur_transport_rows'>
+              <div className='report_row'>
+                <div className='report_row_label'>الكمية (طن)</div>
+                <div className='report_row_value'>
+                  {reportData?.solidSulphur?.quantity}
+                </div>
+              </div>
+              <div className='report_row'>
+                <div className='report_row_label'>عدد الصهاريج</div>
+                <div className='report_row_value'>
+                  {reportData?.solidSulphur?.tankers}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {reportData?.notes?.length > 0 && (
+        <div className='notes'>
+          <h4>{reportData?.notes.length === 1 ? 'ملاحظة' : 'ملاحظات'}</h4>
+          {reportData?.notes.map((note) => (
+            <p key={note.note.replace(/\s/g, '')} className='heading_bullet'>
+              {note.note}
+            </p>
+          ))}
+        </div>
+      )}
     </div>
   );
 

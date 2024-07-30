@@ -33,9 +33,9 @@ const Login = () => {
         setError(error);
       } else {
         loginHook(userId, token, role, unit);
-        if (unit) {
-          navigate(`/${unit}`);
-        }
+
+        navigate('/');
+
         setUserData({ username: '', password: '' });
       }
     } catch (err) {
