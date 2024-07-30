@@ -89,7 +89,9 @@ function App() {
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, token, userId, login, logout }}>
+    <AuthContext.Provider
+      value={{ isLoggedIn, token, role, userId, unit, login, logout }}
+    >
       <Router>
         {isLoggedIn && <Navbar />}
         <Routes>
