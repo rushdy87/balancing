@@ -5,9 +5,9 @@ import { getReportByDate } from '../../api/report';
 const arabicStoreItemsnames = {
   PG: 'البنزين السوبر',
   RG: 'البنزين المحسن',
-  Diesel: 'النفط الأبيض',
+  Kerosene: 'النفط الأبيض',
   ATK: 'وقود الطائرات',
-  Kerosene: 'زيت الغاز',
+  Diesel: 'زيت الغاز',
   HFO: 'زيت الوقود الثقيل',
   HD: 'زيت الديزيل',
   LPG: 'الغاز السائل',
@@ -29,7 +29,6 @@ const ReportView = ({ day, contentToPrint, printMode }) => {
     // Fetch data when the day prop changes
     const fetchData = async () => {
       const tanksReport = await getReportByDate(day);
-      console.log(tanksReport);
       setReportData(tanksReport);
     };
 

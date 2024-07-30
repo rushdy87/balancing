@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -6,6 +7,7 @@ import {
 } from 'react-router-dom';
 
 import {
+  Admin,
   Home,
   Login,
   Reports,
@@ -22,29 +24,57 @@ import { AuthContext } from './context';
 
 function App() {
   const { token, login, logout, role, unit, userId } = useAuth();
+  const [isLoggedIn, setIsLoggedIn] = useState(!!token);
 
-  const renderRoutes = () => {
-    if (!token) {
-      return (
-        <>
-          <Route path='/login' element={<Login />} />
-          <Route path='*' element={<Navigate to='/login' replace />} />
-        </>
-      );
-    } else if (role === '0') {
+  useEffect(() => {
+    setIsLoggedIn(!!token);
+  }, [token]);
+
+  const renderAuthenticatedRoutes = () => {
+    if (role === '0') {
       return (
         <>
           <Route path='/users' element={<Users />} />
           <Route path='/tanks-info' element={<TanksInfo />} />
-          <Route path='/' element={<Home />} />
           <Route path='/u52' element={<Unit52 />} />
           <Route path='/u53' element={<Unit53 />} />
           <Route path='/u54' element={<Unit54 />} />
           <Route path='/u90' element={<Unit90 />} />
           <Route path='/reports' element={<Reports />} />
+          <Route path='/admin' element={<Admin />} />
           <Route path='*' element={<Navigate to='/' replace />} />
         </>
       );
+    } else if (role === '1') {
+      if (unit === 'u52') {
+        return (
+          <>
+            <Route path='/admin' element={<Admin />} />
+            <Route path='/u52' element={<Unit52 />} />
+          </>
+        );
+      } else if (unit === 'u53') {
+        return (
+          <>
+            <Route path='/admin' element={<Admin />} />
+            <Route path='/u53' element={<Unit53 />} />
+          </>
+        );
+      } else if (unit === 'u54') {
+        return (
+          <>
+            <Route path='/admin' element={<Admin />} />
+            <Route path='/u54' element={<Unit54 />} />
+          </>
+        );
+      } else if (unit === 'u90') {
+        return (
+          <>
+            <Route path='/admin' element={<Admin />} />
+            <Route path='/u90' element={<Unit90 />} />
+          </>
+        );
+      }
     } else if (unit === 'u52') {
       return <Route path='/u52' element={<Unit52 />} />;
     } else if (unit === 'u53') {
@@ -54,22 +84,23 @@ function App() {
     } else if (unit === 'u90') {
       return <Route path='/u90' element={<Unit90 />} />;
     } else {
-      return (
-        <>
-          <Route path='/login' element={<Login />} />
-          <Route path='*' element={<Navigate to='/login' replace />} />
-        </>
-      );
+      return <Route path='*' element={<Navigate to='/' replace />} />;
     }
   };
 
   return (
-    <AuthContext.Provider
-      value={{ isLoggedIn: !!token, token, userId, login, logout }}
-    >
+    <AuthContext.Provider value={{ isLoggedIn, token, userId, login, logout }}>
       <Router>
-        <Navbar />
-        <Routes>{renderRoutes()}</Routes>
+        {isLoggedIn && <Navbar />}
+        <Routes>
+          <Route path='/login' element={<Login />} />
+          {isLoggedIn && <Route path='/' element={<Home />} />}
+          {isLoggedIn ? (
+            renderAuthenticatedRoutes()
+          ) : (
+            <Route path='*' element={<Navigate to='/login' replace />} />
+          )}
+        </Routes>
       </Router>
     </AuthContext.Provider>
   );

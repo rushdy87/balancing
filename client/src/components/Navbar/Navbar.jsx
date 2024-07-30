@@ -38,7 +38,7 @@ const Navbar = () => {
         onClick={(e) => (menuOpen ? setMenuOpen(false) : null)}
       >
         <ul>
-          {role === '0' && (
+          {role && (
             <li>
               <Link to='/'>الرئيسية</Link>
             </li>
@@ -61,6 +61,11 @@ const Navbar = () => {
           {(role === '0' || unit === 'u54') && (
             <li>
               <Link to='/u90'>الوحدة 90</Link>
+            </li>
+          )}
+          {(role === '0' || role === '1') && (
+            <li>
+              <Link to='/admin'>التدقيق</Link>
             </li>
           )}
           {role === '0' && (

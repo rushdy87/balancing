@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Input } from '../../components';
 import './Login.scss';
@@ -6,7 +6,7 @@ import { login } from '../../api/auth';
 import { AuthContext } from '../../context';
 
 const Login = () => {
-  const { login: loginHook } = useContext(AuthContext);
+  const { login: loginHook, token, unit } = useContext(AuthContext);
 
   const [userData, setUserData] = useState({
     username: '',
@@ -15,6 +15,16 @@ const Login = () => {
   const [error, setError] = useState('');
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (token) {
+      if (unit) {
+        navigate(`/${unit}`);
+      } else {
+        navigate('/');
+      }
+    }
+  }, [navigate, token, unit]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -33,10 +43,8 @@ const Login = () => {
         setError(error);
       } else {
         loginHook(userId, token, role, unit);
-
-        navigate('/');
-
         setUserData({ username: '', password: '' });
+        navigate('/');
       }
     } catch (err) {
       console.error('Login error:', err);

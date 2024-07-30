@@ -14,10 +14,8 @@ export const useAuth = () => {
     setUserId(uid);
     setRole(role);
     setUnit(unit);
-    // this 'tokenExpirationDate' varible in different scope than the state
     const tokenExpirationDate =
       expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
-
     setTokenExpirationDate(tokenExpirationDate);
 
     localStorage.setItem(
@@ -31,6 +29,7 @@ export const useAuth = () => {
       })
     );
   }, []);
+
   const logout = useCallback(() => {
     setToken(null);
     setTokenExpirationDate(null);

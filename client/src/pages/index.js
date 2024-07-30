@@ -7,3 +7,4 @@ export { default as Reports } from './Reports/Reports';
 export { default as TanksInfo } from './TankInfo/TanksInfo';
 export { default as Users } from './Users/Users';
 export { default as Login } from './Login/Login';
+export { default as Admin } from './Admin/Admin';
