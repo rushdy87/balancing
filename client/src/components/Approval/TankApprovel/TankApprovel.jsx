@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { confirmeTank } from '../../../api/admin';
 import './TankApprovel.scss';
 import NumberInput from '../../NumberInput/NumberInput';
@@ -6,9 +6,13 @@ import Button from '../../Button/Button';
 import { updateTank } from '../../../api/tanks';
 
 const TankApprovel = ({ tag_number, product, tov, isConfirmed, day }) => {
-  const [confirmation, setConfirmation] = useState(isConfirmed);
+  const [confirmation, setConfirmation] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [tankValue, setTankValue] = useState(tov);
+
+  useEffect(() => {
+    setConfirmation(isConfirmed);
+  }, [isConfirmed]);
 
   const handleConfirmation = async () => {
     const confirmationResult = await confirmeTank('u52', day, tag_number);

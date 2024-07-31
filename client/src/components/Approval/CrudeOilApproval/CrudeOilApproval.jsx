@@ -1,12 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './CrudeOilApproval.scss';
 import { confirmeCrudeOil } from '../../../api/admin';
 import Button from '../../Button/Button';
 import NumberInput from '../../NumberInput/NumberInput';
 
 const CrudeOilApproval = ({ crudeOil, day }) => {
-  const [confirmation, setConfirmation] = useState(crudeOil.isConfirmed);
+  const [confirmation, setConfirmation] = useState(false);
   const [editMode, setEditMode] = useState(false);
+
+  useEffect(() => {
+    setConfirmation(crudeOil.isConfirmed);
+  }, [crudeOil]);
 
   const handleConfirmation = async () => {
     const confirmationResult = await confirmeCrudeOil(day);
