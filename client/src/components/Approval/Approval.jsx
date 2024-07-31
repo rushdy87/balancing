@@ -16,31 +16,30 @@ const Approval = ({ unit, day }) => {
   useEffect(() => {
     (async () => {
       const data = await getAllUnitData(unit, day);
-      setTanks(data.tanks);
+      setTanks(data?.tanks);
     })();
-  }, [day, unit]);
+  }, [day, unit, tanks]);
 
   return (
     <div className='Approval_cotainer'>
       <h2>{unitsname[unit]}</h2>
-      <div className='tanks-wrapper'>
-        {tanks.length === 0 ? (
-          ''
-        ) : (
-          <div>
-            {tanks.map(({ tag_number, product, pumpable, isConfirmed }) => (
-              <TankApprovel
-                key={tag_number}
-                tag_number={tag_number}
-                product={product}
-                pumpable={pumpable}
-                isConfirmed={isConfirmed}
-                day={day}
-              />
-            ))}
-          </div>
-        )}
-      </div>
+      {tanks.length === 0 ? (
+        <h2>لم تتم اضافة الخزين بعد!</h2>
+      ) : (
+        <div className='tanks-wrapper'>
+          <h3 className='Approval_subtitle'>الخزين</h3>
+          {tanks.map(({ tag_number, product, tov, isConfirmed }) => (
+            <TankApprovel
+              key={tag_number}
+              tag_number={tag_number}
+              product={product}
+              tov={tov}
+              isConfirmed={isConfirmed}
+              day={day}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

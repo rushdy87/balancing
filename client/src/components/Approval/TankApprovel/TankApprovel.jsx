@@ -5,10 +5,10 @@ import NumberInput from '../../NumberInput/NumberInput';
 import Button from '../../Button/Button';
 import { updateTank } from '../../../api/tanks';
 
-const TankApprovel = ({ tag_number, product, pumpable, isConfirmed, day }) => {
+const TankApprovel = ({ tag_number, product, tov, isConfirmed, day }) => {
   const [confirmation, setConfirmation] = useState(isConfirmed);
   const [editMode, setEditMode] = useState(false);
-  const [tankValue, setTankValue] = useState(pumpable);
+  const [tankValue, setTankValue] = useState(tov);
 
   const handleConfirmation = async () => {
     const confirmationResult = await confirmeTank('u52', day, tag_number);
@@ -44,7 +44,7 @@ const TankApprovel = ({ tag_number, product, pumpable, isConfirmed, day }) => {
       <div className='TankApprovel_wrapper'>
         <span className='TankApprovel_product'>{product}</span>
         <span className='TankApprovel_tag_number'>{tag_number}</span>
-        <span className='TankApprovel_pumpable'>{pumpable}</span>
+        <span className='TankApprovel_tov'>{tov}</span>
         <span className='TankApprovel_isConfirmed' onClick={handleConfirmation}>
           {confirmation ? '🟢' : '🔴'}
         </span>
