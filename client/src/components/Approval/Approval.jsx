@@ -27,7 +27,7 @@ const Approval = ({ unit, day }) => {
       setTanks(data?.tanks);
       setCrudeOil(data.crudeOil);
     })();
-  }, [day, unit, tanks]);
+  }, [day, unit, tanks, crudeOil]);
 
   return (
     <div className='Approval_cotainer'>

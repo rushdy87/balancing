@@ -17,7 +17,7 @@ const Admin = () => {
 
   const { role, unit } = useContext(AuthContext);
 
-  if (role === 0) {
+  if (role === '0') {
     return <h1>Super User</h1>;
   }
 
