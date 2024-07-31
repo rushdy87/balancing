@@ -1,9 +1,20 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/authCntext';
 import './Admin.scss';
-import { Approval } from '../../components';
+import { Approval, Datepicker } from '../../components';
 
 const Admin = () => {
+  const [day, setDay] = useState(
+    `${new Date().getDate()}-${
+      new Date().getMonth() + 1
+    }-${new Date().getFullYear()}`
+  );
+  const changeDate = (newDate) => {
+    setDay(
+      `${newDate.getDate()}-${newDate.getMonth() + 1}-${newDate.getFullYear()}`
+    );
+  };
+
   const { role, unit } = useContext(AuthContext);
 
   if (role === 0) {
@@ -12,7 +23,9 @@ const Admin = () => {
 
   return (
     <div className='Admin_container'>
-      <Approval unit={unit} />
+      <Datepicker date={day} changeDate={changeDate} />
+      <div className='hr' />
+      <Approval unit={unit} day={day} />
     </div>
   );
 };

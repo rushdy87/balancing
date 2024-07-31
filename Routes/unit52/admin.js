@@ -10,10 +10,10 @@ const router = Router();
 // /api/u52/admin/....
 
 router.get('/all/:day', getAllData);
-router.put('/confirm-tank', confirmTankVolume);
-router.put('/confirm-crude', confirmOilVolumes);
-router.put('/confirm-gas', confirmGasVolumes);
-router.put('/confirm-blending', confirmBlending);
+router.patch('/confirm-tank', confirmTankVolume);
+router.patch('/confirm-crude', confirmOilVolumes);
+router.patch('/confirm-gas', confirmGasVolumes);
+router.patch('/confirm-blending', confirmBlending);
 router.post('/notes', addNotes);
 
 module.exports = router;

@@ -171,6 +171,7 @@ exports.confirmTankVolume = async (req, res, next) => {
 
   try {
     checkAuthorization(userData, 'u52', next);
+
     const confirmedTank = await confirmTank(
       Unit52Tank,
       tag_number,

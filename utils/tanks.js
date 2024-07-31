@@ -136,7 +136,6 @@ const confirmTank = async (model, tag_number, day) => {
   const tank = await model.findOne({
     where: { tag_number, day },
   });
-
   if (!tank) {
     return null;
   }
