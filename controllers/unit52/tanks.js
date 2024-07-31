@@ -150,6 +150,8 @@ exports.updateOneTankVolume = async (req, res, next) => {
       );
     }
 
+    console.log(updatedTank);
+
     res.status(200).json({ message: 'The tank volume has been updated.' });
   } catch (error) {
     console.log(error.message);
