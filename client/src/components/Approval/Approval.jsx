@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './Approval.scss';
 import { getAllUnitData } from '../../api/admin';
 import TankApprovel from './TankApprovel/TankApprovel';
+import CrudeOilApproval from './CrudeOilApproval/CrudeOilApproval';
 
 const unitsname = {
   u52: 'Unit 52',
@@ -10,20 +11,28 @@ const unitsname = {
   u90: 'Unit 90',
 };
 
+const isObjectEmpty = (objectName) => {
+  return (
+    Object.keys(objectName).length === 0 && objectName.constructor === Object
+  );
+};
+
 const Approval = ({ unit, day }) => {
   const [tanks, setTanks] = useState([]);
+  const [crudeOil, setCrudeOil] = useState({});
 
   useEffect(() => {
     (async () => {
       const data = await getAllUnitData(unit, day);
       setTanks(data?.tanks);
+      setCrudeOil(data.crudeOil);
     })();
   }, [day, unit, tanks]);
 
   return (
     <div className='Approval_cotainer'>
       <h2>{unitsname[unit]}</h2>
-      {tanks.length === 0 ? (
+      {tanks?.length === 0 ? (
         <h2>لم تتم اضافة الخزين بعد!</h2>
       ) : (
         <div className='tanks-wrapper'>
@@ -38,6 +47,14 @@ const Approval = ({ unit, day }) => {
               day={day}
             />
           ))}
+        </div>
+      )}
+      {isObjectEmpty(crudeOil) ? (
+        <h2>لم تتم اضافة البيانات النفط الخام</h2>
+      ) : (
+        <div className='crudeOil-wrapper'>
+          <h3 className='Approval_subtitle'>النفط الخام</h3>
+          <CrudeOilApproval crudeOil={crudeOil} day={day} />
         </div>
       )}
     </div>

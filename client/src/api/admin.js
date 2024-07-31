@@ -24,3 +24,16 @@ export const confirmeTank = async (unit, day, tag_number) => {
   }
   return true;
 };
+
+export const confirmeCrudeOil = async (day) => {
+  const response = await patchRequest(
+    `${apiConfig.baseURL}/u52/admin/confirm-crude`,
+    { day }
+  );
+
+  if (response.error) {
+    console.log(response.error);
+    return false;
+  }
+  return true;
+};
