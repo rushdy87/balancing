@@ -25,7 +25,7 @@ const Approval = ({ unit, day }) => {
     (async () => {
       const data = await getAllUnitData(unit, day);
       setTanks(data?.tanks);
-      setCrudeOil(data.crudeOil);
+      setCrudeOil(data?.crudeOil);
     })();
   }, [day, unit, tanks, crudeOil]);
 
