@@ -1,6 +1,7 @@
 const express = require('express');
 
 const LPGTransportRoutes = require('./lpg-transport');
+const PGTransportRoutes = require('./pg-transport');
 const RGTransportRoutes = require('./rg-transport');
 const ATKTransportRoutes = require('./atk-transport');
 const HFOTransportRoutes = require('./hfo-transport');
@@ -9,6 +10,7 @@ const HFOTransportRoutes = require('./hfo-transport');
 const router = express.Router();
 
 router.use('/lpg', LPGTransportRoutes);
+router.use('/pg', PGTransportRoutes);
 router.use('/rg', RGTransportRoutes);
 router.use('/atk', ATKTransportRoutes);
 router.use('/hfo', HFOTransportRoutes);
