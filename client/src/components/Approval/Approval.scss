@@ -8,7 +8,8 @@
   gap: 10px;
 
   .tanks-wrapper,
-  .crudeOil-wrapper {
+  .crudeOil-wrapper,
+  .naturalGas-wrapper {
     background-color: rgba($color: $primary, $alpha: 0.07);
     border-radius: $borderRadius;
   }

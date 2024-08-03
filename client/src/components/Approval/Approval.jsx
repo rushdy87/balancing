@@ -3,6 +3,7 @@ import './Approval.scss';
 import { getAllUnitData } from '../../api/admin';
 import TankApprovel from './TankApprovel/TankApprovel';
 import CrudeOilApproval from './CrudeOilApproval/CrudeOilApproval';
+import NaturlGasApproval from './NaturlGasApproval/NaturlGasApproval';
 
 const unitsname = {
   u52: 'Unit 52',
@@ -20,12 +21,14 @@ const isObjectEmpty = (objectName) => {
 const Approval = ({ unit, day }) => {
   const [tanks, setTanks] = useState([]);
   const [crudeOil, setCrudeOil] = useState({});
+  const [naturalGas, setNaturalGas] = useState({});
 
   useEffect(() => {
     (async () => {
       const data = await getAllUnitData(unit, day);
       setTanks(data?.tanks);
       setCrudeOil(data?.crudeOil);
+      setNaturalGas(data?.naturalGas);
     })();
   }, [day, unit]);
 
@@ -50,11 +53,20 @@ const Approval = ({ unit, day }) => {
         </div>
       )}
       {isObjectEmpty(crudeOil) ? (
-        <h2>لم تتم اضافة البيانات النفط الخام</h2>
+        <h2>لم تتم اضافة بيانات النفط الخام</h2>
       ) : (
         <div className='crudeOil-wrapper'>
           <h3 className='Approval_subtitle'>النفط الخام</h3>
           <CrudeOilApproval crudeOil={crudeOil} day={day} />
+        </div>
+      )}
+
+      {isObjectEmpty(naturalGas) ? (
+        <h2>لم تتم اضافة بيانات الغاز الطبيعي المستلم</h2>
+      ) : (
+        <div className='naturalGas-wrapper'>
+          <h3 className='Approval_subtitle'>الغاز المستلم الطبيعي</h3>
+          <NaturlGasApproval naturalGas={naturalGas} day={day} />
         </div>
       )}
     </div>
