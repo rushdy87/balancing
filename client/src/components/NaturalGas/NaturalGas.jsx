@@ -28,14 +28,14 @@ const NaturalGas = ({ naturalGas, setNaturalGas }) => {
         />
       </div>
       <div className='NaturalGas_inputFiled'>
-        <label htmlFor='receiving_mscf'>
-          الغاز المستلم الطبيعي <span>(مقمق)</span>
+        <label htmlFor='receiving_mn3'>
+          الغاز المستلم الطبيعي <span>(mn3)</span>
         </label>
         <NumberInput
           type='number'
-          name='receiving_mscf'
-          id='receiving_mscf'
-          value={naturalGas.receiving_mscf}
+          name='receiving_mn3'
+          id='receiving_mn3'
+          value={naturalGas.receiving_mn3}
           onChange={handleChange}
         />
       </div>

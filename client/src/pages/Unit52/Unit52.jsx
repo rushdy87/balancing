@@ -58,7 +58,7 @@ const Unit52 = () => {
   // Natural Gas
   const [naturalGas, setNaturalGas] = useState({
     receiving_m3: 0,
-    receiving_mscf: 0,
+    receiving_mn3: 0,
   });
 
   const handleSubmit = async (event) => {
@@ -98,7 +98,7 @@ const Unit52 = () => {
     console.log(naturalGasRes);
     setNaturalGas({
       receiving_m3: 0,
-      receiving_mscf: 0,
+      receiving_mn3: 0,
     });
     setShowPreview(false);
   };
