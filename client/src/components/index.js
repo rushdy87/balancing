@@ -14,4 +14,4 @@ export { default as CrudeOil } from './CrudeOil/CrudeOil';
 export { default as NaturalGas } from './NaturalGas/NaturalGas';
 export { default as Transport } from './Transport/Transport';
 export { default as Pumping } from './Pumping/Pumping';
-export { default as Approval } from './Approval/Approval';
+export { default as Unit52Approval } from './Approval/Unit52Approval/Unit52Approval';

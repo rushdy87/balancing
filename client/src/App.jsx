@@ -49,42 +49,28 @@ function App() {
       if (unit === 'u52') {
         return (
           <>
-            <Route path='/admin' element={<Admin />} />
             <Route path='/u52' element={<Unit52 />} />
           </>
         );
       } else if (unit === 'u53') {
         return (
           <>
-            <Route path='/admin' element={<Admin />} />
             <Route path='/u53' element={<Unit53 />} />
           </>
         );
       } else if (unit === 'u54') {
         return (
           <>
-            <Route path='/admin' element={<Admin />} />
             <Route path='/u54' element={<Unit54 />} />
           </>
         );
       } else if (unit === 'u90') {
         return (
           <>
-            <Route path='/admin' element={<Admin />} />
             <Route path='/u90' element={<Unit90 />} />
           </>
         );
       }
-    } else if (unit === 'u52') {
-      return <Route path='/u52' element={<Unit52 />} />;
-    } else if (unit === 'u53') {
-      return <Route path='/u53' element={<Unit53 />} />;
-    } else if (unit === 'u54') {
-      return <Route path='/u54' element={<Unit54 />} />;
-    } else if (unit === 'u90') {
-      return <Route path='/u90' element={<Unit90 />} />;
-    } else {
-      return <Route path='*' element={<Navigate to='/' replace />} />;
     }
   };
 
@@ -97,6 +83,7 @@ function App() {
         <Routes>
           <Route path='/login' element={<Login />} />
           {isLoggedIn && <Route path='/' element={<Home />} />}
+          {isLoggedIn && <Route path='/admin' element={<Admin />} />}
           {isLoggedIn ? (
             renderAuthenticatedRoutes()
           ) : (

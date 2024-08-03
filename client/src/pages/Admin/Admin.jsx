@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/authCntext';
 import './Admin.scss';
-import { Approval, Datepicker } from '../../components';
+import { Unit52Approval, Datepicker } from '../../components';
 
 const Admin = () => {
   const [day, setDay] = useState(
@@ -21,13 +21,19 @@ const Admin = () => {
     return <h1>Super User</h1>;
   }
 
-  return (
-    <div className='Admin_container'>
-      <Datepicker date={day} changeDate={changeDate} />
-      <div className='hr' />
-      <Approval unit={unit} day={day} />
-    </div>
-  );
+  switch (unit) {
+    case 'u52':
+      return (
+        <div className='Admin_container'>
+          <Datepicker date={day} changeDate={changeDate} />
+          <div className='hr' />
+          <Unit52Approval day={day} />
+        </div>
+      );
+
+    default:
+      return <h1>There is an error ocors</h1>;
+  }
 };
 
 export default Admin;

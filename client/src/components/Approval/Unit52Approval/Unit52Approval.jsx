@@ -1,17 +1,10 @@
 import { useEffect, useState } from 'react';
-import './Approval.scss';
-import { getAllUnitData } from '../../api/admin';
-import TankApprovel from './TankApprovel/TankApprovel';
-import CrudeOilApproval from './CrudeOilApproval/CrudeOilApproval';
-import NaturlGasApproval from './NaturlGasApproval/NaturlGasApproval';
-import BlendingApproval from './BlendingApproval/BlendingApproval';
-
-const unitsname = {
-  u52: 'Unit 52',
-  u53: 'Unit 53',
-  u54: 'Unit 54',
-  u90: 'Unit 90',
-};
+import './Unit52Approval.scss';
+import { getAllUnitData } from '../../../api/admin';
+import TankApprovel from '../TankApprovel/TankApprovel';
+import CrudeOilApproval from '../CrudeOilApproval/CrudeOilApproval';
+import NaturlGasApproval from '../NaturlGasApproval/NaturlGasApproval';
+import BlendingApproval from '../BlendingApproval/BlendingApproval';
 
 const isObjectEmpty = (objectName) => {
   return (
@@ -19,7 +12,7 @@ const isObjectEmpty = (objectName) => {
   );
 };
 
-const Approval = ({ unit, day }) => {
+const Unit52Approval = ({ unit, day }) => {
   const [tanks, setTanks] = useState([]);
   const [crudeOil, setCrudeOil] = useState({});
   const [naturalGas, setNaturalGas] = useState({});
@@ -27,7 +20,7 @@ const Approval = ({ unit, day }) => {
 
   useEffect(() => {
     (async () => {
-      const data = await getAllUnitData(unit, day);
+      const data = await getAllUnitData('u52', day);
       setTanks(data?.tanks);
       setCrudeOil(data?.crudeOil);
       setNaturalGas(data?.naturalGas);
@@ -37,7 +30,7 @@ const Approval = ({ unit, day }) => {
 
   return (
     <div className='Approval_cotainer'>
-      <h2>{unitsname[unit]}</h2>
+      <h2>Unit 52</h2>
       {tanks?.length === 0 ? (
         <h2>لم تتم اضافة الخزين بعد!</h2>
       ) : (
@@ -85,4 +78,4 @@ const Approval = ({ unit, day }) => {
   );
 };
 
-export default Approval;
+export default Unit52Approval;
