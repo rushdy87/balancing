@@ -55,17 +55,15 @@ exports.getAllData = async (req, res, next) => {
 
     const pumping = [];
     let pgPumping = await findPumping(PGPumping, formattedDate);
-    if (!pgPumping) pgPumping = {};
-    pumping.push({ ...pgPumping.dataValues, product: 'PG' });
+    if (pgPumping) pumping.push({ ...pgPumping.dataValues, product: 'PG' });
     let rgPumping = await findPumping(RGPumping, formattedDate);
-    if (!rgPumping) rgPumping = {};
-    pumping.push({ ...rgPumping.dataValues, product: 'RG' });
+    if (rgPumping) pumping.push({ ...rgPumping.dataValues, product: 'RG' });
     let dieselPumping = await findPumping(DieselPumping, formattedDate);
-    if (!dieselPumping) dieselPumping = {};
-    pumping.push({ ...dieselPumping.dataValues, product: 'diesel' });
+    if (dieselPumping)
+      pumping.push({ ...dieselPumping.dataValues, product: 'diesel' });
     let kerosenePumping = await findPumping(KerosenePumping, formattedDate);
-    if (!kerosenePumping) kerosenePumping = {};
-    pumping.push({ ...kerosenePumping.dataValues, product: 'kerosene' });
+    if (kerosenePumping)
+      pumping.push({ ...kerosenePumping.dataValues, product: 'kerosene' });
     unit90Data.pumping = [...pumping];
 
     const lightTransport = [];
