@@ -1,36 +1,13 @@
-import { useEffect, useState } from 'react';
-import { confirmeTank } from '../../../api/admin';
+import { useState } from 'react';
+
 import './TankApprovel.scss';
 import NumberInput from '../../NumberInput/NumberInput';
 import Button from '../../Button/Button';
 import { updateTank } from '../../../api/tanks';
 
-const TankApprovel = ({ tag_number, product, tov, isConfirmed, day }) => {
-  const [confirmation, setConfirmation] = useState(false);
+const TankApprovel = ({ tag_number, product, tov, day }) => {
   const [editMode, setEditMode] = useState(false);
   const [tankValue, setTankValue] = useState(tov);
-
-  useEffect(() => {
-    setConfirmation(isConfirmed);
-  }, [isConfirmed]);
-
-  const handleConfirmation = async () => {
-    const confirmationResult = await confirmeTank('u52', day, tag_number);
-    setConfirmation(confirmationResult);
-  };
-
-  const handleKeyDown = (event) => {
-    switch (event.keyCode) {
-      case 38: // Up arrow
-      case 40: // Down arrow
-      case 37: // Left arrow
-      case 39: // Right arrow
-        event.preventDefault();
-        break;
-      default:
-        break;
-    }
-  };
 
   const handleValueChange = (event) => {
     const volume = parseInt(event.target.value, 10);
@@ -49,9 +26,6 @@ const TankApprovel = ({ tag_number, product, tov, isConfirmed, day }) => {
         <span className='TankApprovel_product'>{product}</span>
         <span className='TankApprovel_tag_number'>{tag_number}</span>
         <span className='TankApprovel_tov'>{tov}</span>
-        <span className='TankApprovel_isConfirmed' onClick={handleConfirmation}>
-          {confirmation ? '🟢' : '🔴'}
-        </span>
         <span
           className='TankApprovel_edit'
           onClick={() => setEditMode(!editMode)}
@@ -67,7 +41,6 @@ const TankApprovel = ({ tag_number, product, tov, isConfirmed, day }) => {
             name={tag_number}
             value={tankValue}
             onChange={handleValueChange}
-            onKeyDown={handleKeyDown}
           />
           <Button onClick={handleEdit}>Save</Button>
         </div>

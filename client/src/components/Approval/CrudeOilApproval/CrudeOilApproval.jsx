@@ -1,29 +1,16 @@
 import { useEffect, useState } from 'react';
 import './CrudeOilApproval.scss';
-import { confirmCrudeOil } from '../../../api/admin';
 import Button from '../../Button/Button';
 import NumberInput from '../../NumberInput/NumberInput';
 import { updateCrudeOil } from '../../../api/crude-oil';
 
 const CrudeOilApproval = ({ crudeOil, day }) => {
-  const [confirmation, setConfirmation] = useState(crudeOil.isConfirmed);
   const [editMode, setEditMode] = useState(false);
   const [crudeOilData, setCrudeOilData] = useState({ ...crudeOil });
 
   useEffect(() => {
-    setConfirmation(crudeOil.isConfirmed);
     setCrudeOilData({ ...crudeOil });
-    console.log('useEffect');
-  }, [crudeOil.isConfirmed]);
-
-  const handleConfirmation = async () => {
-    try {
-      const confirmationResult = await confirmCrudeOil(day);
-      setConfirmation(confirmationResult);
-    } catch (error) {
-      console.error('Failed to confirm crude oil:', error);
-    }
-  };
+  }, [crudeOil]);
 
   const handleValueChange = (event) => {
     const volume = parseInt(event.target.value, 10);
@@ -33,43 +20,41 @@ const CrudeOilApproval = ({ crudeOil, day }) => {
   };
 
   const editHandler = async () => {
-    await updateCrudeOil({
-      day,
-      items: {
-        reservoir_m3: crudeOilData.reservoir_m3,
-        reservoir_bbl: crudeOilData.reservoir_bbl,
-        receiving: crudeOilData.receiving,
-        sending: crudeOilData.sending,
-      },
-    });
-    setEditMode(false);
+    try {
+      await updateCrudeOil({
+        day,
+        items: {
+          reservoir_m3: crudeOilData.reservoir_m3,
+          reservoir_bbl: crudeOilData.reservoir_bbl,
+          receiving: crudeOilData.receiving,
+          sending: crudeOilData.sending,
+        },
+      });
+      setEditMode(false);
+    } catch (error) {
+      console.error('Failed to update crude oil data:', error);
+    }
   };
 
   return (
     <div className='CrudeOilApproval'>
       <div className='reservoir_m3'>
         <span>خزين النفط الخام (م3)</span>
-        <span>{crudeOil.reservoir_m3}</span>
+        <span>{crudeOilData.reservoir_m3}</span>
       </div>
       <div className='reservoir_bbl'>
         <span>خزين النفط الخام (برميل)</span>
-        <span>{crudeOil.reservoir_bbl}</span>
+        <span>{crudeOilData.reservoir_bbl}</span>
       </div>
       <div className='receiving'>
         <span>النفط الخام المستلم</span>
-        <span>{crudeOil.receiving}</span>
+        <span>{crudeOilData.receiving}</span>
       </div>
       <div className='sending'>
         <span>النفط الخام المرسل</span>
-        <span>{crudeOil.sending}</span>
+        <span>{crudeOilData.sending}</span>
       </div>
       <div className='confirme_and_edit'>
-        <span
-          className='CrudeOilApproval_isConfirmed'
-          onClick={handleConfirmation}
-        >
-          {confirmation ? '🟢' : '🔴'}
-        </span>
         <span
           className='CrudeOilApproval_edit'
           onClick={() => setEditMode(!editMode)}
