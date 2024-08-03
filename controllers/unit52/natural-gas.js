@@ -82,8 +82,11 @@ exports.addNaturalGas = async (req, res, next) => {
       await deleteNaturalGas(formattedDate);
     }
 
+    const receiving_m3 = Math.round(data.receiving_mscf / (1177 * 24));
+
     const gasVolumes = addNaturalGasVolumes({
       ...data,
+      receiving_m3,
       day: formattedDate,
       userId: userData.id,
     });
