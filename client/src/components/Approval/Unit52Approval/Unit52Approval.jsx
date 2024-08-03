@@ -12,7 +12,7 @@ const isObjectEmpty = (objectName) => {
   );
 };
 
-const Unit52Approval = ({ unit, day }) => {
+const Unit52Approval = ({ day }) => {
   const [tanks, setTanks] = useState([]);
   const [crudeOil, setCrudeOil] = useState({});
   const [naturalGas, setNaturalGas] = useState({});
@@ -26,7 +26,7 @@ const Unit52Approval = ({ unit, day }) => {
       setNaturalGas(data?.naturalGas);
       setBlending(data?.blending);
     })();
-  }, [day, unit]);
+  }, [day]);
 
   return (
     <div className='Approval_cotainer'>
@@ -39,6 +39,7 @@ const Unit52Approval = ({ unit, day }) => {
           {tanks.map(({ tag_number, product, tov, isConfirmed }) => (
             <TankApprovel
               key={tag_number}
+              unit='u52'
               tag_number={tag_number}
               product={product}
               tov={tov}

@@ -15,3 +15,4 @@ export { default as NaturalGas } from './NaturalGas/NaturalGas';
 export { default as Transport } from './Transport/Transport';
 export { default as Pumping } from './Pumping/Pumping';
 export { default as Unit52Approval } from './Approval/Unit52Approval/Unit52Approval';
+export { default as Unit90Approval } from './Approval/Unit90Approval/Unit90Approval';

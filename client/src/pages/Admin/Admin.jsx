@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/authCntext';
 import './Admin.scss';
-import { Unit52Approval, Datepicker } from '../../components';
+import { Unit52Approval, Datepicker, Unit90Approval } from '../../components';
 
 const Admin = () => {
   const [day, setDay] = useState(
@@ -28,6 +28,14 @@ const Admin = () => {
           <Datepicker date={day} changeDate={changeDate} />
           <div className='hr' />
           <Unit52Approval day={day} />
+        </div>
+      );
+    case 'u90':
+      return (
+        <div className='Admin_container'>
+          <Datepicker date={day} changeDate={changeDate} />
+          <div className='hr' />
+          <Unit90Approval day={day} />
         </div>
       );
 

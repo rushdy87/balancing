@@ -5,7 +5,7 @@ import NumberInput from '../../NumberInput/NumberInput';
 import Button from '../../Button/Button';
 import { updateTank } from '../../../api/tanks';
 
-const TankApprovel = ({ tag_number, product, tov, day }) => {
+const TankApprovel = ({ unit, tag_number, product, tov, day }) => {
   const [editMode, setEditMode] = useState(false);
   const [tankValue, setTankValue] = useState(tov);
 
@@ -15,7 +15,7 @@ const TankApprovel = ({ tag_number, product, tov, day }) => {
   };
 
   const handleEdit = async () => {
-    const res = await updateTank('u52', tag_number, day, { tov: tankValue });
+    const res = await updateTank(unit, tag_number, day, { tov: tankValue });
     console.log(res);
     setEditMode(false);
   };
@@ -25,7 +25,7 @@ const TankApprovel = ({ tag_number, product, tov, day }) => {
       <div className='TankApprovel_wrapper'>
         <span className='TankApprovel_product'>{product}</span>
         <span className='TankApprovel_tag_number'>{tag_number}</span>
-        <span className='TankApprovel_tov'>{tov}</span>
+        <span className='TankApprovel_tov'>{tankValue}</span>
         <span
           className='TankApprovel_edit'
           onClick={() => setEditMode(!editMode)}

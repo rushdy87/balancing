@@ -23,7 +23,7 @@ router.post('/', addVolumeToTanks);
 router.post('/tank');
 
 // {tov: $$$}
-router.patch('/:tag_number/:day', updateOneTankVolume);
+router.patch('/tank/:tag_number/:day', updateOneTankVolume);
 
 router.patch('/confirmation', confirmTankVolume);
 

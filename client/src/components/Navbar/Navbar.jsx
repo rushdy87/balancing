@@ -58,7 +58,7 @@ const Navbar = () => {
               <Link to='/u54'>الوحدة 54</Link>
             </li>
           )}
-          {(role === '0' || unit === 'u54') && (
+          {(role === '0' || unit === 'u90') && (
             <li>
               <Link to='/u90'>الوحدة 90</Link>
             </li>
