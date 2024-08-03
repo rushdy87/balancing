@@ -4,6 +4,7 @@ import { getAllUnitData } from '../../api/admin';
 import TankApprovel from './TankApprovel/TankApprovel';
 import CrudeOilApproval from './CrudeOilApproval/CrudeOilApproval';
 import NaturlGasApproval from './NaturlGasApproval/NaturlGasApproval';
+import BlendingApproval from './BlendingApproval/BlendingApproval';
 
 const unitsname = {
   u52: 'Unit 52',
@@ -22,6 +23,7 @@ const Approval = ({ unit, day }) => {
   const [tanks, setTanks] = useState([]);
   const [crudeOil, setCrudeOil] = useState({});
   const [naturalGas, setNaturalGas] = useState({});
+  const [blending, setBlending] = useState({});
 
   useEffect(() => {
     (async () => {
@@ -29,6 +31,7 @@ const Approval = ({ unit, day }) => {
       setTanks(data?.tanks);
       setCrudeOil(data?.crudeOil);
       setNaturalGas(data?.naturalGas);
+      setBlending(data?.blending);
     })();
   }, [day, unit]);
 
@@ -67,6 +70,15 @@ const Approval = ({ unit, day }) => {
         <div className='naturalGas-wrapper'>
           <h3 className='Approval_subtitle'>الغاز المستلم الطبيعي</h3>
           <NaturlGasApproval naturalGas={naturalGas} day={day} />
+        </div>
+      )}
+
+      {isObjectEmpty(blending) ? (
+        <h2>لم تتم اضافة الكميات النهائية المحضرة</h2>
+      ) : (
+        <div className='blending-wrapper'>
+          <h3 className='Approval_subtitle'>تحضير المنتجات النهائية</h3>
+          <BlendingApproval blending={blending} day={day} />
         </div>
       )}
     </div>

@@ -9,7 +9,8 @@
 
   .tanks-wrapper,
   .crudeOil-wrapper,
-  .naturalGas-wrapper {
+  .naturalGas-wrapper,
+  .blending-wrapper {
     background-color: rgba($color: $primary, $alpha: 0.07);
     border-radius: $borderRadius;
   }

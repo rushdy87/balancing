@@ -1,0 +1,43 @@
+@import '../../../styles/variables.scss';
+
+.BlendingApproval {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 290px;
+
+  .lpg_blending,
+  .pg_blending,
+  .rg_blending,
+  .diesel_blending,
+  .hfo_blending {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .edit_inputs {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    .edit_lpg_blending,
+    .edit_pg_blending,
+    .edit_rg_blending,
+    .edit_diesel_blending,
+    .edit_hfo_blending {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .edit_save_btn {
+      width: fit-content;
+      margin: 10px auto;
+    }
+  }
+}

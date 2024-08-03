@@ -30,7 +30,7 @@ const NaturlGasApproval = ({ naturalGas, day }) => {
       });
       setEditMode(false);
     } catch (error) {
-      console.error('Failed to update crude oil data:', error);
+      console.error('Failed to update natural gas data:', error);
     }
   };
 
