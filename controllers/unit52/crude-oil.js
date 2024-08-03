@@ -82,8 +82,11 @@ exports.addCrudeOil = async (req, res, next) => {
       await deleteCrudeOil(formattedDate);
     }
 
+    const reservoir_bbl = Math.round(data.reservoir_m3 * 6.2898);
+
     const oilVolumes = await addCrudeOilVolumes({
       ...data,
+      reservoir_bbl,
       day: formattedDate,
       userId: userData.id,
     });
