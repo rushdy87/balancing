@@ -56,6 +56,18 @@ app.use((req, res, next) => {
 //   });
 //   res.json(user);
 // });
+// const { User } = require('./models');
+// const bcryptjs = require('bcryptjs');
+// app.get('/', async (req, res) => {
+//   const user = await User.create({
+//     username: 'user2',
+//     password: bcryptjs.hashSync('user2', 10),
+//     name: 'user2',
+//     role: '1',
+//     unit: 'u53',
+//   });
+//   res.json(user);
+// });
 
 // ROUTES
 app.use('/api/auth', AuthRoutes);
