@@ -68,17 +68,17 @@ exports.getAllData = async (req, res, next) => {
 
     const lightTransport = [];
     let lpgTransport = await findTransport(LPGTransport, formattedDate);
-    if (!lpgTransport) lpgTransport = {};
-    lightTransport.push({ ...lpgTransport.dataValues, product: 'LPG' });
+    if (lpgTransport)
+      lightTransport.push({ ...lpgTransport.dataValues, product: 'LPG' });
     let pgTransport = await findTransport(PGTransport, formattedDate);
-    if (!pgTransport) pgTransport = {};
-    lightTransport.push({ ...pgTransport.dataValues, product: 'PG' });
+    if (pgTransport)
+      lightTransport.push({ ...pgTransport.dataValues, product: 'PG' });
     let rgTransport = await findTransport(RGTransport, formattedDate);
-    if (!rgTransport) rgTransport = {};
-    lightTransport.push({ ...rgTransport.dataValues, product: 'RG' });
+    if (rgTransport)
+      lightTransport.push({ ...rgTransport.dataValues, product: 'RG' });
     let atkTransport = await findTransport(ATKTransport, formattedDate);
-    if (!atkTransport) atkTransport = {};
-    lightTransport.push({ ...atkTransport.dataValues, product: 'ATK' });
+    if (atkTransport)
+      lightTransport.push({ ...atkTransport.dataValues, product: 'ATK' });
     unit90Data.lightTransport = [...lightTransport];
 
     let hfoTransport = await HFOTransport.findAll({

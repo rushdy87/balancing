@@ -3,16 +3,19 @@ import './Unit90Approval.scss';
 import { getAllUnitData } from '../../../api/admin';
 import TankApprovel from '../TankApprovel/TankApprovel';
 import PumpingApproval from '../PumpingApproval/PumpingApproval';
+import LightTransportApproval from '../LightTransportApproval/LightTransportApproval';
 
 const Unit90Approval = ({ day }) => {
   const [tanks, setTanks] = useState([]);
   const [pumping, setPumping] = useState([]);
+  const [lightTransport, setLightTransport] = useState([]);
 
   useEffect(() => {
     (async () => {
       const data = await getAllUnitData('u90', day);
       setTanks(data?.tanks);
       setPumping(data?.pumping);
+      setLightTransport(data?.lightTransport);
     })();
   }, [day]);
 
@@ -46,11 +49,29 @@ const Unit90Approval = ({ day }) => {
           {pumping.map(({ product, toKarbala, toNajaf }) => {
             return (
               <PumpingApproval
-                key={product}
+                key={`${product}_pumping`}
                 product={product}
                 toKarbala={toKarbala}
                 toNajaf={toNajaf}
                 day={day}
+              />
+            );
+          })}
+        </div>
+      )}
+
+      {lightTransport?.length === 0 ? (
+        <h2>لم تتم اضافة تحميل المنتجات الخفيف؛</h2>
+      ) : (
+        <div className='lightTransportWrapper'>
+          <h3>تحميل المنتجات الخفيفة</h3>
+          {lightTransport.map(({ product, quantity, tankers }) => {
+            return (
+              <LightTransportApproval
+                key={`${product}_transport`}
+                product={product}
+                quantity={quantity}
+                tankers={tankers}
               />
             );
           })}
