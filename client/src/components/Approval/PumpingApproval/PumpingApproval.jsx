@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './PumpingApproval.scss';
 import NumberInput from '../../NumberInput/NumberInput';
 import Button from '../../Button/Button';
@@ -7,6 +7,11 @@ import { updatePumping } from '../../../api/pumping';
 const PumpingApproval = ({ product, toKarbala, toNajaf, day }) => {
   const [editMode, setEditMode] = useState(false);
   const [pumpingVolumes, setPumpingVolumes] = useState({ toKarbala, toNajaf });
+
+  useEffect(() => {
+    setPumpingVolumes({ toKarbala, toNajaf });
+    console.log('useEffect');
+  }, [toKarbala, toNajaf]);
 
   const handleValueChange = (event) => {
     const volume = parseInt(event.target.value, 10);

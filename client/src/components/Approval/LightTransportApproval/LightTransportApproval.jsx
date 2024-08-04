@@ -1,12 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './LightTransportApproval.scss';
+import NumberInput from '../../NumberInput/NumberInput';
+import Button from '../../Button/Button';
+import { updateLightTransport } from '../../../api/transport';
 
-const LightTransportApproval = ({ product, quantity, tankers }) => {
+const LightTransportApproval = ({ product, quantity, tankers, day }) => {
   const [editMode, setEditMode] = useState(false);
   const [transportVolumes, setTransportVolumes] = useState({
     quantity,
     tankers,
   });
+
+  useEffect(() => {
+    setTransportVolumes({ quantity, tankers });
+    console.log('useEffect');
+  }, [quantity, tankers]);
 
   const handleValueChange = (event) => {
     const volume = parseInt(event.target.value, 10);
@@ -15,6 +23,15 @@ const LightTransportApproval = ({ product, quantity, tankers }) => {
   };
 
   const handleEdit = async () => {
+    try {
+      await updateLightTransport(product, {
+        day,
+        items: { ...transportVolumes },
+      });
+    } catch (error) {
+      console.log('there is an error', error);
+    }
+
     setEditMode(false);
   };
 
@@ -39,6 +56,29 @@ const LightTransportApproval = ({ product, quantity, tankers }) => {
           ✏️
         </span>
       </div>
+      {editMode && (
+        <div className='edit_input'>
+          <div className='quantity_input'>
+            <label htmlFor='quantity'>الكمية</label>
+            <NumberInput
+              id='quantity'
+              name='quantity'
+              value={transportVolumes.quantity}
+              onChange={handleValueChange}
+            />
+          </div>
+          <div className='tankers_input'>
+            <label htmlFor='tankers'>الصهاريج</label>
+            <NumberInput
+              id='tankers'
+              name='tankers'
+              value={transportVolumes.tankers}
+              onChange={handleValueChange}
+            />
+          </div>
+          <Button onClick={handleEdit}>Save</Button>
+        </div>
+      )}
     </div>
   );
 };

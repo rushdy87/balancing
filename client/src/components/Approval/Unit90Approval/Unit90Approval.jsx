@@ -16,6 +16,7 @@ const Unit90Approval = ({ day }) => {
       setTanks(data?.tanks);
       setPumping(data?.pumping);
       setLightTransport(data?.lightTransport);
+      console.log(lightTransport);
     })();
   }, [day]);
 
@@ -61,10 +62,10 @@ const Unit90Approval = ({ day }) => {
       )}
 
       {lightTransport?.length === 0 ? (
-        <h2>لم تتم اضافة تحميل المنتجات الخفيف؛</h2>
+        <h2>لم تتم اضافة تحميل المنتجات الخفيفة</h2>
       ) : (
         <div className='lightTransportWrapper'>
-          <h3>تحميل المنتجات الخفيفة</h3>
+          <h3 className='Approval_subtitle'>تحميل المنتجات الخفيفة</h3>
           {lightTransport.map(({ product, quantity, tankers }) => {
             return (
               <LightTransportApproval
@@ -72,6 +73,7 @@ const Unit90Approval = ({ day }) => {
                 product={product}
                 quantity={quantity}
                 tankers={tankers}
+                day={day}
               />
             );
           })}
