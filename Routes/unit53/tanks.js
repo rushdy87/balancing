@@ -20,7 +20,7 @@ router.get('/:from/:to', getTanksBetweenTwoDates);
 router.post('/', addVolumeToTanks);
 
 // {tov: $$$}
-router.patch('/:tag_number/:day', updateOneTankVolume);
+router.patch('/tank/:tag_number/:day', updateOneTankVolume);
 
 router.patch('/confirmation', confirmTankVolume);
 
