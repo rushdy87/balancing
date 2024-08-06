@@ -2,12 +2,16 @@
 
 .input-container {
   margin: 0.8rem 0;
-  width: 320px;
-
+  // width: 320px;
+  width: 100%;
+  @include breakpoint(md) {
+    width: 400px;
+  }
   .input {
     display: flex;
     gap: 20px;
-    width: 320px;
+    // width: 320px;
+    width: 90%;
     align-items: center;
     justify-content: space-between;
     font-size: 1rem;

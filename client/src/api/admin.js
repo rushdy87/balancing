@@ -1,5 +1,5 @@
 import { apiConfig } from './config';
-import { getRequest, patchRequest } from './requist';
+import { getRequest, patchRequest, postRequest } from './requist';
 
 export const getAllUnitData = async (unit, day) => {
   const response = await getRequest(
@@ -36,4 +36,16 @@ export const confirmCrudeOil = async (day) => {
     return false;
   }
   return true;
+};
+
+export const addNotes = async (unit, notesData) => {
+  const response = await postRequest(
+    `${apiConfig.baseURL}/${unit}/notes/all`,
+    notesData
+  );
+  if (response.error) {
+    console.log(response.error);
+  } else {
+    return response;
+  }
 };

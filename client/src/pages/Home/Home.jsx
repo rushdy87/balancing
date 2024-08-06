@@ -1,5 +1,11 @@
+import { AddNotes } from '../../components';
+
 const Home = () => {
-  return <div>Home</div>;
+  return (
+    <div>
+      <AddNotes />
+    </div>
+  );
 };
 
 export default Home;
