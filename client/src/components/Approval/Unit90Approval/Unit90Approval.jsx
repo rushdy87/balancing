@@ -4,6 +4,7 @@ import { getAllUnitData } from '../../../api/admin';
 import TankApprovel from '../TankApprovel/TankApprovel';
 import PumpingApproval from '../PumpingApproval/PumpingApproval';
 import LightTransportApproval from '../LightTransportApproval/LightTransportApproval';
+import AddNotes from '../../AddNotes/AddNotes';
 
 const Unit90Approval = ({ day }) => {
   const [tanks, setTanks] = useState([]);
@@ -78,6 +79,8 @@ const Unit90Approval = ({ day }) => {
           })}
         </div>
       )}
+
+      <AddNotes unit='u90' day={day} />
     </div>
   );
 };

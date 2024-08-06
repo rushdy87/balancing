@@ -5,6 +5,7 @@ import TankApprovel from '../TankApprovel/TankApprovel';
 import CrudeOilApproval from '../CrudeOilApproval/CrudeOilApproval';
 import NaturlGasApproval from '../NaturlGasApproval/NaturlGasApproval';
 import BlendingApproval from '../BlendingApproval/BlendingApproval';
+import AddNotes from '../../AddNotes/AddNotes';
 
 const isObjectEmpty = (objectName) => {
   return (
@@ -75,6 +76,8 @@ const Unit52Approval = ({ day }) => {
           <BlendingApproval blending={blending} day={day} />
         </div>
       )}
+
+      <AddNotes unit='u52' day={day} />
     </div>
   );
 };

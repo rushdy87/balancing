@@ -3,6 +3,7 @@ import './Unit53Approval.scss';
 import { getAllUnitData } from '../../../api/admin';
 import TankApprovel from '../TankApprovel/TankApprovel';
 import AsphaltTransportApproval from '../AsphaltTransportApproval/AsphaltTransportApproval';
+import AddNotes from '../../AddNotes/AddNotes';
 
 const isObjectEmpty = (objectName) => {
   return (
@@ -56,6 +57,8 @@ const Unit53Approval = ({ day }) => {
           />
         </div>
       )}
+
+      <AddNotes unit='u53' day={day} />
     </div>
   );
 };

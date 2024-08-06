@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './AddNotes.scss';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
+import { addNotes } from '../../api/admin';
 
 const AddNotes = ({ unit, day }) => {
   const [notes, setNotes] = useState([]);
@@ -26,11 +27,13 @@ const AddNotes = ({ unit, day }) => {
     setNotes((prevNotes) => [...prevNotes, '']);
   };
 
-  const handleSave = (event) => {
+  const handleSave = async (event) => {
     event.preventDefault();
 
     const notesToSave = notes.filter((note) => note !== '');
-    console.log(notesToSave);
+    if (notesToSave.length > 0) {
+      await addNotes(unit, { day, notes: notesToSave });
+    }
     setNotes([]);
   };
 
@@ -60,11 +63,13 @@ const AddNotes = ({ unit, day }) => {
 
       <div className='AddNotes_actions'>
         <Button type='button' className='primary' onClick={handleAddNote}>
-          ملاحظة جديدة
+          {notes.length === 0 ? 'اضافة ملاحظة' : 'ملاحظة أخرى'}
         </Button>
-        <Button type='buttin' onClick={handleSave}>
-          حفظ
-        </Button>
+        {notes.length > 0 && (
+          <Button type='buttin' onClick={handleSave}>
+            حفظ
+          </Button>
+        )}
       </div>
     </div>
   );
