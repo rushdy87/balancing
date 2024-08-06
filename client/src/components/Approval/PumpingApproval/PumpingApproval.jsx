@@ -10,7 +10,6 @@ const PumpingApproval = ({ product, toKarbala, toNajaf, day }) => {
 
   useEffect(() => {
     setPumpingVolumes({ toKarbala, toNajaf });
-    console.log('useEffect');
   }, [toKarbala, toNajaf]);
 
   const handleValueChange = (event) => {

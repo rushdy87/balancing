@@ -13,7 +13,6 @@ const LightTransportApproval = ({ product, quantity, tankers, day }) => {
 
   useEffect(() => {
     setTransportVolumes({ quantity, tankers });
-    console.log('useEffect');
   }, [quantity, tankers]);
 
   const handleValueChange = (event) => {

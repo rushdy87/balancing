@@ -16,7 +16,6 @@ const Unit90Approval = ({ day }) => {
       setTanks(data?.tanks);
       setPumping(data?.pumping);
       setLightTransport(data?.lightTransport);
-      console.log(lightTransport);
     })();
   }, [day]);
 
