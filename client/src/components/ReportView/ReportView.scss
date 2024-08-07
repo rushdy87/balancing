@@ -13,6 +13,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    font-size: 16px;
+    font-weight: 500;
 
     .report_header_ref_name {
       display: flex;
@@ -32,6 +34,8 @@
       flex-direction: column;
       align-items: center;
       justify-self: flex-end;
+      font-size: 16px;
+      font-weight: 500;
     }
   }
 
@@ -52,12 +56,12 @@
         background-color: rgba($secondary, $alpha: 0.2);
         padding: 2px 5px;
         font-weight: 500;
+        font-size: 14px;
         text-align: center;
         height: 30px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 14px;
       }
       .report_row {
         display: flex;

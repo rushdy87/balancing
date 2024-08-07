@@ -11,11 +11,11 @@ const arabicStoreItemsnames = {
   HFO: 'زيت الوقود الثقيل',
   HD: 'زيت الديزيل',
   LPG: 'الغاز السائل',
-  PA: 'اسفلت الرص',
+  PA: 'اسفلت الرصف',
   sulphur: 'الكبريت الصلب',
 };
 
-const ReportView = ({ day, contentToPrint, printMode }) => {
+const ReportView = ({ day, contentToPrint }) => {
   const [reportData, setReportData] = useState([]);
   const isFirstRender = useRef(true); // Ref to track the initial render
 
@@ -273,21 +273,17 @@ const ReportView = ({ day, contentToPrint, printMode }) => {
               </div>
             </div>
           </div>
-          <div className='atk_transport'>
-            <div className='report_sub_header'>وقود الطائرات</div>
+          <div className='pg_transport'>
+            <div className='report_sub_header'>البنزين السوبر</div>
             <div className='report_row'>
               <div className='report_row_label'>
                 الكمية (م <sup>3</sup>)
               </div>
-              <div className='report_row_value'>
-                {reportData?.lightProdectsTransport?.atkTransport?.quantity}
-              </div>
+              <div className='report_row_value'>{0}</div>
             </div>
             <div className='report_row'>
               <div className='report_row_label'>الصهاريج</div>
-              <div className='report_row_value'>
-                {reportData?.lightProdectsTransport?.atkTransport?.tankers}
-              </div>
+              <div className='report_row_value'>{0}</div>
             </div>
           </div>
           <div className='rg_transport'>
@@ -307,17 +303,21 @@ const ReportView = ({ day, contentToPrint, printMode }) => {
               </div>
             </div>
           </div>
-          <div className='pg_transport'>
-            <div className='report_sub_header'>البنزين السوبر</div>
+          <div className='atk_transport'>
+            <div className='report_sub_header'>وقود الطائرات</div>
             <div className='report_row'>
               <div className='report_row_label'>
                 الكمية (م <sup>3</sup>)
               </div>
-              <div className='report_row_value'>{0}</div>
+              <div className='report_row_value'>
+                {reportData?.lightProdectsTransport?.atkTransport?.quantity}
+              </div>
             </div>
             <div className='report_row'>
               <div className='report_row_label'>الصهاريج</div>
-              <div className='report_row_value'>{0}</div>
+              <div className='report_row_value'>
+                {reportData?.lightProdectsTransport?.atkTransport?.tankers}
+              </div>
             </div>
           </div>
         </div>
