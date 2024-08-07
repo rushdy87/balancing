@@ -9,6 +9,7 @@ const {
   RGTransport,
   ATKTransport,
   HFOTransport,
+  U90Note,
 } = require('../../models');
 const {
   validateInput,
@@ -19,6 +20,7 @@ const {
   findTankInfo,
   findPumping,
   findTransport,
+  findNotesByDate,
 } = require('../../utils');
 
 exports.getAllData = async (req, res, next) => {
@@ -87,6 +89,12 @@ exports.getAllData = async (req, res, next) => {
     });
     if (!hfoTransport) hfoTransport = [];
     unit90Data.hfoTransport = [...hfoTransport];
+
+    let notes = await findNotesByDate(U90Note, formattedDate);
+    if (!notes) {
+      notes = [];
+    }
+    unit90Data.notes = notes;
 
     res.status(200).json(unit90Data);
   } catch (error) {

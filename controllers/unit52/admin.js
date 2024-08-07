@@ -1,4 +1,4 @@
-const { Unit52Tank } = require('../../models');
+const { Unit52Tank, U52Note } = require('../../models');
 const {
   validateInput,
   formatDate,
@@ -9,6 +9,7 @@ const {
   findNaturalGasByDate,
   findBlendingByDate,
   findTankInfo,
+  findNotesByDate,
 } = require('../../utils');
 
 exports.getAllData = async (req, res, next) => {
@@ -60,6 +61,12 @@ exports.getAllData = async (req, res, next) => {
       blending = {};
     }
     unit52Data.blending = blending;
+
+    let notes = await findNotesByDate(U52Note, formattedDate);
+    if (!notes) {
+      notes = [];
+    }
+    unit52Data.notes = notes;
 
     res.status(200).json(unit52Data);
   } catch (error) {

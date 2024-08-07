@@ -14,6 +14,8 @@ const Unit90Approval = ({ day }) => {
   useEffect(() => {
     (async () => {
       const data = await getAllUnitData('u90', day);
+      console.log(data);
+
       setTanks(data?.tanks);
       setPumping(data?.pumping);
       setLightTransport(data?.lightTransport);

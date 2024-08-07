@@ -22,6 +22,8 @@ const Unit52Approval = ({ day }) => {
   useEffect(() => {
     (async () => {
       const data = await getAllUnitData('u52', day);
+      console.log(data);
+
       setTanks(data?.tanks);
       setCrudeOil(data?.crudeOil);
       setNaturalGas(data?.naturalGas);

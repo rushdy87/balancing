@@ -1,4 +1,4 @@
-const { Unit53Tank, PavingAsphaltTransport } = require('../../models');
+const { Unit53Tank, PavingAsphaltTransport, U53Note } = require('../../models');
 const {
   validateInput,
   formatDate,
@@ -7,6 +7,7 @@ const {
   checkAuthorization,
   findTankInfo,
   findTransport,
+  findNotesByDate,
 } = require('../../utils');
 
 exports.getAllData = async (req, res, next) => {
@@ -49,6 +50,13 @@ exports.getAllData = async (req, res, next) => {
       pavingAsphaltTransport = {};
     }
     unit53Data.pavingAsphaltTransport = pavingAsphaltTransport;
+
+    let notes = await findNotesByDate(U53Note, formattedDate);
+    if (!notes) {
+      notes = [];
+    }
+
+    unit53Data.notes = notes;
 
     res.status(200).json(unit53Data);
   } catch (error) {
