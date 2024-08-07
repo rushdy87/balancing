@@ -45,6 +45,7 @@ const Unit90 = () => {
 
   // Transport
   const [lpgTransport, setLPGTransport] = useState({ quantity: 0, tankers: 0 });
+  const [pgTransport, setPGTransport] = useState({ quantity: 0, tankers: 0 });
   const [rgTransport, setRGTransport] = useState({ quantity: 0, tankers: 0 });
   const [atkTransport, setATKTransport] = useState({ quantity: 0, tankers: 0 });
 
@@ -73,6 +74,7 @@ const Unit90 = () => {
       tanks: prepareTanksObject(tanks),
     });
     console.log(tanksRes);
+
     const u90Tanks = await getTanksByUnit('u90');
     setTanks(u90Tanks.map((tank) => ({ ...tank, volume: 0 })));
 
@@ -109,6 +111,12 @@ const Unit90 = () => {
     });
     console.log(lpgTransportRes);
     setLPGTransport({ quantity: 0, tankers: 0 });
+    const pgTransportRes = await addLightTransport('pg', {
+      day,
+      ...pgTransport,
+    });
+    console.log(pgTransportRes);
+
     const rgTransportRes = await addLightTransport('rg', {
       day,
       ...rgTransport,
@@ -171,6 +179,11 @@ const Unit90 = () => {
               item='lpg'
               transport={lpgTransport}
               setTransport={setLPGTransport}
+            />
+            <Transport
+              item='pg'
+              transport={pgTransport}
+              setTransport={setPGTransport}
             />
             <Transport
               item='rg'
