@@ -10,7 +10,7 @@ const ModalOverlay = ({ renderedContent, save, close }) => {
       <div className='ModalOverlay-body'>{renderedContent}</div>
       <div className='ModalOverlay-footer'>
         <Button onClick={close}>رجوع</Button>
-        <Button onClick={save}>حفظ</Button>
+        {save && <Button onClick={save}>حفظ</Button>}
       </div>
     </div>
   );
