@@ -37,6 +37,7 @@ export const useAuth = () => {
     setRole(null);
     setUnit(null);
     localStorage.removeItem('userData');
+    window.location.reload();
   }, []);
 
   useEffect(() => {

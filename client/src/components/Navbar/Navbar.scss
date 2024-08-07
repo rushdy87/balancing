@@ -68,7 +68,8 @@
             margin-right: $spacing-md;
           }
         }
-        a {
+        a,
+        .signout {
           text-decoration: none;
           text-wrap: nowrap;
           color: inherit;
@@ -84,6 +85,10 @@
             border-radius: calc(#{$borderRadius} + 6px);
             background: linear-gradient(rgba($light, 0.1), rgba($light, 0.2));
           }
+        }
+
+        .signout {
+          cursor: pointer;
         }
       }
     }

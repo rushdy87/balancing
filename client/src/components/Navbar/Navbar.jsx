@@ -5,7 +5,7 @@ import './Navbar.scss';
 import { useAuth } from '../../hooks';
 
 const Navbar = () => {
-  const { role, unit } = useAuth();
+  const { role, unit, logout } = useAuth();
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [size, setSize] = useState({ width: undefined, height: undefined });
@@ -40,6 +40,9 @@ const Navbar = () => {
         <ul>
           {role && (
             <li>
+              <span className='signout' onClick={logout}>
+                الخروج
+              </span>
               <Link to='/'>الرئيسية</Link>
             </li>
           )}
