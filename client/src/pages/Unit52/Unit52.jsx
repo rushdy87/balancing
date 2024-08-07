@@ -19,7 +19,7 @@ import { addNaturalGas } from '../../api/natural-gas';
 const Unit52 = () => {
   const [showPreview, setShowPreview] = useState(false);
   const [day, setDay] = useState(
-    `${new Date().getDate()}-${
+    `${new Date().getDate() - 1}-${
       new Date().getMonth() + 1
     }-${new Date().getFullYear()}`
   );
