@@ -9,7 +9,6 @@ import {
   Transport,
 } from '../../components';
 import { addSolidSulphurStore } from '../../api/solid-sulphur-store';
-import { addSolidSulphurProduct } from '../../api/solid-sulphur-production';
 import { addTransport } from '../../api/transport';
 
 const Unit54 = () => {
@@ -27,12 +26,10 @@ const Unit54 = () => {
 
   // solid Sulphur Storge
   const [solidSulphurStorge, setSolidSulphurStorge] = useState({
-    actual_quantity: 0,
-  });
-
-  // Solid Sulphur Production
-  const [solidSulphurProduction, setSolidSulphurProduction] = useState({
-    quantity: 0,
+    big_bag: 0,
+    small_bag: 0,
+    silos: 0,
+    temporary_shelter: 0,
   });
 
   // addSolid Sulphur Transport
@@ -52,14 +49,12 @@ const Unit54 = () => {
       ...solidSulphurStorge,
     });
     console.log(storingResult);
-    setSolidSulphurStorge({ actual_quantity: 0 });
-
-    const productionResult = await addSolidSulphurProduct({
-      day,
-      ...solidSulphurProduction,
+    setSolidSulphurStorge({
+      big_bag: 0,
+      small_bag: 0,
+      silos: 0,
+      temporary_shelter: 0,
     });
-    console.log(productionResult);
-    setSolidSulphurProduction({ quantity: 0 });
 
     const tarnsportResult = await addTransport('u54', {
       day,
@@ -87,30 +82,58 @@ const Unit54 = () => {
             <h3 className='u54_subheading'>خزين الكبريت الصلب</h3>
             <div className='u54_input_filed_box'>
               <div className='u54_input_filed_row'>
-                <label htmlFor='actual_quantity'>الكمية</label>
+                <label htmlFor='actual_quantity'>الأكياس الكبيرة</label>
                 <NumberInput
                   id='actual_quantity'
                   name='actual_quantity'
-                  value={solidSulphurStorge.actual_quantity}
+                  value={solidSulphurStorge.big_bag}
                   onChange={(e) => {
-                    setSolidSulphurStorge({ actual_quantity: e.target.value });
+                    setSolidSulphurStorge((prev) => ({
+                      ...prev,
+                      big_bag: e.target.value,
+                    }));
                   }}
                 />
               </div>
-            </div>
-          </div>
-
-          <div className='u54_input_filed'>
-            <h3 className='u54_subheading'>الكبريت الصلب المُنتج</h3>
-            <div className='u54_input_filed_box'>
               <div className='u54_input_filed_row'>
-                <label htmlFor='quantity'>الكمية</label>
+                <label htmlFor='actual_quantity'>الأكياس الصغيرة</label>
                 <NumberInput
-                  id='quantity'
-                  name='quantity'
-                  value={solidSulphurProduction.quantity}
+                  id='actual_quantity'
+                  name='actual_quantity'
+                  value={solidSulphurStorge.small_bag}
                   onChange={(e) => {
-                    setSolidSulphurProduction({ quantity: e.target.value });
+                    setSolidSulphurStorge((prev) => ({
+                      ...prev,
+                      small_bag: e.target.value,
+                    }));
+                  }}
+                />
+              </div>
+              <div className='u54_input_filed_row'>
+                <label htmlFor='actual_quantity'>السايلوات</label>
+                <NumberInput
+                  id='actual_quantity'
+                  name='actual_quantity'
+                  value={solidSulphurStorge.silos}
+                  onChange={(e) => {
+                    setSolidSulphurStorge((prev) => ({
+                      ...prev,
+                      silos: e.target.value,
+                    }));
+                  }}
+                />
+              </div>
+              <div className='u54_input_filed_row'>
+                <label htmlFor='actual_quantity'>الخزين المؤقت</label>
+                <NumberInput
+                  id='actual_quantity'
+                  name='actual_quantity'
+                  value={solidSulphurStorge.temporary_shelter}
+                  onChange={(e) => {
+                    setSolidSulphurStorge((prev) => ({
+                      ...prev,
+                      temporary_shelter: e.target.value,
+                    }));
                   }}
                 />
               </div>
@@ -140,7 +163,6 @@ const Unit54 = () => {
                 unit: 'Unit 52',
                 subjects: {
                   solidSulphurStorge,
-                  solidSulphurProduction,
                   solidSulphurTransport,
                 },
               }}

@@ -26,7 +26,10 @@ const ArSubjects = {
 };
 
 const ArWords = {
-  actual_quantity: 'الكمية',
+  big_bag: 'الأكياس الكبيرة',
+  small_bag: 'الأكياس الصغيرة',
+  silos: 'الستيلوات',
+  temporary_shelter: 'الشلتر المؤقت',
   quantity: 'الكمية',
   tankers: 'الصهاريج',
   toKarbala: 'كربلاء',
