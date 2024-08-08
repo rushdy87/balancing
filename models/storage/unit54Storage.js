@@ -18,6 +18,26 @@ const Unit54Storage = sequelize.define('Unit54Storage', {
     allowNull: false,
     defaultValue: 9720,
   },
+  big_bag: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
+  },
+  small_bag: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
+  },
+  silos: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
+  },
+  temporary_shelter: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
+  },
   actual_quantity: {
     type: Sequelize.INTEGER,
     allowNull: false,

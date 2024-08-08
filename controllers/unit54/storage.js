@@ -5,6 +5,9 @@ const {
   validateInput,
   findSolidSulphurByDate,
   findSolidSulphurByDateRange,
+  findSolidSulphurProductionByDate,
+  deleteSolidSulphurProduction,
+  addSolidSulphurProduction,
 } = require('../../utils');
 const { checkAuthorization } = require('../../utils/authorization');
 
@@ -70,8 +73,9 @@ exports.getSolidSulphurBetweenTwoDates = async (req, res, next) => {
 };
 
 exports.addSolidSulphur = async (req, res, next) => {
-  const { day, actual_quantity } = req.body;
-  if (!day || !actual_quantity) {
+  const { day, big_bag, small_bag, silos, temporary_shelter } = req.body;
+
+  if (!day) {
     return handleError(next, 'Missing required data: day.', 400);
   }
 
@@ -80,14 +84,21 @@ exports.addSolidSulphur = async (req, res, next) => {
 
   try {
     checkAuthorization(userData, 'u54', next);
-    const existingSulphurStore = await findSolidSulphurByDate(formattedDate);
 
+    // Check and delete existing sulphur store
+    const existingSulphurStore = await findSolidSulphurByDate(formattedDate);
     if (existingSulphurStore) {
       await Unit54Storage.destroy({ where: { day: formattedDate } });
     }
 
+    // Create new sulphur store
+    const actual_quantity = big_bag + small_bag + silos + temporary_shelter;
     const sulphurStore = await Unit54Storage.create({
       actual_quantity,
+      big_bag,
+      small_bag,
+      silos,
+      temporary_shelter,
       day: formattedDate,
       userId: userData.id,
     });
@@ -100,13 +111,57 @@ exports.addSolidSulphur = async (req, res, next) => {
       );
     }
 
+    // Calculate yesterday's date
+    const yesterday = new Date(day);
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    const formattedYesterDay = formatDate(yesterday);
+
+    // Get yesterday's quantity
+    const yesterdayQuantity = await findSolidSulphurByDate(formattedYesterDay);
+    if (!yesterdayQuantity) {
+      return handleError(
+        next,
+        "Could not find yesterday's Solid Sulphur Storage.",
+        500
+      );
+    }
+
+    // Calculate production
+    const production = actual_quantity - yesterdayQuantity.actual_quantity;
+
+    // Check and delete existing sulphur production
+    const existingSulphurProduction = await findSolidSulphurProductionByDate(
+      formattedDate
+    );
+    if (existingSulphurProduction) {
+      await deleteSolidSulphurProduction(formattedDate);
+    }
+
+    // Create new sulphur production
+    const sulphurProduction = await addSolidSulphurProduction({
+      quantity: production,
+      day: formattedDate,
+      userId: userData.id,
+    });
+
+    if (!sulphurProduction) {
+      return handleError(
+        next,
+        'Could not add Solid Sulphur Production at this time.',
+        500
+      );
+    }
+
     res.status(201).json({
-      message: 'The Solid Sulphur Storage have been successfully added.',
+      message:
+        'The Solid Sulphur Storage and today Production have been successfully added.',
     });
   } catch (error) {
     handleError(
       next,
-      `Error adding Solid Sulphur Storage in this day. Error: ${error.message}`
+      `Error adding Solid Sulphur Storage. Error: ${error.message}`,
+      500
     );
   }
 };
