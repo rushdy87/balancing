@@ -31,7 +31,7 @@ exports.getAllData = async (req, res, next) => {
       tanks = await Promise.all(
         tanks.map(async (tank) => {
           const { low_level } = await findTankInfo(tank.tag_number);
-          const tov = tank.pumpable + low_level;
+          const tov = tank.pumpable === 0 ? 0 : tank.pumpable + low_level;
           return {
             tag_number: tank.tag_number,
             product: tank.product,
