@@ -36,3 +36,15 @@ export const updateLightTransport = async (product, transportData) => {
     return response;
   }
 };
+
+export const updateSolidSulphurTransport = async (transportData) => {
+  const response = await patchRequest(
+    `${apiConfig.baseURL}/u54/transport`,
+    transportData
+  );
+  if (response.error) {
+    console.log(response.error);
+  } else {
+    return response;
+  }
+};
