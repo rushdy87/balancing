@@ -7,6 +7,10 @@ const findSolidSulphurByDate = async (day) => {
     attributes: [
       'id',
       'day',
+      'big_bag',
+      'small_bag',
+      'silos',
+      'temporary_shelter',
       'working_quantity',
       'actual_quantity',
       'isConfirmed',
@@ -17,7 +21,17 @@ const findSolidSulphurByDate = async (day) => {
 const findSolidSulphurByDateRange = async (startDate, endDate) => {
   return await Unit54Storage.findAll({
     where: { day: { [Op.between]: [startDate, endDate] } },
-    attributes: ['day', 'working_quantity', 'actual_quantity', 'isConfirmed'],
+    attributes: [
+      'id',
+      'day',
+      'big_bag',
+      'small_bag',
+      'silos',
+      'temporary_shelter',
+      'working_quantity',
+      'actual_quantity',
+      'isConfirmed',
+    ],
     order: [['day', 'ASC']],
   });
 };

@@ -11,19 +11,81 @@ const {
 } = require('../../utils');
 const { checkAuthorization } = require('../../utils/authorization');
 
+// Helper function to get yesterday's date
+const getYesterday = (date) => {
+  let [day, month, year] = date.split('-').map(Number);
+
+  if (day === 1) {
+    // Move to the last day of the previous month
+    month -= 1;
+
+    // If it's January, move to December of the previous year
+    if (month === 0) {
+      month = 12;
+      year -= 1;
+    }
+
+    // Get the last day of the previous month
+    const lastDayOfPrevMonth = new Date(year, month, 0).getDate();
+    day = lastDayOfPrevMonth;
+  } else {
+    day -= 1;
+  }
+
+  // Format day and month to have leading zeros if needed
+  const formattedDay = day.toString().padStart(2, '0');
+  const formattedMonth = month.toString().padStart(2, '0');
+
+  const yesterday = `${formattedDay}-${formattedMonth}-${year}`;
+
+  return formatDate(yesterday);
+};
+
+// Helper function for checking and deleting existing production
+const updateProduction = async (today, actual_quantity, userId, next) => {
+  const yesterdayQuantity = await findSolidSulphurByDate(getYesterday(today));
+  if (!yesterdayQuantity) {
+    return handleError(
+      next,
+      "Could not find yesterday's Solid Sulphur Storage.",
+      500
+    );
+  }
+
+  const production = actual_quantity - yesterdayQuantity.actual_quantity;
+
+  const existingProduction = await findSolidSulphurProductionByDate(
+    formatDate(today)
+  );
+  if (existingProduction) {
+    await deleteSolidSulphurProduction(formatDate(today));
+  }
+
+  const sulphurProduction = await addSolidSulphurProduction({
+    quantity: production,
+    day: formatDate(today),
+    userId,
+  });
+
+  if (!sulphurProduction) {
+    return handleError(
+      next,
+      'Could not add Solid Sulphur Production at this time.',
+      500
+    );
+  }
+};
+
 exports.getSolidSulphurByDay = async (req, res, next) => {
   const { day } = req.params;
 
   if (!validateInput(req.params, ['day'], next)) return;
 
-  const formattedDate = formatDate(day);
-
-  const { userData } = req;
-
   try {
-    checkAuthorization(userData, 'u53', next);
-    const sulphurStore = await findSolidSulphurByDate(formattedDate);
+    const formattedDate = formatDate(day);
+    checkAuthorization(req.userData, 'u53', next);
 
+    const sulphurStore = await findSolidSulphurByDate(formattedDate);
     if (!sulphurStore) {
       return handleError(
         next,
@@ -36,25 +98,23 @@ exports.getSolidSulphurByDay = async (req, res, next) => {
   } catch (error) {
     handleError(
       next,
-      `Error fetching Solid Sulphur Storage for day: ${day}. Error: ${error.message}`
+      `Error fetching Solid Sulphur Storage for day: ${day}.`,
+      500
     );
   }
 };
 
 exports.getSolidSulphurBetweenTwoDates = async (req, res, next) => {
   const { from, to } = req.params;
-  if (!from || !to) {
-    return handleError(next, 'Missing required parameters: from and to.', 400);
-  }
 
-  const startDate = formatDate(from);
-  const endDate = formatDate(to);
-  const { userData } = req;
+  if (!validateInput(req.params, ['from', 'to'], next)) return;
 
   try {
-    checkAuthorization(userData, 'u54', next);
-    const sulphurStore = await findSolidSulphurByDateRange(startDate, endDate);
+    const startDate = formatDate(from);
+    const endDate = formatDate(to);
+    checkAuthorization(req.userData, 'u54', next);
 
+    const sulphurStore = await findSolidSulphurByDateRange(startDate, endDate);
     if (!sulphurStore || sulphurStore.length === 0) {
       return handleError(
         next,
@@ -67,7 +127,8 @@ exports.getSolidSulphurBetweenTwoDates = async (req, res, next) => {
   } catch (error) {
     handleError(
       next,
-      `Error fetching Solid Sulphur Storage in this date range. Error: ${error.message}`
+      'Error fetching Solid Sulphur Storage in this date range.',
+      500
     );
   }
 };
@@ -75,23 +136,21 @@ exports.getSolidSulphurBetweenTwoDates = async (req, res, next) => {
 exports.addSolidSulphur = async (req, res, next) => {
   const { day, big_bag, small_bag, silos, temporary_shelter } = req.body;
 
-  if (!day) {
-    return handleError(next, 'Missing required data: day.', 400);
-  }
-
-  const formattedDate = formatDate(day);
-  const { userData } = req;
+  if (
+    !validateInput(
+      req.body,
+      ['day', 'big_bag', 'small_bag', 'silos', 'temporary_shelter'],
+      next
+    )
+  )
+    return;
 
   try {
-    checkAuthorization(userData, 'u54', next);
+    const formattedDate = formatDate(day);
+    checkAuthorization(req.userData, 'u54', next);
 
-    // Check and delete existing sulphur store
-    const existingSulphurStore = await findSolidSulphurByDate(formattedDate);
-    if (existingSulphurStore) {
-      await Unit54Storage.destroy({ where: { day: formattedDate } });
-    }
+    await Unit54Storage.destroy({ where: { day: formattedDate } });
 
-    // Create new sulphur store
     const actual_quantity = big_bag + small_bag + silos + temporary_shelter;
     const sulphurStore = await Unit54Storage.create({
       actual_quantity,
@@ -100,7 +159,7 @@ exports.addSolidSulphur = async (req, res, next) => {
       silos,
       temporary_shelter,
       day: formattedDate,
-      userId: userData.id,
+      userId: req.userData.id,
     });
 
     if (!sulphurStore) {
@@ -111,47 +170,7 @@ exports.addSolidSulphur = async (req, res, next) => {
       );
     }
 
-    // Calculate yesterday's date
-    const yesterday = new Date(day);
-    yesterday.setDate(yesterday.getDate() - 1);
-
-    const formattedYesterDay = formatDate(yesterday);
-
-    // Get yesterday's quantity
-    const yesterdayQuantity = await findSolidSulphurByDate(formattedYesterDay);
-    if (!yesterdayQuantity) {
-      return handleError(
-        next,
-        "Could not find yesterday's Solid Sulphur Storage.",
-        500
-      );
-    }
-
-    // Calculate production
-    const production = actual_quantity - yesterdayQuantity.actual_quantity;
-
-    // Check and delete existing sulphur production
-    const existingSulphurProduction = await findSolidSulphurProductionByDate(
-      formattedDate
-    );
-    if (existingSulphurProduction) {
-      await deleteSolidSulphurProduction(formattedDate);
-    }
-
-    // Create new sulphur production
-    const sulphurProduction = await addSolidSulphurProduction({
-      quantity: production,
-      day: formattedDate,
-      userId: userData.id,
-    });
-
-    if (!sulphurProduction) {
-      return handleError(
-        next,
-        'Could not add Solid Sulphur Production at this time.',
-        500
-      );
-    }
+    await updateProduction(day, actual_quantity, req.userData.id, next);
 
     res.status(201).json({
       message:
@@ -160,80 +179,91 @@ exports.addSolidSulphur = async (req, res, next) => {
   } catch (error) {
     handleError(
       next,
-      `Error adding Solid Sulphur Storage. Error: ${error.message}`,
+      `Error adding Solid Sulphur Storage. ${error.message}`,
       500
     );
   }
 };
 
 exports.updateSolidSulphurStore = async (req, res, next) => {
-  const { day, actual_quantity } = req.body;
-  if (!day || !actual_quantity) {
-    return handleError(next, 'Missing required data: day.', 400);
-  }
+  const { day, data } = req.body;
 
-  const formattedDate = formatDate(day);
-  const { userData } = req;
+  if (!validateInput(req.body, ['day', 'data'], next)) return;
 
   try {
-    checkAuthorization(userData, 'u54', next);
-    const existingSulphurStore = await findSolidSulphurByDate(formattedDate);
+    const formattedDate = formatDate(day);
+    checkAuthorization(req.userData, 'u54', next);
 
-    if (!existingSulphurStore) {
+    const sulphurStore = await findSolidSulphurByDate(formattedDate);
+    if (!sulphurStore) {
       return handleError(
         next,
-        'Could not find any Solid Sulphur Storage in this day.',
+        'Could not find any Solid Sulphur Storage on this day.',
         404
       );
     }
 
-    existingSulphurStore.actual_quantity = actual_quantity;
+    for (const key in data) {
+      if (
+        data.hasOwnProperty(key) &&
+        key !== 'isConfirmed' &&
+        key !== 'actual_quantity'
+      ) {
+        sulphurStore[key] = data[key];
+      }
+    }
 
-    await existingSulphurStore.save();
+    sulphurStore.actual_quantity =
+      sulphurStore.big_bag +
+      sulphurStore.small_bag +
+      sulphurStore.silos +
+      sulphurStore.temporary_shelter;
+    await sulphurStore.save();
 
-    res.status(201).json({
-      message: 'The Solid Sulphur Storage have been successfully updated.',
+    await updateProduction(
+      day,
+      sulphurStore.actual_quantity,
+      req.userData.id,
+      next
+    );
+
+    res.status(200).json({
+      message: 'The Solid Sulphur Storage has been successfully updated.',
     });
   } catch (error) {
-    handleError(
-      next,
-      `Error updating Solid Sulphur Storage in this day. Error: ${error.message}`
-    );
+    handleError(next, 'Error updating Solid Sulphur Storage on this day.', 500);
   }
 };
 
-exports.confirmeSolidSulphurStore = async (req, res, next) => {
+exports.confirmSolidSulphurStore = async (req, res, next) => {
   const { day } = req.body;
-  if (!day) {
-    return handleError(next, 'Missing required day.', 400);
-  }
 
-  const formattedDate = formatDate(day);
-  const { userData } = req;
+  if (!validateInput(req.body, ['day'], next)) return;
 
   try {
-    checkAuthorization(userData, 'u54', next);
-    const existingSulphurStore = await findSolidSulphurByDate(formattedDate);
+    const formattedDate = formatDate(day);
+    checkAuthorization(req.userData, 'u54', next);
 
-    if (!existingSulphurStore) {
+    const sulphurStore = await findSolidSulphurByDate(formattedDate);
+    if (!sulphurStore) {
       return handleError(
         next,
-        'Could not find any Solid Sulphur Storage in this day.',
+        'Could not find any Solid Sulphur Storage on this day.',
         404
       );
     }
 
-    existingSulphurStore.isConfirmed = true;
+    sulphurStore.isConfirmed = true;
+    await sulphurStore.save();
 
-    await existingSulphurStore.save();
-
-    res.status(201).json({
-      message: 'The Solid Sulphur Storage have been successfully confirmed.',
+    res.status(200).json({
+      message: 'The Solid Sulphur Storage has been successfully confirmed.',
     });
   } catch (error) {
     handleError(
       next,
-      `Error confirming Solid Sulphur Storage in this day. Error: ${error.message}`
+      'Error confirming Solid Sulphur Storage on this day.',
+      500
     );
   }
 };
