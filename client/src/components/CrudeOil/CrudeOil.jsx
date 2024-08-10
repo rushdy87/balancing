@@ -26,18 +26,7 @@ const CrudeOil = ({ crudeOil, setCrudeOil }) => {
           onChange={handleChange}
         />
       </div>
-      <div className='CrudeOil_inputFiled'>
-        <label htmlFor='reservoir_bbl'>
-          النفط الخام القابل <span>(برميل)</span>
-        </label>
-        <NumberInput
-          type='number'
-          name='reservoir_bbl'
-          id='reservoir_bbl'
-          value={crudeOil.reservoir_bbl}
-          onChange={handleChange}
-        />
-      </div>
+
       <div className='CrudeOil_inputFiled'>
         <label htmlFor='receiving'>
           النفط الخام المستلم{' '}

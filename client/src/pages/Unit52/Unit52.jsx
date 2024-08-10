@@ -50,7 +50,6 @@ const Unit52 = () => {
   // Crude Oil
   const [crudeOil, setCrudeOil] = useState({
     reservoir_m3: 0,
-    reservoir_bbl: 0,
     receiving: 0,
     sending: 0,
   });
@@ -89,7 +88,6 @@ const Unit52 = () => {
     console.log(crudeRes);
     setCrudeOil({
       reservoir_m3: 0,
-      reservoir_bbl: 0,
       receiving: 0,
       sending: 0,
     });
