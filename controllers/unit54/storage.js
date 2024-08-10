@@ -151,7 +151,8 @@ exports.addSolidSulphur = async (req, res, next) => {
 
     await Unit54Storage.destroy({ where: { day: formattedDate } });
 
-    const actual_quantity = big_bag + small_bag + silos + temporary_shelter;
+    const actual_quantity = +big_bag + +small_bag + +silos + +temporary_shelter;
+
     const sulphurStore = await Unit54Storage.create({
       actual_quantity,
       big_bag,

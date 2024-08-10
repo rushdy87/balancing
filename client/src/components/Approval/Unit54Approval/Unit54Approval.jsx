@@ -4,6 +4,7 @@ import './Unit54Approval.scss';
 import { getAllUnitData } from '../../../api/admin';
 import SolidSulphurTransportApproval from '../SolidSulphurTransportApproval/SolidSulphurTransportApproval';
 import SolidSulphuProductionApproval from '../SolidSulphuProductionApproval/SolidSulphuProductionApproval';
+import SolidSulphurStoreApproval from '../SolidSulphurStoreApproval/SolidSulphurStoreApproval';
 
 const isObjectEmpty = (objectName) => {
   return (
@@ -31,7 +32,10 @@ const Unit54Approval = ({ day }) => {
       {isObjectEmpty(store) ? (
         <h2>لم تتم اضافة خزين الكبريت الصلب</h2>
       ) : (
-        <div className='solidSulphur_store_wrapper'></div>
+        <div className='solidSulphur_store_wrapper'>
+          <h3 className='Approval_subtitle'>خزين الكبريت</h3>
+          <SolidSulphurStoreApproval storage={store} day={day} />
+        </div>
       )}
       {isObjectEmpty(production) ? (
         <h2>لم تتم اضافة انتاج الكبريت الصلب</h2>
