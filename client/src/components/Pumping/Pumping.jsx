@@ -28,6 +28,7 @@ const Pumping = ({ pumpingQuantities, setPumpingQuantities }) => {
                 type='number'
                 name='toKarbala'
                 id='toKarbala'
+                value={pumpingQuantities[item].toKarbala}
                 onChange={(e) =>
                   handleChange(item, 'toKarbala', e.target.value)
                 }
@@ -39,6 +40,7 @@ const Pumping = ({ pumpingQuantities, setPumpingQuantities }) => {
                 type='number'
                 name='toNajaf'
                 id='toNajaf'
+                value={pumpingQuantities[item].toNajaf}
                 onChange={(e) => handleChange(item, 'toNajaf', e.target.value)}
               />
             </div>
