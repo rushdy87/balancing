@@ -54,6 +54,7 @@ exports.getReportByDay = async (req, res, next) => {
     const u54Storege = await findSolidSulphurStorageForReport(formattedDate);
 
     const store = calculateTanksVolumes(tanks);
+
     store.push({
       product: 'sulphur',
       pumpable: u54Storege.actual_quantity,

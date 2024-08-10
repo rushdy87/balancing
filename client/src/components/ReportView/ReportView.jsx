@@ -45,9 +45,7 @@ const ReportView = ({ day, contentToPrint }) => {
         <div className='oil_receiving'>
           <div className='report_sub_header'>الغاز المستلم الطبيعي</div>
           <div className='report_row'>
-            <div className='report_row_label'>
-              م <sup>3</sup>
-            </div>
+            <div className='report_row_label'>متر مكعب</div>
             <div className='report_row_value'>
               {reportData?.naturalGas?.receiving_m3}
             </div>
@@ -63,7 +61,7 @@ const ReportView = ({ day, contentToPrint }) => {
           <div className='report_sub_header'>النفط الخام</div>
           <div className='report_row'>
             <div className='report_row_label'>
-              المستلم م <sup>3</sup>
+              المستلم (م <sup>3</sup>)
             </div>
             <div className='report_row_value'>
               {reportData?.crudeOil?.receiving}
@@ -71,7 +69,7 @@ const ReportView = ({ day, contentToPrint }) => {
           </div>
           <div className='report_row'>
             <div className='report_row_label'>
-              المرسل م <sup>3</sup>
+              المرسل (م <sup>3</sup>)
             </div>
             <div className='report_row_value'>
               {reportData?.crudeOil?.sending}
@@ -80,7 +78,7 @@ const ReportView = ({ day, contentToPrint }) => {
         </div>
         <div className='crude'>
           <div className='report_sub_header'>
-            خزين النفط الخام م <sup>3</sup>
+            خزين النفط الخام (م <sup>3</sup>)
           </div>
           <div className='report_row'>
             <div className='report_row_label'>التشغيلي</div>
@@ -96,7 +94,7 @@ const ReportView = ({ day, contentToPrint }) => {
           </div>
         </div>
         <div className='crude'>
-          <div className='report_sub_header'>خزين النفط الخام برميل</div>
+          <div className='report_sub_header'>خزين النفط الخام (برميل)</div>
           <div className='report_row'>
             <div className='report_row_label'>التشغيلي</div>
             <div className='report_row_value'>
@@ -119,7 +117,7 @@ const ReportView = ({ day, contentToPrint }) => {
             return (
               <div key={item.product} className='store_item'>
                 <div className='report_sub_header'>
-                  {arabicStoreItemsnames[item.product]} م <sup>3</sup>
+                  {arabicStoreItemsnames[item.product]} (م <sup>3</sup>)
                 </div>
                 <div className='report_row'>
                   <div className='report_row_label'>التشغيلي</div>
@@ -150,7 +148,7 @@ const ReportView = ({ day, contentToPrint }) => {
             </div>
             <div className='pumbing_items_row'>
               <div className='pumbing_column1'>
-                البنزين السوبر م <sup>3</sup>
+                البنزين السوبر (م <sup>3</sup>)
               </div>
               <div className='pumbing_column2'>
                 {reportData?.pumping?.pgPumping?.toKarbala}
@@ -164,7 +162,7 @@ const ReportView = ({ day, contentToPrint }) => {
             </div>
             <div className='pumbing_items_row'>
               <div className='pumbing_column1'>
-                البنزين المحسن م <sup>3</sup>
+                البنزين المحسن (م <sup>3</sup>)
               </div>
               <div className='pumbing_column2'>
                 {reportData?.pumping?.rgPumping?.toKarbala}
@@ -178,7 +176,7 @@ const ReportView = ({ day, contentToPrint }) => {
             </div>
             <div className='pumbing_items_row'>
               <div className='pumbing_column1'>
-                النفط الأبيض م <sup>3</sup>
+                النفط الأبيض (م <sup>3</sup>)
               </div>
               <div className='pumbing_column2'>
                 {reportData?.pumping?.kerosenePumping?.toKarbala}
@@ -192,7 +190,7 @@ const ReportView = ({ day, contentToPrint }) => {
             </div>
             <div className='pumbing_items_row'>
               <div className='pumbing_column1'>
-                زيت الغاز م <sup>3</sup>
+                زيت الغاز (م <sup>3</sup>)
               </div>
               <div className='pumbing_column2'>
                 {reportData?.pumping?.dieselPumping?.toKarbala}
@@ -211,7 +209,7 @@ const ReportView = ({ day, contentToPrint }) => {
           <div className='blending_items'>
             <div className='report_row blending_row'>
               <div className='report_row_label'>
-                الغاز السائل م <sup>3</sup>
+                الغاز السائل (م <sup>3</sup>)
               </div>
               <div className='report_row_value'>
                 {reportData?.blending?.lpg}
@@ -219,19 +217,19 @@ const ReportView = ({ day, contentToPrint }) => {
             </div>
             <div className='report_row blending_row'>
               <div className='report_row_label'>
-                البنزين السوبر م <sup>3</sup>
+                البنزين السوبر (م <sup>3</sup>)
               </div>
               <div className='report_row_value'>{reportData?.blending?.pg}</div>
             </div>
             <div className='report_row blending_row'>
               <div className='report_row_label'>
-                البنزين المحسن م <sup>3</sup>
+                البنزين المحسن (م <sup>3</sup>)
               </div>
               <div className='report_row_value'>{reportData?.blending?.rg}</div>
             </div>
             <div className='report_row blending_row'>
               <div className='report_row_label'>
-                زيت الغاز م <sup>3</sup>
+                زيت الغاز (م <sup>3</sup>)
               </div>
               <div className='report_row_value'>
                 {reportData?.blending?.diesel}
@@ -239,7 +237,7 @@ const ReportView = ({ day, contentToPrint }) => {
             </div>
             <div className='report_row blending_row'>
               <div className='report_row_label'>
-                زيت الوقود الثقيل م <sup>3</sup>
+                زيت الوقود الثقيل (م <sup>3</sup>)
               </div>
               <div className='report_row_value'>
                 {reportData?.blending?.hfo}
@@ -329,7 +327,9 @@ const ReportView = ({ day, contentToPrint }) => {
           <div className='hfo_items'>
             <div className='hfo_items_header'>
               <div className='hfo_column1'>جهة التجهيز</div>
-              <div className='hfo_column2'>الكمية</div>
+              <div className='hfo_column2'>
+                الكمية (م<sup>3</sup>)
+              </div>
               <div className='hfo_column3'>عدد الصهاريج</div>
             </div>
             <div className='hfo_items_row'>

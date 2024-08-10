@@ -27,6 +27,17 @@ const findTanksForReport = async (model, unit, day) => {
 };
 
 const calculateTanksVolumes = (tanks) => {
+  const rank = {
+    LPG: 0,
+    PG: 1,
+    RG: 2,
+    Diesel: 3,
+    ATK: 4,
+    Kerosene: 5,
+    HD: 6,
+    HFO: 7,
+    PA: 8,
+  };
   // Initialize a result object
   const result = {};
 
@@ -35,15 +46,20 @@ const calculateTanksVolumes = (tanks) => {
     const { product, pumpable, working_volume } = item;
 
     if (!result[product]) {
-      result[product] = { product, pumpable: 0, working_volume: 0 };
+      result[product] = {
+        product,
+        rank: rank[product],
+        pumpable: 0,
+        working_volume: 0,
+      };
     }
 
     result[product].pumpable += pumpable;
     result[product].working_volume += working_volume;
   });
 
-  // Convert the result object to an array
-  return Object.values(result);
+  // Convert the result object to an array and sort it by rank
+  return Object.values(result).sort((a, b) => a.rank - b.rank);
 };
 
 const findSolidSulphurStorageForReport = async (day) => {
