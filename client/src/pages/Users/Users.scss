@@ -1,0 +1,61 @@
+@import '../../styles/variables.scss';
+
+.Users_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .Users_add_user {
+  }
+  .Users_show_users {
+    width: 90%;
+    font-size: 1.2em;
+    .show_user_rapper {
+      .show_user_row,
+      .show_user_header {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .even_row {
+        background-color: rgba($color: $primary, $alpha: 0.1);
+      }
+
+      .show_user_header {
+        font-size: 1.4rem;
+        font-weight: 500;
+        background-color: rgba($color: $primary, $alpha: 0.24);
+        height: 40px;
+      }
+    }
+    .user_header,
+    .user_column {
+      text-align: center;
+    }
+
+    .column1 {
+      width: 20%;
+    }
+    .column2 {
+      width: 15%;
+    }
+    .column3 {
+      width: 15%;
+    }
+    .column4 {
+      width: 15%;
+    }
+    .column5 {
+      width: 15%;
+    }
+    .column6,
+    .column7 {
+      width: 10%;
+      font-size: 1.6rem;
+      cursor: pointer;
+    }
+  }
+}

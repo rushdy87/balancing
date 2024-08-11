@@ -49,3 +49,12 @@ export const addNotes = async (unit, notesData) => {
     return response;
   }
 };
+
+export const fetchUsers = async () => {
+  const response = await getRequest(`${apiConfig.baseURL}/users`);
+  if (response.error) {
+    console.log(response.error);
+  } else {
+    return response;
+  }
+};
