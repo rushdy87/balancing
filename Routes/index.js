@@ -6,6 +6,7 @@ const Unit90Routes = require('./unit90');
 
 const ReportsRoutes = require('./reports');
 const TanksInfoRoutes = require('./tanks-info');
+const UserRoutes = require('./user');
 
 module.exports = {
   AuthRoutes,
@@ -15,4 +16,5 @@ module.exports = {
   Unit90Routes,
   ReportsRoutes,
   TanksInfoRoutes,
+  UserRoutes,
 };

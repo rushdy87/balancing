@@ -11,6 +11,7 @@ const {
 
 const {
   AuthRoutes,
+  UserRoutes,
   Unit52Routes,
   Unit53Routes,
   Unit54Routes,
@@ -90,7 +91,7 @@ app.use('/api/u54', Unit54Routes);
 app.use('/api/u90', Unit90Routes);
 app.use('/api/reports', ReportsRoutes);
 app.use('/api/tanks-info', TanksInfoRoutes);
-// app.use('/api/users', UsersRoutes);
+app.use('/api/users', UserRoutes);
 
 // This medilware handle unsupported Routes
 app.use(unsupportedRoutes);
