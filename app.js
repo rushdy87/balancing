@@ -45,43 +45,6 @@ app.use((req, res, next) => {
 //   res.json(user);
 // });
 
-// const { User } = require('./models');
-// const bcryptjs = require('bcryptjs');
-// app.get('/', async (req, res) => {
-//   const user = await User.create({
-//     username: 'user1',
-//     password: bcryptjs.hashSync('user1', 10),
-//     name: 'user1',
-//     role: '2',
-//     unit: 'u52',
-//   });
-//   res.json(user);
-// });
-// const { User } = require('./models');
-// const bcryptjs = require('bcryptjs');
-// app.get('/', async (req, res) => {
-//   const user = await User.create({
-//     username: 'user2',
-//     password: bcryptjs.hashSync('user2', 10),
-//     name: 'user2',
-//     role: '1',
-//     unit: 'u53',
-//   });
-//   res.json(user);
-// });
-// const { User } = require('./models');
-// const bcryptjs = require('bcryptjs');
-// app.get('/', async (req, res) => {
-//   const user = await User.create({
-//     username: 'user4',
-//     password: bcryptjs.hashSync('user4', 10),
-//     name: 'user4',
-//     role: '1',
-//     unit: 'u90',
-//   });
-//   res.json(user);
-// });
-
 // ROUTES
 app.use('/api/auth', AuthRoutes);
 app.use(checkAuth);

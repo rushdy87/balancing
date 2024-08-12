@@ -96,11 +96,7 @@ const Users = () => {
 
       {/* Modal */}
       {showPreview && (
-        <Modal
-          renderedContent={<AddUser />}
-          // save={() => {}}
-          close={handleClose}
-        />
+        <Modal renderedContent={<AddUser />} close={handleClose} />
       )}
     </div>
   );
