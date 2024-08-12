@@ -58,3 +58,14 @@ export const fetchUsers = async () => {
     return response;
   }
 };
+
+export const addUser = async (userData) => {
+  console.log(userData);
+
+  const response = await postRequest(`${apiConfig.baseURL}/users`, userData);
+  if (response.error) {
+    console.log(response.error);
+  } else {
+    return response;
+  }
+};

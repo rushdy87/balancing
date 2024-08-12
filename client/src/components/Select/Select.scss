@@ -1,0 +1,29 @@
+@import '../../styles/variables.scss';
+
+.select-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 200px;
+  font-size: 1rem;
+  margin: 0.8rem 0;
+
+  label {
+    width: 90px;
+    display: block;
+    font-weight: 700;
+  }
+  select {
+    width: 115px;
+    display: block;
+    height: 30px;
+    border: 1px solid $secondary;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    text-align: center;
+    &:focus {
+      outline: none;
+    }
+  }
+}

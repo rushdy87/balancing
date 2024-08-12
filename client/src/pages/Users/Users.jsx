@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
-import './Users.scss';
 import { fetchUsers } from '../../api/admin';
+import { Button, ContentPreview, Modal } from '../../components';
+import './Users.scss';
+import AddUser from '../../components/AddUser/AddUser';
 
 const rolos = { 0: 'ROOT', 1: 'MANAGER' };
 
 const Users = () => {
   const [users, setUsers] = useState([]);
-
+  const [showPreview, setShowPreview] = useState(false);
   useEffect(() => {
     (async () => {
       try {
@@ -37,7 +39,15 @@ const Users = () => {
 
   return (
     <div className='Users_container'>
-      <div className='Users_add_user'></div>
+      <div className='Users_add_user'>
+        <Button
+          type='button'
+          className='primary'
+          onClick={() => setShowPreview(true)}
+        >
+          اضافة مستخدم جديد
+        </Button>
+      </div>
       <div className='Users_show_users'>
         {users.length > 0 && (
           <div className='show_user_rapper'>
@@ -54,6 +64,15 @@ const Users = () => {
           </div>
         )}
       </div>
+
+      {/* Modal */}
+      {showPreview && (
+        <Modal
+          renderedContent={<AddUser />}
+          save={() => {}}
+          close={() => setShowPreview(false)}
+        />
+      )}
     </div>
   );
 };
