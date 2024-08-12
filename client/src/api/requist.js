@@ -44,3 +44,17 @@ export const patchRequest = async (url, data) => {
     }
   }
 };
+
+export const deleteRequest = async (url) => {
+  try {
+    await axios.delete(url);
+  } catch (error) {
+    if (error.response) {
+      return {
+        error: `Error: ${error.response.status} - ${error.response.data.message}`,
+      };
+    } else {
+      return { error: 'Network Error' };
+    }
+  }
+};

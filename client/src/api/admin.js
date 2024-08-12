@@ -1,5 +1,10 @@
 import { apiConfig } from './config';
-import { getRequest, patchRequest, postRequest } from './requist';
+import {
+  deleteRequest,
+  getRequest,
+  patchRequest,
+  postRequest,
+} from './requist';
 
 export const getAllUnitData = async (unit, day) => {
   const response = await getRequest(
@@ -60,12 +65,23 @@ export const fetchUsers = async () => {
 };
 
 export const addUser = async (userData) => {
-  console.log(userData);
-
   const response = await postRequest(`${apiConfig.baseURL}/users`, userData);
   if (response.error) {
     console.log(response.error);
   } else {
     return response;
+  }
+};
+
+export const deleteUser = async (id) => {
+  try {
+    const response = await deleteRequest(`${apiConfig.baseURL}/users/${id}`);
+    if (response.error) {
+      return response.error;
+    } else {
+      return response;
+    }
+  } catch (error) {
+    return error;
   }
 };
