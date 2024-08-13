@@ -4,8 +4,8 @@ import './Pumping.scss';
 const ArSubjects = {
   pgPumping: 'البنزين السوبر',
   rgPumping: 'البنزين المحسن',
-  dieselPumping: 'النفط الأبيض',
-  kerosenePumping: 'زيت الغاز',
+  dieselPumping: 'زيت الغاز',
+  kerosenePumping: 'النفط الأبيض',
 };
 
 const Pumping = ({ pumpingQuantities, setPumpingQuantities }) => {
