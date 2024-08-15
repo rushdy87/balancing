@@ -175,7 +175,9 @@ exports.addSolidSulphur = async (req, res, next) => {
     await updateProduction(day, actual_quantity, req.userData.id, next);
 
     await addNote(U54Note, {
-      note: `القابل لتجهيز الكبريت الصلب متوفر بأكياس بكمية ${actual_quantity} طن وبكمية ${silos} طن بالسايلوات وبكمية ${temporary_shelter} طن بالخزن المؤقت.`,
+      note: `القابل لتجهيز الكبريت الصلب متوفر بأكياس بكمية ${
+        big_bag + small_bag
+      } طن وبكمية ${silos} طن بالسايلوات وبكمية ${temporary_shelter} طن بالخزن المؤقت.`,
       day: formattedDate,
       userId: req.userData.id,
     });
