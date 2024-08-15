@@ -1,4 +1,4 @@
-const { Unit54Storage } = require('../../models');
+const { Unit54Storage, U54Note } = require('../../models');
 const {
   handleError,
   formatDate,
@@ -8,6 +8,7 @@ const {
   findSolidSulphurProductionByDate,
   deleteSolidSulphurProduction,
   addSolidSulphurProduction,
+  addNote,
 } = require('../../utils');
 const { checkAuthorization } = require('../../utils/authorization');
 
@@ -172,6 +173,12 @@ exports.addSolidSulphur = async (req, res, next) => {
     }
 
     await updateProduction(day, actual_quantity, req.userData.id, next);
+
+    await addNote(U54Note, {
+      note: `القابل لتجهيز الكبريت الصلب متوفر بأكياس بكمية ${actual_quantity} طن وبكمية ${silos} طن بالسايلوات وبكمية ${temporary_shelter} طن بالخزن المؤقت.`,
+      day: formattedDate,
+      userId: req.userData.id,
+    });
 
     res.status(201).json({
       message:
