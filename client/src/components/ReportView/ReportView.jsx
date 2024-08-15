@@ -38,7 +38,7 @@ const ReportView = ({ day, contentToPrint }) => {
   const renderReport = (
     <div className='report-wrapper'>
       <h3 className='report-main-header'>
-        موقف الاستلام و الخزين و التجهيز لمصفى كربلاء ليوم {day}
+        موقف الاستلام والخزين والتجهيز لمصفى كربلاء ليوم {day}
       </h3>
 
       <div className='crude_and_oil_receiving'>

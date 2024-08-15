@@ -150,13 +150,24 @@ exports.getReportByDay = async (req, res, next) => {
     );
 
     report.hfoTransport = {
-      governmentalTransport,
-      nonGovernmentalTransport,
-      exportTransport,
-      quantityTotlal: getTotal(
-        governmentalTransport.quantity,
-        nonGovernmentalTransport.quantity,
-        exportTransport.quantity
+      governmentalTransport: {
+        ...governmentalTransport,
+        quantity: Math.round(governmentalTransport.quantity / 1000),
+      },
+      nonGovernmentalTransport: {
+        ...nonGovernmentalTransport,
+        quantity: Math.round(nonGovernmentalTransport.quantity / 1000),
+      },
+      exportTransport: {
+        ...exportTransport,
+        quantity: Math.round(exportTransport.quantity / 1000),
+      },
+      quantityTotlal: Math.round(
+        getTotal(
+          governmentalTransport.quantity,
+          nonGovernmentalTransport.quantity,
+          exportTransport.quantity
+        ) / 1000
       ),
       tankersTotlal: getTotal(
         governmentalTransport.tankers,

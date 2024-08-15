@@ -26,8 +26,12 @@ const Transport = ({ item, transport, setTransport }) => {
       <div className='Transport_inputFiled'>
         <label htmlFor='quantity'>
           الكمية{' '}
-          {item === 'solidSulphur' ? (
+          {item === 'solidSulphur' ||
+          item === 'PavingAsphalt' ||
+          item === 'lpg' ? (
             <span>(طن)</span>
+          ) : item === '1' || item === '2' || item === '3' ? (
+            <span>(لتر)</span>
           ) : (
             <span>
               (م<sup>3</sup>)

@@ -101,9 +101,11 @@ const tanksDataFormatting = async (tanksData) => {
       await findTankInfo(tag_number);
 
     const tankVolume = tanksData[tag_number];
-    const pumpable = tankVolume === 0 ? 0 : tankVolume - low_level;
+    let pumpable = tankVolume === 0 ? 0 : tankVolume - low_level;
 
-    if (pumpable > high_level || pumpable < 0) {
+    if (pumpable < 0) {
+      pumpable = 0;
+    } else if (pumpable > high_level) {
       throw new Error(`The pumpable volume for ${tag_number} is out of range.`);
     }
 
