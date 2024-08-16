@@ -3,6 +3,7 @@ const HttpError = require('./http-error');
 const TanksInfo = require('./tanks-info');
 
 const Blending = require('./blending/blending');
+const HFOBlending = require('./blending/hfoBlending');
 const SolidSulphurProduction = require('./blending/solidSulphurProduction');
 
 const CrudeOil = require('./crude/crudeOil');
@@ -37,6 +38,9 @@ TanksInfo.belongsTo(User, { foreignKey: 'userId' });
 
 User.hasMany(Blending, { foreignKey: 'userId' });
 Blending.belongsTo(User, { foreignKey: 'userId' });
+
+User.hasMany(HFOBlending, { foreignKey: 'userId' });
+HFOBlending.belongsTo(User, { foreignKey: 'userId' });
 
 User.hasMany(SolidSulphurProduction, { foreignKey: 'userId' });
 SolidSulphurProduction.belongsTo(User, { foreignKey: 'userId' });
@@ -109,6 +113,7 @@ module.exports = {
   HttpError,
   TanksInfo,
   Blending,
+  HFOBlending,
   SolidSulphurProduction,
   CrudeOil,
   NaturalGas,

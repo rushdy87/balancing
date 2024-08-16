@@ -88,11 +88,41 @@ const validateInput = (input, fields, next) => {
   return true;
 };
 
+const getYesterday = (date) => {
+  let [day, month, year] = date.split('-').map(Number);
+
+  if (day === 1) {
+    // Move to the last day of the previous month
+    month -= 1;
+
+    // If it's January, move to December of the previous year
+    if (month === 0) {
+      month = 12;
+      year -= 1;
+    }
+
+    // Get the last day of the previous month
+    const lastDayOfPrevMonth = new Date(year, month, 0).getDate();
+    day = lastDayOfPrevMonth;
+  } else {
+    day -= 1;
+  }
+
+  // Format day and month to have leading zeros if needed
+  const formattedDay = day.toString().padStart(2, '0');
+  const formattedMonth = month.toString().padStart(2, '0');
+
+  const yesterday = `${formattedDay}-${formattedMonth}-${year}`;
+
+  return formatDate(yesterday);
+};
+
 module.exports = {
   checkAuthorization,
   handleError,
   formatDate,
   validateInput,
+  getYesterday,
   findTankInfo,
   findAllTanksInfo,
   findTanksInfoByUnit,

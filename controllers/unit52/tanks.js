@@ -13,6 +13,7 @@ const {
   findTankInfo,
   editTank,
   confirmTank,
+  getYesterday,
 } = require('../../utils');
 
 exports.getTanksByDay = async (req, res, next) => {
@@ -100,6 +101,34 @@ exports.addVolumeToTanks = async (req, res, next) => {
     });
 
     await Promise.all(createPromises);
+
+    // const hfoTodayTanks = await Unit52Tank.findAll({
+    //   where: { product: 'HFO', day: formattedDate },
+    //   attributes: ['pumpable'],
+    //   raw: true,
+    // });
+
+    // const hfoTodayTanksValue = hfoTodayTanks.reduce(
+    //   (accumulator, currentValue) => accumulator + currentValue.pumpable,
+    //   0
+    // );
+
+    // const yesterday = getYesterday(day);
+
+    // const hfoYesterdayTanks = await Unit52Tank.findAll({
+    //   where: { product: 'HFO', day: yesterday },
+    //   attributes: ['pumpable'],
+    //   raw: true,
+    // });
+
+    // const hfoYesterdayTanksValue = hfoYesterdayTanks.reduce(
+    //   (accumulator, currentValue) => accumulator + currentValue.pumpable,
+    //   0
+    // );
+
+    // console.log('hfoTodayTanksValue', hfoTodayTanksValue);
+    // console.log('hfoYesterdayTanksValue', hfoYesterdayTanksValue);
+
     res
       .status(201)
       .json({ message: 'All tanks pumpable volumes have been added.' });
