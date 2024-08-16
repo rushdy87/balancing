@@ -30,6 +30,7 @@ const {
   findHFOTransportForReport,
   getTotal,
   findNotesForReport,
+  calculateOneTankVolumes,
 } = require('../../utils');
 
 exports.getReportByDay = async (req, res, next) => {
@@ -50,6 +51,9 @@ exports.getReportByDay = async (req, res, next) => {
     const u53Tanks = await findTanksForReport(Unit53Tank, 'u53', formattedDate);
     const u90Tanks = await findTanksForReport(Unit90Tank, 'u90', formattedDate);
     const tanks = [...u52Tanks, ...u53Tanks, ...u90Tanks];
+    const crudeOilTanks = calculateOneTankVolumes(
+      u52Tanks.filter((tank) => tank.product === 'CO')
+    );
 
     const u54Storege = await findSolidSulphurStorageForReport(formattedDate);
 
@@ -73,7 +77,13 @@ exports.getReportByDay = async (req, res, next) => {
     report.blending = blending;
 
     const crudeOil = await findCrudeOilByDateForReport(formattedDate);
-    report.crudeOil = crudeOil;
+    report.crudeOil = {
+      ...crudeOil,
+      w_v_m3: 18000,
+      w_v_bbl: 1132164,
+      reservoir_m3: crudeOilTanks?.pumpable || 0,
+      reservoir_bbl: Math.floor(crudeOilTanks?.pumpable * 6.2898) || 0,
+    };
 
     const naturalGas = await findNaturalGasByDateForReport(formattedDate);
     report.naturalGas = naturalGas;
@@ -179,6 +189,8 @@ exports.getReportByDay = async (req, res, next) => {
     const notes = await findNotesForReport(formattedDate);
 
     report.notes = notes;
+
+    // console.log(report);
 
     res.status(200).json(report);
   } catch (error) {

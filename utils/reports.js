@@ -45,10 +45,36 @@ const calculateTanksVolumes = (tanks) => {
   tanks.forEach((item) => {
     const { product, pumpable, working_volume } = item;
 
+    if (product !== 'CO') {
+      if (!result[product]) {
+        result[product] = {
+          product,
+          rank: rank[product],
+          pumpable: 0,
+          working_volume: 0,
+        };
+      }
+
+      result[product].pumpable += pumpable;
+      result[product].working_volume += working_volume;
+    }
+  });
+
+  // Convert the result object to an array and sort it by rank
+  return Object.values(result).sort((a, b) => a.rank - b.rank);
+};
+
+const calculateOneTankVolumes = (tanks) => {
+  // Initialize a result object
+  const result = {};
+
+  // Iterate through the combined array
+  tanks.forEach((item) => {
+    const { product, pumpable, working_volume } = item;
+
     if (!result[product]) {
       result[product] = {
         product,
-        rank: rank[product],
         pumpable: 0,
         working_volume: 0,
       };
@@ -59,7 +85,7 @@ const calculateTanksVolumes = (tanks) => {
   });
 
   // Convert the result object to an array and sort it by rank
-  return Object.values(result).sort((a, b) => a.rank - b.rank);
+  return Object.values(result)[0];
 };
 
 const findSolidSulphurStorageForReport = async (day) => {
@@ -179,6 +205,7 @@ const getTotal = (...args) => {
 module.exports = {
   findTanksForReport,
   calculateTanksVolumes,
+  calculateOneTankVolumes,
   findSolidSulphurStorageForReport,
   findBlendingByDateForReport,
   findSolidSulphurProductionForReport,

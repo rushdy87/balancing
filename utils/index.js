@@ -32,6 +32,7 @@ const {
   findHFOTransportForReport,
   getTotal,
   findNotesForReport,
+  calculateOneTankVolumes,
 } = require('./reports');
 const {
   findBlendingByDate,
@@ -110,6 +111,7 @@ module.exports = {
   addBlendingVolumes,
   findTanksForReport,
   calculateTanksVolumes,
+  calculateOneTankVolumes,
   findSolidSulphurByDateRange,
   findSolidSulphurStorageForReport,
   findBlendingByDateForReport,

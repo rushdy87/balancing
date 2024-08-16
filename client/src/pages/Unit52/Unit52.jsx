@@ -34,7 +34,7 @@ const Unit52 = () => {
   useEffect(() => {
     (async () => {
       const u52Tanks = await getTanksByUnit('u52');
-      console.log(u52Tanks);
+      //
 
       setTanks(u52Tanks.map((tank) => ({ ...tank, volume: 0 })));
     })();
@@ -51,7 +51,6 @@ const Unit52 = () => {
 
   // Crude Oil
   const [crudeOil, setCrudeOil] = useState({
-    reservoir_m3: 0,
     receiving: 0,
     sending: 0,
   });
