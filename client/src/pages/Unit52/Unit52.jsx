@@ -34,6 +34,8 @@ const Unit52 = () => {
   useEffect(() => {
     (async () => {
       const u52Tanks = await getTanksByUnit('u52');
+      console.log(u52Tanks);
+
       setTanks(u52Tanks.map((tank) => ({ ...tank, volume: 0 })));
     })();
   }, []);

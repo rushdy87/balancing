@@ -44,6 +44,16 @@ app.use((req, res, next) => {
 //   });
 //   res.json(user);
 // });
+// Add tanks Info to TanksInfo table
+// const tanksData = require('./data/tanks-info.json');
+// app.get('/', async (req, res, next) => {
+//   console.log(tanksData);
+//   const createPromises = tanksData.map((tank) => {
+//     return TanksInfo.create(tank);
+//   });
+//   await Promise.all(createPromises);
+//   res.json(tanksData);
+// });
 
 // ROUTES
 app.use('/api/auth', AuthRoutes);
