@@ -147,7 +147,7 @@ exports.addSolidSulphur = async (req, res, next) => {
 
     await addNote(U54Note, {
       note: `القابل لتجهيز الكبريت الصلب متوفر بأكياس بكمية ${
-        big_bag + small_bag
+        +big_bag + +small_bag
       } طن وبكمية ${silos} طن بالسايلوات وبكمية ${temporary_shelter} طن بالخزن المؤقت.`,
       day: formattedDate,
       userId: req.userData.id,
